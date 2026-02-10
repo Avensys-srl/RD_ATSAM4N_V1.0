@@ -99,7 +99,7 @@ void managementBypass(unsigned short enab_func)
   Bool  cmd_bypass_open = false, cmd_bypass_close = false;
   
   
-  // per prima cosa verifichiamo se è in test
+  // per prima cosa verifichiamo se ï¿½ in test
   if( (sData.status_test & MSK_TEST_BYPASS) )
     return;
 
@@ -139,7 +139,7 @@ void managementBypass(unsigned short enab_func)
         {     
           
            if( (count_active_freecooling_on > 0) && (count_active_freecooling_on < 60)) {
-           // Mi sono attivato, rimango così per 5 minuti (60 cicli), a prescindere da tutto.
+           // Mi sono attivato, rimango cosï¿½ per 5 minuti (60 cicli), a prescindere da tutto.
               if (read_byte_eeprom(ADDR_EEP(Set_Power_ON)) == 0)  //se ero spento mi accendo
               {
               write_byte_eeprom(ADDR_EEP(Set_Power_ON), 1);
@@ -205,7 +205,7 @@ void managementBypass(unsigned short enab_func)
     
     
     case BPD_AUTOMATIC:      
-        // se l'accessorio DXD è acceso chiudi il Bypass 
+        // se l'accessorio DXD ï¿½ acceso chiudi il Bypass 
         if(DigitAccessoryOn(ACC_I2C_DXD)){
           cmd_bypass_close = true;
           cmd_bypass_open  = false;
@@ -227,9 +227,9 @@ void managementBypass(unsigned short enab_func)
           if(!CkAlarm(ALM_PTFRESH_KO) && !CkAlarm(ALM_PTRET_KO))
           {    
               //============== Condizioni di Apertura del bypass ==============  
-              //  1: La Temperatura all'interno è >= del SetPoint di Temp. (Attenzione se c'è l'HEATER allo spegnimento dell'HEATER)
-              //  2: La Temperatura all'esterno è > della soglia minima di funz. del bypass  (default: 14.0°C)
-              //  3: La Temperatura all'esterno è minore di 2.0°C della temparatura all'interno
+              //  1: La Temperatura all'interno ï¿½ >= del SetPoint di Temp. (Attenzione se c'ï¿½ l'HEATER allo spegnimento dell'HEATER)
+              //  2: La Temperatura all'esterno ï¿½ > della soglia minima di funz. del bypass  (default: 14.0ï¿½C)
+              //  3: La Temperatura all'esterno ï¿½ minore di 2.0ï¿½C della temparatura all'interno
               //  4: Non vi sono Condizionatori Accesi. 
               if((sData.measure_Temp[I_PROBE_RETURN] >= (SetPointTemp + 10)) &&     
                  (sData.measure_Temp[I_PROBE_FRESH] > Bypass_minTemp) &&                    
@@ -247,9 +247,9 @@ void managementBypass(unsigned short enab_func)
                //============== Condizioni di Chiusura del bypass ==============
                //  1: La Temp. Esterna >=  della Temp. Interna
                //  2: La Temp. Esterna < della Soglia min. di Funz. Bypass
-               //  3: La Temperatura Interna è minore del SetPoint Temp.Interna -2.0°C (default: 20.0°C)
-               //  4: Riscaldatore (EHD) è Acceso 
-               //  5: il Raffreddatore (CWD)  è ACCESO.
+               //  3: La Temperatura Interna ï¿½ minore del SetPoint Temp.Interna -2.0ï¿½C (default: 20.0ï¿½C)
+               //  4: Riscaldatore (EHD) ï¿½ Acceso 
+               //  5: il Raffreddatore (CWD)  ï¿½ ACCESO.
                if((sData.measure_Temp[I_PROBE_FRESH] >= sData.measure_Temp[I_PROBE_RETURN]) ||    
                   (sData.measure_Temp[I_PROBE_FRESH] < Bypass_minTemp) ||                 
                   (sData.measure_Temp[I_PROBE_RETURN] <= (rif_temp_interna - 20)) ||  
@@ -279,19 +279,19 @@ void managementBypass(unsigned short enab_func)
         if(cfg_inp == INP_12V_BYPASS_OPEN) 
         {    
             //============== Config_4 =  12V->Bypass Open , 0V->Bypass Closed	==============     
-            // 1: Se il Bypass è Aperto Ma il comando che leggiamo dall'input  è di chiusura (< 2,5Volt), attiva la procedura di chiusura
+            // 1: Se il Bypass ï¿½ Aperto Ma il comando che leggiamo dall'input  ï¿½ di chiusura (< 2,5Volt), attiva la procedura di chiusura
             if (((sData.status_unit & MSK_STS_BYPASS) == 0) && (sData.measure_ADC_input[i] < 250)) 
                cmd_bypass_close = true;
-            // 2: Se il Bypass è Chiuso Ma il comando che leggiamo dall'input  è di apetura (> 6,0Volt), attiva la procedura di apertura    
+            // 2: Se il Bypass ï¿½ Chiuso Ma il comando che leggiamo dall'input  ï¿½ di apetura (> 6,0Volt), attiva la procedura di apertura    
             else if (((sData.status_unit & MSK_STS_BYPASS) == mskBPD_Close) &&  (sData.measure_ADC_input[i] > 610)) 
                cmd_bypass_open  = true;     
         }else if (cfg_inp == INP_0V_BYPASS_OPEN) 
         {
              //============== Config_5 =  0V->Bypass Open , 12V->Bypass Closed	==============
-             // 1: Se il Bypass è Aperto Ma il comando che leggiamo dall'input  è di chiusura (> 6,0Volt), attiva la procedura di chiusura
+             // 1: Se il Bypass ï¿½ Aperto Ma il comando che leggiamo dall'input  ï¿½ di chiusura (> 6,0Volt), attiva la procedura di chiusura
             if (((sData.status_unit & MSK_STS_BYPASS) == 0) && (sData.measure_ADC_input[i] > 610)) 
                cmd_bypass_close = true;
-            // 2: Se il Bypass è Chiuso Ma il comando che leggiamo dall'input  è di apetura (< 2,5Volt), attiva la procedura di apertura    
+            // 2: Se il Bypass ï¿½ Chiuso Ma il comando che leggiamo dall'input  ï¿½ di apetura (< 2,5Volt), attiva la procedura di apertura    
             else if (((sData.status_unit & MSK_STS_BYPASS) == mskBPD_Close) &&  (sData.measure_ADC_input[i] < 250)) 
                cmd_bypass_open  = true;         
         }  
@@ -345,7 +345,7 @@ void managementBypass(unsigned short enab_func)
 #endif
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' x_dbg      
  
-  // attendi N secondi affinchè la velocità dei motori diminuisca, quindi attiva il motorino BPD.
+  // attendi N secondi affinchï¿½ la velocitï¿½ dei motori diminuisca, quindi attiva il motorino BPD.
   if(sData.speed_motors_F > 200)        i = 44;     
   else if (sData.speed_motors_F > 150)  i = 37;
   else if (sData.speed_motors_F > 110)  i = 30;  
@@ -384,7 +384,7 @@ int TemperatureRegulate()
 #endif
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' x_dbg   
 
-  //---- (1) Se l'unità non è in funzione esci dalla funzione ----
+  //---- (1) Se l'unitï¿½ non ï¿½ in funzione esci dalla funzione ----
   if((sData.status_unit & (1 << POS_BIT_UNIT_RUN)) == 0  &&  ( cfg_bypass != BPD_AUTO_ON_OFF ) && !(enab_func & (1 << ENAB_MBF))  )  {
     // Se il bypass era aperto chiudilo
     if((sData.status_unit & MSK_STS_BYPASS) == 0) 
@@ -427,9 +427,9 @@ int TemperatureRegulate()
   //---- (2) Gestione ByPass ----
   managementBypass(enab_func);
 
-  //---- (3)  Se è attivo almeno un accessorio di Riscaldamento o raffreddamento procedi ----
+  //---- (3)  Se ï¿½ attivo almeno un accessorio di Riscaldamento o raffreddamento procedi ----
   if(!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_PREHEATER) && !AccessoryPresent_EepList(ACC_EEP_DXD) && !AccessoryPresent_EepList(ACC_EEP_SSR))
-    return 1;       // se non vi è nessuno sistema per riscaldare o raffreddare, che ci sto a fà qui ??? Esco.
+    return 1;       // se non vi ï¿½ nessuno sistema per riscaldare o raffreddare, che ci sto a fï¿½ qui ??? Esco.
 
   //---- (4) In caso di guasto di uno dei motori spegni subito gli accessori clima a meno che non sia il MODBUS a comandare i motori   
   if ((sData.StatusMotorsR & 0xF0) || (sData.StatusMotorsF &0xF0) || CkAlarm(ALM_EB_CTRL_FAN) && !(enab_func & (1 << ENAB_MBF))) {
@@ -456,16 +456,16 @@ int TemperatureRegulate()
     if(DigitAccessoryOperating(ACC_I2C_PREHEATER) && (enab_func & (1 << ENAB_PREHEATING)) ) 
     {    
 
-      if(sData.AccI2C[ACC_I2C_PREHEATER].sts & STS_ACC_ELECT)  // se l'accessorio è elettrico non mi preoccupo della formazione di ghiaccio sullo stesso
+      if(sData.AccI2C[ACC_I2C_PREHEATER].sts & STS_ACC_ELECT)  // se l'accessorio ï¿½ elettrico non mi preoccupo della formazione di ghiaccio sullo stesso
       {
         int ton_preheater = 120;// 5 sec. * 36 = 180 sec.; 
         int toff_preheater = 36;// 5 sec. * 36 = 180 sec.; 
         
-        if( (sData.measure_Temp[I_PROBE_EXHAUST] < 30) && (count_preHeaterOn == 0) ) // se si forma condensa può ghiacciare, accendo il preheater per 3 min e tengo acceso se T_EX non è > 3°C
+        if( (sData.measure_Temp[I_PROBE_EXHAUST] < 30) && (count_preHeaterOn == 0) ) // se si forma condensa puï¿½ ghiacciare, accendo il preheater per 3 min e tengo acceso se T_EX non ï¿½ > 3ï¿½C
         {
            TAG_DigitAccessoryOn(ACC_I2C_PREHEATER); //accendo l'accessorio
            count_preHeaterOn = ton_preheater; //carico il timer (ON)
-        }else if ((sData.measure_Temp[I_PROBE_EXHAUST] > 30) && (count_preHeaterOn == 0)) // se si è scaldato abbastanza spengo e inserisco una pausa di 3 min prima del prossimo controllo
+        }else if ((sData.measure_Temp[I_PROBE_EXHAUST] > 30) && (count_preHeaterOn == 0)) // se si ï¿½ scaldato abbastanza spengo e inserisco una pausa di 3 min prima del prossimo controllo
         {
            TAG_DigitAccessoryOff(ACC_I2C_PREHEATER);
            count_preHeaterOn = toff_preheater; //carico il timer (OFF)
@@ -476,7 +476,7 @@ int TemperatureRegulate()
       }
      else
         // ---------- 
-        // se l'accessorio è ad acqua e la temperatura  dell'aria è bassa si congela la batteria !!!! Mantenere sempre acceso sotto i 5 gradi !!!!
+        // se l'accessorio ï¿½ ad acqua e la temperatura  dell'aria ï¿½ bassa si congela la batteria !!!! Mantenere sempre acceso sotto i 5 gradi !!!!
         // ----------       
      {
        if(sData.AccI2C[ACC_I2C_PREHEATER].measure1 <= 50) 
@@ -491,14 +491,14 @@ int TemperatureRegulate()
      
 // ---------- 
 // Qui il vecchio codice:
-// Non torna...se l'accessorio è ad acqua e la temperatura 
-// dell'aria è bassa si congela la batteria !!!! Mantenere sempre acceso !!!!
+// Non torna...se l'accessorio ï¿½ ad acqua e la temperatura 
+// dell'aria ï¿½ bassa si congela la batteria !!!! Mantenere sempre acceso !!!!
 // 
 // ---------- 
 //        
 //           int ton_preheater = 120;// 5 sec. * 120 = 600 sec.; 
 //           
-//           // se la temperatura è sotto i -15°C portiamo il tempo di on a 15 min.
+//           // se la temperatura ï¿½ sotto i -15ï¿½C portiamo il tempo di on a 15 min.
 //           if(sData.AccI2C[ACC_I2C_PREHEATER].measure1 <= -150) 
 //              ton_preheater = 180;
 //              
@@ -554,16 +554,16 @@ int TemperatureRegulate()
 							if(DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER))   // entrambi
 								TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
 							else
-								TempRif = sData.measure_Temp[I_PROBE_RETURN];  // se c'è l'AWP, la Treturn diventa quella dell'accessorio.
+								TempRif = sData.measure_Temp[I_PROBE_SUPPLY];  // se c'ï¿½ l'AWP, la Treturn diventa quella dell'accessorio.
   }else
 	TempRif = sData.measure_Temp[I_PROBE_RETURN];
- /* { //Commento aggiunto nel caso Micheal VS per iEHD, poichè la sonda di supply è più avanti di quella dell'accessorio
+ /* { //Commento aggiunto nel caso Micheal VS per iEHD, poichï¿½ la sonda di supply ï¿½ piï¿½ avanti di quella dell'accessorio
 // ----------------------------------------------- 
 // Aggiungo inseguimento sonda accessorio presente  
-// se c'è solo HEATER o solo COOLER leggo la sonda 
+// se c'ï¿½ solo HEATER o solo COOLER leggo la sonda 
 // di uno o dell'altro. Nel caso di compresenza  
 // leggo quella del HEATER.
-// Se nessun accessorio è presente inseguo Tsupply
+// Se nessun accessorio ï¿½ presente inseguo Tsupply
 // Dalla 2.20 in poi -- Nicola 05/05/2016
 // ----------------------------------------------- 
 
@@ -580,7 +580,7 @@ int TemperatureRegulate()
   //_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\
   //                        ------  ACCESSORIO  DXD -----
   //
-  // Se è inserito, anche se non funzionante l'accessorio DXD, non prendere in considerazione gli altri
+  // Se ï¿½ inserito, anche se non funzionante l'accessorio DXD, non prendere in considerazione gli altri
   // accesori clima.
   //_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\ 
  
@@ -617,7 +617,7 @@ int TemperatureRegulate()
      }   
      
      
-     // la funzione è richiamata ogni 5 sec., si può configurare il tempo di reazione del regolatore
+     // la funzione ï¿½ richiamata ogni 5 sec., si puï¿½ configurare il tempo di reazione del regolatore
      // partendo da un tempo minimo di 30 sec. fino ad un tempo max= 180 sec. 
      // <set_regulate_Clima>: ..., bit[5,4,3,2]: 0..15, speed_regulator  
      //                                bit[1]: 1=TempRif=TR / 0=TempRif=TS
@@ -629,15 +629,15 @@ int TemperatureRegulate()
      {
         Byte hist_T; 
                
-        // isteresi da applicare alla temperatura in uscita al compressore se il controllo è sulla sonda supply 
+        // isteresi da applicare alla temperatura in uscita al compressore se il controllo ï¿½ sulla sonda supply 
         if(sData.RegDXD.func_compressor == 'W') {
           hist_T = read_byte_eeprom(ADDR_EEP(DeltaTemp_Supply)); // default 120 = 12.0
-          SetPointTemp += hist_T; // es: 22.0 + 12.0 => 34.0 è la temperature in uscita per scadare l'ambiente e portare la temperatura interna a 22.0 
+          SetPointTemp += hist_T; // es: 22.0 + 12.0 => 34.0 ï¿½ la temperature in uscita per scadare l'ambiente e portare la temperatura interna a 22.0 
         }else {
           hist_T = read_byte_eeprom(ADDR_EEP(DeltaTemp_Supply)); // default 120 = 12.0
           
           if(SetPointTemp > hist_T)
-            SetPointTemp -= hist_T; // es: 22.0 - 12.0 => 10.0 è la temperature in uscita per raffreddare l'ambiente e portare la temperatura interna a 22.0 
+            SetPointTemp -= hist_T; // es: 22.0 - 12.0 => 10.0 ï¿½ la temperature in uscita per raffreddare l'ambiente e portare la temperatura interna a 22.0 
           else
             SetPointTemp = 0;  
         }  
@@ -663,7 +663,7 @@ int TemperatureRegulate()
 */     
 //---------------------------------------x_dbg
 
-     // Se il compressore è in allarme, spegnaimoo subito
+     // Se il compressore ï¿½ in allarme, spegnaimoo subito
      if(CkAlarm(ALM_DXD_COMPRESS)) {
 //---------------------------------------x_dbg       
 //        Serial_println1(" *** Allarme *** ");
@@ -688,7 +688,7 @@ int TemperatureRegulate()
        if (sData.RegDXD.func_compressor == 'W'){
           // * * * * * * * * * * * * * * * * *
           // * * * * *  RISCALDMENTO * * * * * 
-          // La sonda supply è messa dopo il compressore, se l'aria in immissione ambiente è maggiore di 19 gradi della soglia, 
+          // La sonda supply ï¿½ messa dopo il compressore, se l'aria in immissione ambiente ï¿½ maggiore di 19 gradi della soglia, 
           // non aumentare la potenza del compressore            
           if ((TempRif <= (SetPointTemp - 8)) && (sData.measure_Temp[I_PROBE_SUPPLY] <= (SetPointTemp + 190))) 
           {
@@ -696,7 +696,7 @@ int TemperatureRegulate()
               {  // prima accensione:      
                  TAG_DigitAccessoryOn(ACC_I2C_DXD);  
                  sData.RegDXD.val_0_10V =  60;  // si parte con il compressore al 60%
-                 sData.RegDXD.count     = -24;  // Diamo +2 minuti in più (24 x 5sec. = 120 sec), in modo da dare il tempo al compressore di arrivare a regime
+                 sData.RegDXD.count     = -24;  // Diamo +2 minuti in piï¿½ (24 x 5sec. = 120 sec), in modo da dare il tempo al compressore di arrivare a regime
               }else
                  sData.RegDXD.val_0_10V += STEP_REG_DXD;
               
@@ -735,7 +735,7 @@ int TemperatureRegulate()
        }else if (sData.RegDXD.func_compressor == 'S') { 
           // * * * * * * * * * * * * * * * * * *
           // * * * * *  RAFFREDDAMENTO * * * * * 
-          // La sonda supply è messa dopo il compressore, se l'aria in immissione ambiente è minore di 19 gradi della soglia, 
+          // La sonda supply ï¿½ messa dopo il compressore, se l'aria in immissione ambiente ï¿½ minore di 19 gradi della soglia, 
           // non aumentare la potenza del compressore  
           if ((TempRif >= (SetPointTemp + 8)) && (sData.measure_Temp[I_PROBE_SUPPLY] <= (SetPointTemp + 190))) 
           {                
@@ -743,7 +743,7 @@ int TemperatureRegulate()
               // prima accensione:   
               TAG_DigitAccessoryOn(ACC_I2C_DXD);  
               sData.RegDXD.val_0_10V =   60;  // si parte con il compressore al 60%
-              sData.RegDXD.count     =  -24;  // Diamo +2 minuti in più, in modo da dare il tempo al compressore di arrivare a regime
+              sData.RegDXD.count     =  -24;  // Diamo +2 minuti in piï¿½, in modo da dare il tempo al compressore di arrivare a regime
             }else
               sData.RegDXD.val_0_10V += STEP_REG_DXD;
               
@@ -792,7 +792,7 @@ int TemperatureRegulate()
    
   
    
-  //---- (5) se è disabilitata la funzione CLIMA o non ho accessori Heater o Cooler. ---- 
+  //---- (5) se ï¿½ disabilitata la funzione CLIMA o non ho accessori Heater o Cooler. ---- 
   if (!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !AccessoryPresent_EepList(ACC_EEP_SSR))
   {
     // spengo gli accesori se attivi
@@ -860,7 +860,7 @@ int TemperatureRegulate()
 		 }
          else if (TempRif >= soglia_Off_Heater) 
          {
-            // Diamo qualche secondo in più prima di spegnere
+            // Diamo qualche secondo in piï¿½ prima di spegnere
             if(++persist_Temp_heater_off > 1) { 
                TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
 			   write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);
@@ -913,13 +913,13 @@ int TemperatureRegulate()
       // o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o o 
       if(DigitAccessoryOperating(ACC_I2C_COOLER))
       {         
-        // Se la temperatura esterna è minore di quella interna di 3.0 Gradi lavoriamo prima con il Bypass.
+        // Se la temperatura esterna ï¿½ minore di quella interna di 3.0 Gradi lavoriamo prima con il Bypass.
         if((TempRif >= soglia_On_Cooler) && (sData.measure_Temp[I_PROBE_FRESH] > (sData.measure_Temp[I_PROBE_RETURN] - 40))) 
           TAG_DigitAccessoryOn(ACC_I2C_COOLER);
         else if ((TempRif < soglia_Off_Cooler) || (sData.measure_Temp[I_PROBE_FRESH] < (sData.measure_Temp[I_PROBE_RETURN] - 50))) 
           TAG_DigitAccessoryOff(ACC_I2C_COOLER);
       }else  {
-        //Se la funzione è disable, spegnilo 
+        //Se la funzione ï¿½ disable, spegnilo 
         if(DigitAccessoryOn(ACC_I2C_COOLER) == 1)
           TAG_DigitAccessoryOff(ACC_I2C_COOLER); 
       }
@@ -996,11 +996,11 @@ int ThermoCheck()
 //   if ( S1_T < S4_T) // FRESCO FUORI vs CALDO DENTRO
 //   {
 //       
-//      if ( (S2_T < (S1_T-tolT)) || (S2_T >= S1_T))  // S2 T non può essere più freddo di S1_T o fuori tolleranza 
+//      if ( (S2_T < (S1_T-tolT)) || (S2_T >= S1_T))  // S2 T non puï¿½ essere piï¿½ freddo di S1_T o fuori tolleranza 
 //      {
 //          S2_T  = sData.AccI2C[ACC_I2C_EXT2].measure1+290; 
 //          
-//          if ( (S2_RH < S1_RH)  || (S2_RH > (S1_RH + tolRH) ) )   //S2 RH non può essere maggiore o fuori tolleranza       
+//          if ( (S2_RH < S1_RH)  || (S2_RH > (S1_RH + tolRH) ) )   //S2 RH non puï¿½ essere maggiore o fuori tolleranza       
 //          {
 //           S2_RH = sData.AccI2C[ACC_I2C_EXT2].measure2; 
 //          }
@@ -1016,7 +1016,7 @@ int ThermoCheck()
 //      }
 //        
 //    
-//    if( (T5 < (S2_T-tolT)) || (T5 >= S2_T) )  // T5 non può essere più freddo di S2_T o fuori tolleranza
+//    if( (T5 < (S2_T-tolT)) || (T5 >= S2_T) )  // T5 non puï¿½ essere piï¿½ freddo di S2_T o fuori tolleranza
 //      {
 //          T5 = Temp_modbus[I_PROBE_SUPPLY]+50;  // T5 // TEMP. AFTER DX COIL
 //      }
@@ -1026,7 +1026,7 @@ int ThermoCheck()
 //    }
 //      
 //      
-//    if( (T3 < (T5-tolT)) || (T3 >= T5) )  // T3 non può essere più freddo di T5 o fuori tolleranza
+//    if( (T3 < (T5-tolT)) || (T3 >= T5) )  // T3 non puï¿½ essere piï¿½ freddo di T5 o fuori tolleranza
 //      {
 //         T3 = sData.AccI2C[ACC_I2C_SSR].measure3+80;  // T3 // TEMP. AFTER EHD
 //      }
@@ -1036,7 +1036,7 @@ int ThermoCheck()
 //    }
 //     
 //   
-//   if( (T4 > (S4_T+tolT)) || (T4 <= S4_T) )  // T4 non può essere più caldo di S4_T o fuori tolleranza
+//   if( (T4 > (S4_T+tolT)) || (T4 <= S4_T) )  // T4 non puï¿½ essere piï¿½ caldo di S4_T o fuori tolleranza
 //      {
 //      T4 = Temp_modbus[I_PROBE_EXHAUST]; // T4 // TEMP. EXHAUST  
 //      }
@@ -1045,13 +1045,13 @@ int ThermoCheck()
 //      T4 = S4_T-5;
 //    }
 //
-//   if (info_EBPD == 0) // se il bypass è chiuso
+//   if (info_EBPD == 0) // se il bypass ï¿½ chiuso
 //   {
-//     if ((S2_T > S4_T)  ) // S2_T non può essere superiore a S4_T
+//     if ((S2_T > S4_T)  ) // S2_T non puï¿½ essere superiore a S4_T
 //     {
 //      S2_T = S4_T-10;
 //     }    
-//     if ((T4 > S2_T)  )  // T4 non può essere superiore a S2_T
+//     if ((T4 > S2_T)  )  // T4 non puï¿½ essere superiore a S2_T
 //     {
 //       T4 = S2_T-10;
 //     }
@@ -1062,11 +1062,11 @@ int ThermoCheck()
 //   }
 //   else // FRESCO DENTRO vs CALDO FUORI
 //   {
-//      if ( (S2_T > (S1_T+tolT)) || (S2_T <= S1_T))  // S2 T non può essere più caldo di S1_T o fuori tolleranza 
+//      if ( (S2_T > (S1_T+tolT)) || (S2_T <= S1_T))  // S2 T non puï¿½ essere piï¿½ caldo di S1_T o fuori tolleranza 
 //      {
 //          S2_T  = sData.AccI2C[ACC_I2C_EXT2].measure1+290; 
 //          
-//          if ( (S2_RH > S1_RH)  || (S2_RH < (S1_RH - tolRH) ) )   //S2 RH non può essere minore o fuori tolleranza       
+//          if ( (S2_RH > S1_RH)  || (S2_RH < (S1_RH - tolRH) ) )   //S2 RH non puï¿½ essere minore o fuori tolleranza       
 //          {
 //           S2_RH = sData.AccI2C[ACC_I2C_EXT2].measure2; 
 //          }
@@ -1082,7 +1082,7 @@ int ThermoCheck()
 //      }
 //        
 //    
-//    if( (T5 > (S2_T+tolT)) || (T5 <= S2_T) )  // T5 non può essere più caldo di S2_T o fuori tolleranza
+//    if( (T5 > (S2_T+tolT)) || (T5 <= S2_T) )  // T5 non puï¿½ essere piï¿½ caldo di S2_T o fuori tolleranza
 //      {
 //          T5 = Temp_modbus[I_PROBE_SUPPLY]+50;  // T5 // TEMP. AFTER DX COIL
 //      }
@@ -1092,7 +1092,7 @@ int ThermoCheck()
 //    }
 //      
 //      
-//    if( (T3 > (T5+tolT)) || (T3 <= T5) )  // T3 non può essere più caldo di T5 o fuori tolleranza
+//    if( (T3 > (T5+tolT)) || (T3 <= T5) )  // T3 non puï¿½ essere piï¿½ caldo di T5 o fuori tolleranza
 //      {
 //         T3 = sData.AccI2C[ACC_I2C_SSR].measure3+80;  // T3 // TEMP. AFTER EHD
 //      }
@@ -1102,7 +1102,7 @@ int ThermoCheck()
 //    }
 //     
 //   
-//   if( (T4 < (S4_T-tolT)) || (T4 >= S4_T) )  // T4 non può essere più freddo di S4_T o fuori tolleranza
+//   if( (T4 < (S4_T-tolT)) || (T4 >= S4_T) )  // T4 non puï¿½ essere piï¿½ freddo di S4_T o fuori tolleranza
 //      {
 //      T4 = Temp_modbus[I_PROBE_EXHAUST]; // T4 // TEMP. EXHAUST  
 //      }
@@ -1112,13 +1112,13 @@ int ThermoCheck()
 //    }
 //   }
 //      
-//   if (info_EBPD == 0) // se il bypass è chiuso
+//   if (info_EBPD == 0) // se il bypass ï¿½ chiuso
 //   {
-//     if ((S2_T < S4_T)  ) // S2_T non può essere minore a S4_T
+//     if ((S2_T < S4_T)  ) // S2_T non puï¿½ essere minore a S4_T
 //     {
 //      S2_T = S4_T+10;
 //     }    
-//     if ((T4 < S2_T)  )  // T4 non può essere minore a S2_T
+//     if ((T4 < S2_T)  )  // T4 non puï¿½ essere minore a S2_T
 //     {
 //       T4 = S2_T+10;
 //     }
