@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Checklist Collaudo Firmware</title>
+  <style>
+    :root {
+      --text: #111;
+      --muted: #555;
+      --line: #cfcfcf;
+      --bg-soft: #f7f7f7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--text);
+      background: #fff;
+      line-height: 1.35;
+    }
+
+    .page {
+      width: min(1200px, 96%);
+      margin: 16px auto 48px;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: #fff;
+      margin-bottom: 12px;
+    }
+
+    button {
+      border: 1px solid #666;
+      background: #fff;
+      color: #111;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    button:hover {
+      background: var(--bg-soft);
+    }
+
+    h1, h2, h3 {
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      margin-top: 18px;
+      font-size: 18px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 4px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 8px 10px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .c12 { grid-column: span 12; }
+    .c8 { grid-column: span 8; }
+    .c6 { grid-column: span 6; }
+    .c4 { grid-column: span 4; }
+    .c3 { grid-column: span 3; }
+    .c2 { grid-column: span 2; }
+
+    label {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="time"],
+    textarea,
+    select {
+      border: 1px solid var(--line);
+      padding: 6px 8px;
+      border-radius: 3px;
+      width: 100%;
+      font: inherit;
+      background: #fff;
+    }
+
+    textarea {
+      min-height: 64px;
+      resize: vertical;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      table-layout: fixed;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 6px 7px;
+      vertical-align: top;
+      font-size: 13px;
+    }
+
+    th {
+      background: var(--bg-soft);
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .col-step { width: 30%; }
+    .col-ok { width: 30%; }
+    .col-ko { width: 30%; }
+    .col-esito { width: 10%; }
+
+    .esito {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .section-note {
+      margin-top: 6px;
+      margin-bottom: 14px;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 900px) {
+      .c8, .c6, .c4, .c3, .c2 { grid-column: span 12; }
+      .col-step, .col-ok, .col-ko, .col-esito { width: auto; }
+    }
+
+    @media print {
+      .toolbar {
+        display: none;
+      }
+      .page {
+        width: 100%;
+        margin: 0;
+      }
+      @page {
+        size: A4;
+        margin: 10mm;
+      }
+      body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      input[type="text"],
+      input[type="date"],
+      input[type="time"],
+      textarea,
+      select {
+        border: 1px solid #999;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="toolbar">
+      <button type="button" id="saveBtn">Salva in locale</button>
+      <button type="button" id="loadBtn">Ricarica dati</button>
+      <button type="button" id="clearBtn">Reset modulo</button>
+      <button type="button" id="printBtn">Stampa / PDF</button>
+      <span class="small" id="statusTxt"></span>
+    </div>
+
+    <h1>Checklist Collaudo Firmware</h1>
+    <div class="hint">Modulo compilabile da browser. Per PDF in Chrome: `Ctrl+P` e scegli `Salva come PDF`.</div>
+
+    <h2>Scheda Collaudo</h2>
+    <div class="grid">
+      <div class="field c3"><label>Data test</label><input name="data_test" type="date"></div>
+      <div class="field c2"><label>Ora inizio</label><input name="ora_inizio" type="time"></div>
+      <div class="field c2"><label>Ora fine</label><input name="ora_fine" type="time"></div>
+      <div class="field c5"><label>Operatore</label><input name="operatore" type="text"></div>
+
+      <div class="field c4"><label>Revisore</label><input name="revisore" type="text"></div>
+      <div class="field c4"><label>Versione firmware</label><input name="versione_fw" type="text"></div>
+      <div class="field c4"><label>Commit/Tag Git</label><input name="commit_tag" type="text"></div>
+
+      <div class="field c4"><label>Build date/time</label><input name="build_datetime" type="text"></div>
+      <div class="field c4"><label>SN unita testata</label><input name="sn_unita" type="text"></div>
+      <div class="field c4"><label>Profilo EEPROM</label><input name="profilo_eeprom" type="text"></div>
+
+      <div class="field c6"><label>Configurazione hardware (motori/NTC/accessori)</label><input name="config_hw" type="text"></div>
+      <div class="field c6"><label>Strumentazione usata</label><input name="strumentazione" type="text"></div>
+
+      <div class="field c6"><label>Ambiente prova (banco/campo)</label><input name="ambiente_prova" type="text"></div>
+      <div class="field c3"><label>Esito complessivo</label>
+        <select name="esito_complessivo">
+          <option value="">-- seleziona --</option>
+          <option>PASS</option>
+          <option>FAIL</option>
+        </select>
+      </div>
+      <div class="field c3"><label>Blocco rilascio</label>
+        <select name="blocco_rilascio">
+          <option value="">-- seleziona --</option>
+          <option>NO</option>
+          <option>SI</option>
+        </select>
+      </div>
+
+      <div class="field c12"><label>Note generali</label><textarea name="note_generali"></textarea></div>
+      <div class="field c6"><label>Firma operatore</label><input name="firma_operatore" type="text"></div>
+      <div class="field c6"><label>Firma revisore</label><input name="firma_revisore" type="text"></div>
+    </div>
+
+    <h2>Checklist Esecutiva</h2>
+    <div class="hint">Per ogni riga: marca l'esito (`OK` o `KO`) e aggiungi note quando necessario.</div>
+
+    <div id="sections"></div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "rd_firmware_checklist_v1";
+
+    const sections = [
+      {
+        title: "0) Preparazione",
+        rows: [
+          ["Versione firmware e build", "VERSION_FW e build coerenti con rilascio", "versione errata o non tracciabile"],
+          ["Configurazione hardware", "configurazione reale allineata", "mismatch HW/configurazione"],
+          ["Profilo EEPROM di collaudo", "profilo caricato e verificato", "profilo diverso o parziale"],
+          ["Strumentazione", "strumenti operativi e stabili", "strumenti assenti/non affidabili"],
+          ["Accessori richiesti collegati", "nodi raggiungibili", "nodi mancanti/non raggiungibili"]
+        ]
+      },
+      {
+        title: "1) Boot e stabilita base",
+        rows: [
+          ["Boot unit", "avvio regolare senza reset loop", "freeze/reset ciclico"],
+          ["Watchdog e reset cause", "watchdog attivo e cause coerenti", "cause inattese o watchdog inattivo"],
+          ["Scheduler tick", "tick regolare", "task non eseguite/jitter anomalo"],
+          ["Allarmi critici a freddo", "nessun allarme critico nominale", "allarmi critici senza fault"]
+        ]
+      },
+      {
+        title: "2) KTS (UART0 9600)",
+        rows: [
+          ["Polling KTS", "richiesta/risposta continua", "timeout o perdita link"],
+          ["Lettura debug", "valori coerenti", "valori incoerenti/non aggiornati"],
+          ["Lettura EEPROM via KTS", "dati corretti", "indirizzi/dati errati"],
+          ["Scrittura EEPROM via KTS", "persistenza confermata", "scrittura non persistente"],
+          ["Comandi test KTS", "attivazione/uscita corretta", "stato test bloccato"],
+          ["Timeout KTS simulato", "gestione timeout conforme", "assenza gestione timeout"]
+        ]
+      },
+      {
+        title: "3) CTRL_FAN (UART2 38400)",
+        rows: [
+          ["Polling CTRL_FAN", "risposta valida e continua", "frame invalidi/perdita polling"],
+          ["Feedback RPM/tensioni", "coerenti con setpoint", "non coerenti/non aggiornati"],
+          ["Stato motori", "bit stato coerenti", "bit incoerenti"],
+          ["Variazione setpoint", "risposta entro tolleranza", "errore oltre tolleranza"],
+          ["Recovery link", "ripristino senza reset", "blocco o reset richiesto"]
+        ]
+      },
+      {
+        title: "4) Modbus (UART2 38400)",
+        rows: [
+          ["Polling packet 1/2", "pacchetti completi", "pacchetti errati/incompleti"],
+          ["Lettura stato/allarmi", "registri coerenti", "registri non coerenti"],
+          ["Lettura misure", "misure plausibili", "misure fisse/sature"],
+          ["Scrittura setpoint", "effetto applicato", "comando ignorato/errato"],
+          ["Timeout Modbus simulato", "gestione KO conforme", "nessuna gestione errore"]
+        ]
+      },
+      {
+        title: "5) Accessori I2C",
+        rows: [
+          ["Scansione accessori", "presenza corretta in sData", "falsi positivi/negativi"],
+          ["Livello link", "aggiornamento 0/10..10/10 coerente", "link bloccato/incoerente"],
+          ["Lettura misure accessori", "valori coerenti", "valori nulli/fissi"],
+          ["Simulazione link KO", "allarme + recovery", "manca allarme o recovery"]
+        ]
+      },
+      {
+        title: "6) Sensori analogici",
+        rows: [
+          ["NTC (TS/TF/TR/TE)", "valori plausibili", "drift/outlier non giustificati"],
+          ["Ingressi 0-10V", "scala coerente", "scala errata/saturazione"],
+          ["Corrente KTS", "stabile e in range", "instabile/fuori range"],
+          ["Assorbimento bypass", "min/max coerenti", "valori incoerenti/assenti"],
+          ["ADC esterni", "conversioni valide", "canali bloccati"]
+        ]
+      },
+      {
+        title: "7) Motori e velocita",
+        rows: [
+          ["Avvio velocita minima", "avvio regolare", "mancato avvio/fault"],
+          ["Step min/med/max", "RPM coerente", "risposta assente/invertita"],
+          ["Modalita CAP", "pressione nel target", "pressione non controllata"],
+          ["Modalita CAF", "portata nel target", "portata non controllata"],
+          ["Modalita MBF", "controllo F/R indipendente", "accoppiamento non previsto"],
+          ["Defrost e post-vent", "transizioni corrette", "stato bloccato/transizioni errate"]
+        ]
+      },
+      {
+        title: "8) Bypass e clima",
+        rows: [
+          ["Bypass manuale OPEN/CLOSE", "movimento completo e feedback coerente", "corsa incompleta/stato errato"],
+          ["Bypass automatico", "azioni coerenti con setpoint", "assenza intervento/logica inversa"],
+          ["Freecooling auto", "attivazione/disattivazione corretta", "attivazione intempestiva/assente"],
+          ["Preheater/Heater/Cooler", "attuazione su soglie/isteresi", "short-cycle/mancata attuazione"],
+          ["Defrost", "ingresso/uscita corretti", "defrost non stabile"]
+        ]
+      },
+      {
+        title: "9) Filtri e manutenzione",
+        rows: [
+          ["Ore funzionamento", "incremento e persistenza", "contatore fermo/non persistente"],
+          ["DPS", "allarme a soglia", "allarme assente/anticipato"],
+          ["DPP", "calibrazione/verifica completata", "ciclo non completabile"],
+          ["Reset filtri da KTS", "allarme azzerato", "reset parziale/fallito"]
+        ]
+      },
+      {
+        title: "10) Weekly program",
+        rows: [
+          ["Range giornalieri", "slot rispettati", "slot fuori orario/ignorati"],
+          ["Speed/setpoint/imbalance", "set applicati per fascia", "set non applicati"],
+          ["Pre-apertura preheater", "anticipo rispettato", "anticipo assente/errato"]
+        ]
+      },
+      {
+        title: "11) Allarmi e sicurezza",
+        rows: [
+          ["Fault simulati", "allarme corretto tracciato", "allarme errato/assente"],
+          ["Clear allarme", "cancellazione conforme", "allarme persistente o prematuro"],
+          ["Allarme incendio", "modalita ventilazione corretta", "modalita non coerente"],
+          ["Battery backup", "comportamento di sicurezza conforme", "nessuna reazione/reazione errata"]
+        ]
+      },
+      {
+        title: "12) Chiusura",
+        rows: [
+          ["Allarmi residui", "nessun allarme non atteso", "allarmi residui non spiegati"],
+          ["Report collaudo", "report completo e firmato", "report incompleto"],
+          ["Valutazione regressione", "nessuna regressione", "regressione confermata/dubbia"]
+        ]
+      }
+    ];
+
+    function buildTable(sectionIdx, sectionData) {
+      const wrapper = document.createElement("section");
+      const title = document.createElement("h3");
+      title.textContent = sectionData.title;
+      wrapper.appendChild(title);
+
+      const table = document.createElement("table");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th class="col-step">Test</th>
+            <th class="col-ok">OK atteso</th>
+            <th class="col-ko">KO/Fallito</th>
+            <th class="col-esito">Esito</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+      const tbody = table.querySelector("tbody");
+      sectionData.rows.forEach((row, rowIdx) => {
+        const tr = document.createElement("tr");
+        const base = `sec_${sectionIdx}_row_${rowIdx}`;
+        tr.innerHTML = `
+          <td>
+            <strong>${row[0]}</strong>
+            <div class="section-note"><label>Note</label><textarea name="${base}_note"></textarea></div>
+          </td>
+          <td>${row[1]}</td>
+          <td>${row[2]}</td>
+          <td>
+            <div class="esito">
+              <label><input type="radio" name="${base}_esito" value="OK"> OK</label>
+              <label><input type="radio" name="${base}_esito" value="KO"> KO</label>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      wrapper.appendChild(table);
+      return wrapper;
+    }
+
+    function collectData() {
+      const data = {};
+      document.querySelectorAll("input[name], textarea[name], select[name]").forEach(el => {
+        if (el.type === "radio") {
+          if (el.checked) data[el.name] = el.value;
+        } else {
+          data[el.name] = el.value;
+        }
+      });
+      return data;
+    }
+
+    function applyData(data) {
+      document.querySelectorAll("input[name], textarea[name], select[name]").forEach(el => {
+        if (!(el.name in data)) return;
+        if (el.type === "radio") {
+          el.checked = (data[el.name] === el.value);
+        } else {
+          el.value = data[el.name];
+        }
+      });
+    }
+
+    function setStatus(msg) {
+      document.getElementById("statusTxt").textContent = msg;
+      setTimeout(() => {
+        if (document.getElementById("statusTxt").textContent === msg) {
+          document.getElementById("statusTxt").textContent = "";
+        }
+      }, 2500);
+    }
+
+    function initDefaults() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      const h = String(d.getHours()).padStart(2, "0");
+      const min = String(d.getMinutes()).padStart(2, "0");
+      const dateInput = document.querySelector('input[name="data_test"]');
+      const timeInput = document.querySelector('input[name="ora_inizio"]');
+      if (dateInput && !dateInput.value) dateInput.value = `${y}-${m}-${day}`;
+      if (timeInput && !timeInput.value) timeInput.value = `${h}:${min}`;
+    }
+
+    document.getElementById("sections").append(...sections.map((s, i) => buildTable(i, s)));
+    initDefaults();
+
+    document.getElementById("saveBtn").addEventListener("click", () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(collectData()));
+      setStatus("Dati salvati in locale");
+    });
+
+    document.getElementById("loadBtn").addEventListener("click", () => {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return setStatus("Nessun dato salvato");
+      try {
+        applyData(JSON.parse(raw));
+        setStatus("Dati caricati");
+      } catch (e) {
+        setStatus("Errore caricamento dati");
+      }
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", () => {
+      if (!confirm("Vuoi azzerare tutti i campi del modulo?")) return;
+      document.querySelectorAll("input[name], textarea[name], select[name]").forEach(el => {
+        if (el.type === "radio" || el.type === "checkbox") {
+          el.checked = false;
+        } else {
+          el.value = "";
+        }
+      });
+      initDefaults();
+      setStatus("Modulo azzerato");
+    });
+
+    document.getElementById("printBtn").addEventListener("click", () => window.print());
+  </script>
+</body>
+</html>
