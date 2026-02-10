@@ -540,42 +540,22 @@ int TemperatureRegulate()
   //                       bit[1]: 1=TempRif=TR / 0=TempRif=TS
   //                       bit[0]: * * *
   ref_T_setting = read_byte_eeprom(ADDR_EEP(Ref_T_setting));
-  
   if((ref_T_setting & 0x02) == 0) {
-     if(DigitAccessoryOperating(ACC_I2C_AWP)) 
+     // Riferimento su TS: preferisci AWP o accessori clima, altrimenti fallback su TSupply
+     if(DigitAccessoryOperating(ACC_I2C_AWP)) {
         TempRif = sData.AccI2C[ACC_I2C_AWP].measure2;
-		else
-			if(DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_HEATER))  //solo COOLER
-				TempRif = sData.AccI2C[ACC_I2C_COOLER].measure1;
-				else
-					if(DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER))  //solo HEATER
-						TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
-						else
-							if(DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER))   // entrambi
-								TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
-							else
-								TempRif = sData.measure_Temp[I_PROBE_SUPPLY];  // se c'� l'AWP, la Treturn diventa quella dell'accessorio.
-  }else
-	TempRif = sData.measure_Temp[I_PROBE_RETURN];
- /* { //Commento aggiunto nel caso Micheal VS per iEHD, poich� la sonda di supply � pi� avanti di quella dell'accessorio
-// ----------------------------------------------- 
-// Aggiungo inseguimento sonda accessorio presente  
-// se c'� solo HEATER o solo COOLER leggo la sonda 
-// di uno o dell'altro. Nel caso di compresenza  
-// leggo quella del HEATER.
-// Se nessun accessorio � presente inseguo Tsupply
-// Dalla 2.20 in poi -- Nicola 05/05/2016
-// ----------------------------------------------- 
-
-     if(DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_HEATER))  //solo COOLER
+     } else if (DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_HEATER)) {  // solo COOLER
         TempRif = sData.AccI2C[ACC_I2C_COOLER].measure1;
-     if(DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER))  //solo HEATER
+     } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER)) {  // solo HEATER
         TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
-     if(DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER))   // entrambi
-        TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;    
-     else
-        TempRif = sData.measure_Temp[I_PROBE_SUPPLY];                                           // nessuno
-   }*/
+     } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER)) {   // entrambi
+        TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
+     } else {
+        TempRif = sData.measure_Temp[I_PROBE_SUPPLY];
+     }
+  } else {
+     TempRif = sData.measure_Temp[I_PROBE_RETURN];
+  }
   
   //_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\_/\
   //                        ------  ACCESSORIO  DXD -----
