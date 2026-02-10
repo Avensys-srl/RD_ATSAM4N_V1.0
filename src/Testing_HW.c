@@ -5,6 +5,7 @@
  */ 
 
 #include "asf.h"
+#include "common/build_config.h"
 
 #include "Protocol_Ser1.h"
 #include "data.h"

@@ -244,25 +244,16 @@ Zakaria / Nicola     2.68      26/01/26    - Added PIR strategy to RD firmware( 
 #define   DEVICE_ADS7142_IC9	   0x1F
 
 //---------------------------- MACRO -------------------------------
-// Se definita l'unità si inilializza con le funzionalità EXTRA, commentandola, si attivano le funzioni BASIC
-#define TYPE_FUNC_UNIT_EXTRA
-
-// Se definita abilita il WDT 6 sec.
-#define WORK_WDT
-
-// Se definita utilizza delle tabelle a custom per la funzione PCAF con sensore PCAP
-// #define COMESSA_2388
+// Build-time switches are centralized in build_config.h
+#include "common/build_config.h"
 
 // Versione el FW.
 const char VERSION_FW[5]= {' ','2', '.','6','8'};
 
 //----------------------- Funzioni a custom sul FW -------------------------
-#define COMESSA_2388                // Se definita utilizza delle tabelle a custom per la funzione PCAF con sensore PCAP
-#define _DISABLE_ALARM_BYPASS_      // Se abilito la define Disattivo l'allarme del BYPASS
 //#define _MAPPING_FUNC               // Se abilito la define Attivo la funzione di mappatura dei motori, stampando a video rmp etc..
 //#define _CLEAR_ALARMS_POWER_MOTORS  // Se abilito la define Maschero gli allarmi 8-01, 8-02, 8-03, 9-01, 9-02, 9-03.
 //#define _CLEAR_ALARMS_PREHEATER     // Se abilito la define Maschero gli allarmi del preheater
-//#define _EEP_SERIAL_NUMBER          // Se abilito la define Inserisco nell'array default dell'eeprom il serial number qui sotto riportato
 
 
 #ifdef  _EEP_SERIAL_NUMBER

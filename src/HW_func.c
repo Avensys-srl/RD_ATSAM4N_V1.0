@@ -6,14 +6,13 @@
  */ 
 
 #include "asf.h"
+#include "common/build_config.h"
 
 #include "data.h"
 #include "Scheduler.h"
 #include "eeprom_map.h"
 #include "alarm.h"
 #include "Protocol_Ser1.h"
-
-#define _DISABLE_ALARM_BYPASS_      // Se abilito la define Disattivo l'allarme del BYPASS
 
 // Period needed for timer 1 to trigger an interrupt every 5ms
 #define PERIOD_T4                     1563    // Interrupt timer 4 : (256 *PERIOD_T4) /80MHz =  5,002ms

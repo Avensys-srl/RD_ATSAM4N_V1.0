@@ -9,6 +9,7 @@
  */ 
 
 #include "asf.h"
+#include "common/build_config.h"
 
 #include "data.h"
 #include "eeprom_map.h"

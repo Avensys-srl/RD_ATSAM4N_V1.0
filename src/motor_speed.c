@@ -5,6 +5,7 @@
  */ 
 
 #include "asf.h"
+#include "common/build_config.h"
 
 #include "eeprom_map.h"
 #include "Protocol_Ser1.h"
@@ -22,8 +23,6 @@ char cnt_view_dbg = 0;
 #endif
 
 #endif 
-
-#define COMESSA_2388
 
 // stato del Rele' e delle tensione dell'elettronica
 #define POWER_SAVE     0

@@ -4,6 +4,7 @@
  */ 
 
 #include "asf.h"
+#include "common/build_config.h"
 
 #include <math.h>
 #include "data.h"
@@ -11,8 +12,6 @@
 #include "alarm.h"
 
 #define byte		Byte
-
-#define WORK_WDT
 
 // stato del Rele' e delle tensione dell'elettronica
 #define POWER_SAVE     0

@@ -11,6 +11,7 @@
  */ 
 
 #include "asf.h"
+#include "common/build_config.h"
 
  #include "Protocol_Ser1.h"
  #include "Protocol_Ser2.h"
