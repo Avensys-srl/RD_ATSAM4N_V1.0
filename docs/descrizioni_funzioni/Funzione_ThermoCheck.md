@@ -88,9 +88,9 @@ La parte avanzata che farebbe controlli di coerenza piu spinti tra una sonda e l
 - Mancanza di controllo avanzato di plausibilita attivo: eventuali incoerenze tra sonde possono propagarsi ad altre logiche.
 
 ### Checklist problem solving (dati da controllare)
-- Coerenza tra temperatura richiesta e temperature disponibili: verificare che i valori usati dal controllo siano realistici.
-- Confronto tra sensori vicini: differenze eccessive tra punti fisicamente correlati indicano possibile anomalia.
-- Stabilita nel tempo: controllare se un valore resta fisso troppo a lungo mentre l'impianto cambia.
-- Correzioni/offset applicati: considerare che il valore interno puo differire dalla lettura grezza.
-- Sequenza di avvio: verificare i primi cicli dopo accensione, quando vengono inizializzati i riferimenti.
-- Presenza allarmi sensori/comunicazione: con allarmi attivi i valori possono essere non utilizzabili per una regolazione affidabile.
+- Obiettivo richiesto: verificare che i dati termici/igrometrici forniti alle logiche a valle siano coerenti e aggiornati.
+- Dati reali disponibili: confrontare letture sensori, valori normalizzati interni e andamento temporale delle misure.
+- Condizioni di autorizzazione o blocco: verificare disponibilita canali misura, qualita comunicazione e completezza dati provenienti dai dispositivi collegati.
+- Filtri temporali: considerare fase di avvio e primi cicli di stabilizzazione prima di giudicare incoerenze.
+- Protezioni/allarmi: controllare stati di errore su sensori e comunicazioni che possono rendere i dati non affidabili.
+- Verifica effetto reale: confermare che i valori usati dalle funzioni successive reagiscano in modo credibile alle variazioni reali dell'impianto.

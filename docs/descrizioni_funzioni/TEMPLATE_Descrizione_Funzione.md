@@ -69,11 +69,13 @@ Includere sempre:
 - differenza tra "logica non autorizzata a intervenire" e "logica in protezione"
 
 ### Checklist problem solving (dati da controllare)
-Per ogni funzione inserire una checklist concreta con almeno:
-- setpoint richiesto
-- valore rilevato reale
-- soglie di intervento (ON/OFF)
-- isteresi e tempi di ritardo/persistenza
-- stato allarmi
-- stato consensi/modalita (estate, inverno, manuale, automatico)
-- stato attuatore finale (comando dato vs effetto fisico osservato)
+Per ogni funzione inserire una checklist concreta, adattata al caso specifico.
+La checklist non deve essere fissa: va costruita in base al tipo di logica (es. bypass, motori, riscaldamento, raffreddamento, sicurezza, comunicazione, ecc.).
+
+Approccio minimo da mantenere:
+- obiettivo richiesto dalla funzione (cosa dovrebbe fare)
+- dati reali disponibili al momento (misure, stati, ingressi, feedback)
+- condizioni che autorizzano o bloccano l'azione (soglie, consensi, modalita, prerequisiti)
+- filtri temporali della decisione (isteresi, ritardi, persistenze, timer)
+- protezioni e allarmi che possono inibire il comportamento
+- verifica finale dell'effetto reale (comando logico vs comportamento fisico osservato)

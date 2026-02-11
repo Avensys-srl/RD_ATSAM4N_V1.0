@@ -92,11 +92,9 @@ In modalita auto on/off (freecooling), il sistema puo perfino accendere o spegne
 - Stato gia raggiunto: se il bypass e gia nella posizione richiesta, non c'e nuova manovra.
 
 ### Checklist problem solving (dati da controllare)
-- Modalita bypass impostata: manuale chiuso, manuale aperto, automatico, comando esterno, auto on/off.
-- Temperatura richiesta e temperatura reale: confrontare aria di ritorno e aria esterna.
-- Soglia minima per usare il bypass: verificare che l'aria esterna sia sopra la soglia minima prevista.
-- Delta termico utile: verificare se l'aria esterna e realmente favorevole rispetto all'aria interna.
-- Isteresi e persistenza: confermare che siano trascorsi i tempi minimi prima di aspettarsi il cambio stato.
-- Stato riscaldamento/raffreddamento attivo: se sono gia attivi possono inibire l'apertura bypass.
-- Stato allarmi sonde: con allarmi attivi il bypass puo restare chiuso per sicurezza.
-- Comando inviato vs effetto fisico: verificare se la serranda si muove davvero (feedback, posizione, assorbimento, rumore motore).
+- Obiettivo richiesto: capire se in questo momento il bypass dovrebbe essere aperto o chiuso in base alla modalita selezionata.
+- Dati reali disponibili: rilevare temperature aria esterna/ritorno, stato bypass attuale, stato riscaldamento/raffreddamento e tipo comando (manuale, automatico, esterno).
+- Condizioni di autorizzazione o blocco: verificare soglia minima aria esterna, delta termico utile e presenza di condizioni che inibiscono apertura (es. altri attuatori clima gia attivi).
+- Filtri temporali: confermare isteresi, persistenze e tempi minimi prima della manovra; evitare diagnosi immediata senza attendere il ciclo logico completo.
+- Protezioni/allarmi: controllare allarmi sonde o stati di sicurezza che forzano comportamento prudente.
+- Verifica effetto reale: confrontare comando dato con movimento fisico serranda (posizione, feedback, assorbimento, rumorosita attuatore).

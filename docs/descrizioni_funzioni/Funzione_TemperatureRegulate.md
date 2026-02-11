@@ -117,12 +117,9 @@ Un aspetto chiave per assistenza e che il bypass viene valutato prima del raffre
 - Comunicazione non affidabile con accessori o sensori: la logica decide, ma l'effetto reale non arriva.
 
 ### Checklist problem solving (dati da controllare)
-- Setpoint richiesto: temperatura desiderata per ambiente/mandata in base alla configurazione.
-- Temperatura rilevata reale: confrontare la temperatura usata dal controllo con il setpoint.
-- Isteresi attive: verificare soglia di accensione e soglia di spegnimento (non sono uguali).
-- Ritardi e persistenze: attendere i tempi previsti prima di dichiarare mancata risposta.
-- Stato stagione e consensi: inverno, estate, eventuale modalita speciale, comandi manuali.
-- Stato allarmi: ventilatori, compressore, sonde, protezioni generali.
-- Disponibilita accessori: riscaldatore, raffreddatore, preheater, eventuale modulo modulante.
-- Priorita energetica: verificare se il bypass sta gia fornendo supporto e quindi riduce richiesta al raffreddatore.
-- Comando vs risultato: verificare se l'uscita e comandata ma il dispositivo reale non segue (teleruttore, alimentazione, rele, attuatore).
+- Obiettivo richiesto: chiarire quale effetto clima e atteso nel punto operativo (riscaldare, raffreddare, mantenere, standby protetto).
+- Dati reali disponibili: confrontare setpoint, temperatura di riferimento usata dal controllo e temperature misurate dei punti principali.
+- Condizioni di autorizzazione o blocco: verificare modalita attiva (estate/inverno), consensi, disponibilita accessori e prerequisiti di funzionamento.
+- Filtri temporali: verificare isteresi ON/OFF, ritardi e persistenze prima di aspettare accensione/spegnimento di heater, cooler, preheater o modulazione DXD.
+- Protezioni/allarmi: controllare allarmi ventilazione, compressore, sonde e tutte le protezioni che possono forzare spegnimento o riduzione potenza.
+- Verifica effetto reale: confrontare il comando logico con l'effetto fisico (uscita attiva, assorbimento, stato attuatore, risposta termica reale in impianto).
