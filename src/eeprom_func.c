@@ -38,7 +38,7 @@
     ' ','4','.','0',          //  4 Byte:  Ascii: versione hardware MB     Es: " 4.0"
     ' ',            //  5 Byte:  Ascii: versione software MB     Es: " 2.01" oppure " 2.10"
     '2', '.',
-    '6', '8', 
+    '6', '9', 
     
 #ifdef _EEP_SERIAL_NUMBER
     SN[0],  SN[1],  SN[2],  SN[3],
@@ -68,7 +68,7 @@
     0x13,                     //           (HIGH)  bit[15]:--- | bit[14]:MBF | bit[13]:DPP | bit[12]:PREHEATER| bit[11]:EnSummer| bit[10]EnWinter   | bit[9]:CtrlFilter| bit[8]:PASSWORD
 
    
-    ENAB_FUNC_EXTRA,          // se il bit =0, Toglie la possibilità di abilitatre la funzione. 
+    ENAB_FUNC_EXTRA,          // se il bit =0, Toglie la possibilitï¿½ di abilitatre la funzione. 
     0xFF,
 
     
@@ -112,12 +112,12 @@
                               //                         5=  0V->Bypass Open , 12V->Bypass Closed		
     0, 0,                     //   0= Disable                   (il rele rimane non alimentato)
                               //   1= Bypass Status Open        (il rele passa in attrazione se: Bypass Open)	
-                              //   2= Common Fault Status       (il rele passa in attrazione se: Unità in allarme)		
-                              //   3= Unit is Run (ex: SDD)     (il rele passa in attrazione se: Unita è in funz.)	
+                              //   2= Common Fault Status       (il rele passa in attrazione se: Unitï¿½ in allarme)		
+                              //   3= Unit is Run (ex: SDD)     (il rele passa in attrazione se: Unita ï¿½ in funz.)	
                               // 128= Disable                   (il rele rimane in attrazione)
                               // 129= Bypass Status Open        (il rele passa in Diseccitaz. se: Bypass Open)
-                              // 130= Common Fault Status       (il rele passa in Diseccitaz. se: Unità in allarme)
-                              // 131= Unit is Run (ex: SDD)     (il rele passa in Diseccitaz. se: Unita è in funz.)      
+                              // 130= Common Fault Status       (il rele passa in Diseccitaz. se: Unitï¿½ in allarme)
+                              // 131= Unit is Run (ex: SDD)     (il rele passa in Diseccitaz. se: Unita ï¿½ in funz.)      
     3,                        //  1 Byte: Selettore dell'indice degli array Set_StepMotors*[4]: 0, 1, 2, 3=Steepless                                
     0xFA, 0x00,               //  8 Byte(LO, HI):  4 Soglie di velocitÃ  dei motori in modalitÃ : CFS/ CAF  (Range: da 25.0%,  a 100.0%), soglia[3] = se Ã¨ impostato il set in Stepless.
     0x90, 0x01,               //                   se CAF [Range da 20.0%SIZE a 110.0%SIZE (es:SIZE=0043: 80mq/h a 440mq/h)]  (3.6 mq/h = 1 L/s)  
@@ -129,7 +129,7 @@
     0x28, 0x00,               
     0,                        //  1 Byte: Set_imbalance_1, values max: +/-70 %
     0,                        //  1 Byte: Set_imbalance_2, values max: +/-70 %  
-    60,                       //  1 Byte: Set_TimeBoost, valore in minunti (min:15, max:240) se abilitato va al massimo della velocita'  per il tempo indicato. 
+    60,                       //  1 Byte: Set_TimeBoost, valore in minunti (min:15, max:240) se abilitato va al massimo della velocita'ï¿½ per il tempo indicato. 
 //   LO,  HI    
     0xEE, 0x02,               //  2 Byte(LO, HI): SetPoint_CO2 da 500 a 1500 PPM  (default 750 PPM)
     50,                       //  1 Byte: SetPoint_RH,  da 20% a 99% (default 50%)
@@ -150,7 +150,7 @@
     0,0,0,0,0,0,              //  6 Byte: Calibr[6], 4 sonde temp + 2 Qual_Air
               
     //--------- Soglie Temperature (20 Byte)----------------
-    0xA0, 0x00,               //  2 Byte(Lo, Hi): Bypass_minTempExt, il valore Ã¨ moltiplicato x10.(Range: 11.0 °C a 32.0 °C),   (default: 16.0)
+    0xA0, 0x00,               //  2 Byte(Lo, Hi): Bypass_minTempExt, il valore Ã¨ moltiplicato x10.(Range: 11.0 ï¿½C a 32.0 ï¿½C),   (default: 16.0)
     0xDC, 0x00,               //  4 Byte(Lo, Hi): SetPointTemp[0], Set-Point Temperatura 1 (Range: 12.0 Â°C a 35.0 Â°C),         (default: 22.0)         
     0xBE, 0x00,               //                  SetPointTemp[1], Set-Point Temperatura 2 (Range: 12.0 Â°C a 35.0 Â°C),         (default: 19.0)
     0x00,                     //  1 Byte:  ...., bit[0]: 1=Rif.Temp2, 0=Rif.Temp1 
@@ -328,7 +328,7 @@ void Erase_EEprom ( void )
  
  
 //-----------------------------------------------------------------
-// Leggi 4 byte dalla eeprom, il primo è quello LOW, per poi salire
+// Leggi 4 byte dalla eeprom, il primo ï¿½ quello LOW, per poi salire
 //-----------------------------------------------------------------
  unsigned long int read_Dword_eeprom(unsigned short addr_eep)
  {
@@ -344,7 +344,7 @@ void Erase_EEprom ( void )
  }   
  
 //-----------------------------------------------------------------
-// Viene upgradata l'unità ad EXTRA, in base al size si abilitano le
+// Viene upgradata l'unitï¿½ ad EXTRA, in base al size si abilitano le
 // funzioni CAP & CAF.
 //-----------------------------------------------------------------
 void upgrade_type_func()
@@ -360,7 +360,7 @@ void upgrade_type_func()
       size_unit[i] = read_byte_eeprom(ADDR_EEP(SerialString[4+i]));
    
    //  bit[7]:CAF | bit[6]:CAP | bit[5]:CSF | ...
-   // al momento solo le unità serie 5 utilizzano la funz. CAP/CAF. 
+   // al momento solo le unitï¿½ serie 5 utilizzano la funz. CAP/CAF. 
    if(size_unit[3] != '5')
      msk &= 0x3F;
            
@@ -371,7 +371,7 @@ void upgrade_type_func()
 // Func: check_control_speed_func
 // 
 // Description:
-//   Andiamo a vedere la funzionalita dell' unità (CAP/CAF/CSF) e, 
+//   Andiamo a vedere la funzionalita dell' unitï¿½ (CAP/CAF/CSF) e, 
 //   facciamo le varie considerazioni in base all'accessorio configuato,
 //   al tipo di motore e alle mappature inserite.
 //------------------------------------------------------------------
@@ -397,9 +397,9 @@ void upgrade_type_func()
         //*************   
         //**  BASIC  **
         //*************   
-        // Funz. BASIC, non è possibile in alcun modo abilitare le funz. CAP/CAF
-        new_enab_func &= ~0x00C0; // tolgo la possibilità di far funzione CAP e CAF
-        new_msk_enab_func &= ~0x00C0; // tolgo la possibilità di far funzione CAP e CAF
+        // Funz. BASIC, non ï¿½ possibile in alcun modo abilitare le funz. CAP/CAF
+        new_enab_func &= ~0x00C0; // tolgo la possibilitï¿½ di far funzione CAP e CAF
+        new_msk_enab_func &= ~0x00C0; // tolgo la possibilitï¿½ di far funzione CAP e CAF
         new_msk_enab_func |= 0x0020;
     }else {  
         //*************       
@@ -433,19 +433,19 @@ void upgrade_type_func()
           new_msk_enab_func |= 0x0080;
         }  
                   
-        // Se non ho l'accessorio CAP esterno, e l'unità non è una serie 5, disabilita la funzione CAP perchè non ho le mappature dei motori
-		// Si je n'ai pas l'accessoire CAP externe et que l'appareil n'est pas une série 5, désactivez la fonction CAP car je n'ai pas les cartographies moteur
+        // Se non ho l'accessorio CAP esterno, e l'unitï¿½ non ï¿½ una serie 5, disabilita la funzione CAP perchï¿½ non ho le mappature dei motori
+		// Si je n'ai pas l'accessoire CAP externe et que l'appareil n'est pas une sï¿½rie 5, dï¿½sactivez la fonction CAP car je n'ai pas les cartographies moteur
         if(!acc_cap && (serie_unit != '5') && (serie_unit != '8'))
            new_enab_func &= ~0x0040; // NO CAP in eep 
       
         
-        // Se non ho l'accessorio CAF o CAP esterno, e l'unità non è una serie 5, disabilita la funzione CAF perchè non ho le mappature dei motori
-		// Si je n'ai pas l'accessoire externe CAF ou CAP, et que l'appareil n'est pas une série 5, désactiver la fonction CAF car je n'ai pas les cartographies moteur
+        // Se non ho l'accessorio CAF o CAP esterno, e l'unitï¿½ non ï¿½ una serie 5, disabilita la funzione CAF perchï¿½ non ho le mappature dei motori
+		// Si je n'ai pas l'accessoire externe CAF ou CAP, et que l'appareil n'est pas une sï¿½rie 5, dï¿½sactiver la fonction CAF car je n'ai pas les cartographies moteur
         if(!acc_caf && (serie_unit != '5') && (serie_unit != '8')) 
            new_enab_func &= ~0x0080; // NO CAF in eep
       
         
-        // Se ho abilitato la Funz. CAP, ma non è abilitata la maschera, Disabilitiamo la funzione 
+        // Se ho abilitato la Funz. CAP, ma non ï¿½ abilitata la maschera, Disabilitiamo la funzione 
 		// If I have enabled the Function.CAP, but the mask is not enabled. We disable the function          
         if (enab_func & (1 << ENAB_CAP)) 
         {
@@ -466,7 +466,7 @@ void upgrade_type_func()
          
     }
     
-    // Se dopo tutte le varie masturbazioni mentali, risulta che nessun controllo è stato inserito, andiamo con quello di default: FSC
+    // Se dopo tutte le varie masturbazioni mentali, risulta che nessun controllo ï¿½ stato inserito, andiamo con quello di default: FSC
 	// If after all the various mental masturbations, it turns out that no controls have been inserted, we go with the default one: FSC
     if((new_enab_func & 0x00C0) == 0)
        new_enab_func |= (1 << ENAB_CSF);
@@ -523,9 +523,9 @@ void upgrade_type_func()
         //*************   
         //**  BASIC  **
         //*************   
-        // Funz. BASIC, non è possibile in alcun modo abilitare le funz. CAP/CAF
-        new_enab_func &= ~0x00C0; // tolgo la possibilità di far funzione CAP e CAF
-        new_msk_enab_func &= ~0x00C0; // tolgo la possibilità di far funzione CAP e CAF
+        // Funz. BASIC, non ï¿½ possibile in alcun modo abilitare le funz. CAP/CAF
+        new_enab_func &= ~0x00C0; // tolgo la possibilitï¿½ di far funzione CAP e CAF
+        new_msk_enab_func &= ~0x00C0; // tolgo la possibilitï¿½ di far funzione CAP e CAF
         new_msk_enab_func |= 0x0020;
     }else {  
         //*************       
@@ -542,7 +542,7 @@ void upgrade_type_func()
          
     }
     
-    // Se dopo tutte le varie masturbazioni mentali, risulta che nessun controllo è stato inserito, andiamo con quello di default: FSC
+    // Se dopo tutte le varie masturbazioni mentali, risulta che nessun controllo ï¿½ stato inserito, andiamo con quello di default: FSC
 	// If after all the various mental masturbations, it turns out that no controls have been inserted, we go with the default one: FSC
     if((new_enab_func & 0x00C0) == 0)
        new_enab_func |= (1 << ENAB_CSF);
@@ -700,7 +700,7 @@ void upgrade_type_func()
        //  (HIGH) bit[15]:--- | bit[14]:--- | bit[13]:---   | bit[12]:EnPreHeater| bit[11]:EnSummer| bit[10]:EnWinter| bit[9]:CtrlFilter| bit[8]:Password  
        enab_func  = read_word_eeprom(ADDR_EEP(Enab_Fuction));  
        if((enab_func & 0x0C00) == 0x0C00) {
-          // se non è presente il Cooler, attiviamo solo la funzione Winter 
+          // se non ï¿½ presente il Cooler, attiviamo solo la funzione Winter 
           //   parte 1 list Acc.HW: (MSB)    PIR,   BPD,   AWP,   CWD,   EHD,   HWD,  PHWD,  PEHD  (LSB) 
           if(read_byte_eeprom(ADDR_EEP(AccessoyHW[0])) & (1 << ACC_EEP_CWD))
              enab_func &= ~0x0400; // togliamo la funzione WINTER: solo SUMMER
@@ -727,7 +727,7 @@ void upgrade_type_func()
     
 
 
-    // Andiamo a vedere la funzionalita di controllo ventole dell'unità (CAP/CAF/CSF) e, facciamo le varie deduzioni
+    // Andiamo a vedere la funzionalita di controllo ventole dell'unitï¿½ (CAP/CAF/CSF) e, facciamo le varie deduzioni
     check_control_speed_func();
               
     //----- (3) controlliamo i dati in ram e in eeprom coincidano -----
@@ -767,7 +767,7 @@ int ctrl_validity_values(Byte start_addr, Byte end_addr, Byte *buff)
   Byte val, val_BPD, ctrl_val;
   
     
-  //--- ADDR_MODBUS: lo 0 nel mondo MODBUS  è per i comandi di broadcast  
+  //--- ADDR_MODBUS: lo 0 nel mondo MODBUS  ï¿½ per i comandi di broadcast  
   addr = ADDR_EEP(AddrUnit);
   if ((addr >= start_addr) && (addr <= end_addr)){
     val = buff[addr - start_addr];     
@@ -806,7 +806,7 @@ int ctrl_validity_values(Byte start_addr, Byte end_addr, Byte *buff)
   }
                                   
   //--- INPUT:   0= Disable, ... , 5=  0V->Bypass Open , 10V->Bypass Closed,	  
-  // 1 se il bypass non è config. con Ext CTRL, e vi sono invece input config. per pilortare il bypass
+  // 1 se il bypass non ï¿½ config. con Ext CTRL, e vi sono invece input config. per pilortare il bypass
   //   disabilito gli input  
   for(i=0; i < 2; i++) {
     addr = ADDR_EEP(Set_Input[i]);
@@ -876,7 +876,7 @@ int ctrl_validity_values(Byte start_addr, Byte end_addr, Byte *buff)
       return -1;
   }
   
-//--- Giorni manutenzione filtro sporco: da 30 a 360gg --- // Tolto questa parte di condice perchè rompe le scatole al DPP -- Nicola dalla 2.22 in poi (andrebbe introdotta la doppia validità)
+//--- Giorni manutenzione filtro sporco: da 30 a 360gg --- // Tolto questa parte di condice perchï¿½ rompe le scatole al DPP -- Nicola dalla 2.22 in poi (andrebbe introdotta la doppia validitï¿½)
 //  addr = ADDR_EEP(gg_manut_Filter);
 //  if ((addr >= start_addr) && (addr < end_addr)){
 //    val_16  = ((buff[addr + 1 - start_addr]  << 8)&0xFF00) + buff[addr - start_addr]; 
@@ -885,7 +885,7 @@ int ctrl_validity_values(Byte start_addr, Byte end_addr, Byte *buff)
 //      return -1;
 //  }
   
-  //--- MIN. TEMP. BYPASS: 11.0°C a 30.0°C ---
+  //--- MIN. TEMP. BYPASS: 11.0ï¿½C a 30.0ï¿½C ---
   addr = ADDR_EEP(Bypass_minTempExt);
   if ((addr >= start_addr) && (addr < end_addr)){
     val_16  = ((buff[addr + 1 - start_addr]  << 8)&0xFF00) + buff[addr - start_addr]; 
@@ -895,7 +895,7 @@ int ctrl_validity_values(Byte start_addr, Byte end_addr, Byte *buff)
   }  
       
   for(i=0; i < 2; i++) {
-     //--- Set-Point Temperature 1&2 value 15.0 °C a 32.0 °C. ---
+     //--- Set-Point Temperature 1&2 value 15.0 ï¿½C a 32.0 ï¿½C. ---
      addr = ADDR_EEP(SetPointTemp[i]);
      if ((addr >= start_addr) && (addr < end_addr)){
        val_16  = ((buff[addr + 1 - start_addr]  << 8) & 0xFF00) + buff[addr - start_addr];  
@@ -921,8 +921,8 @@ Byte ctrl_lim_histTemp()
    //  si accende basso es: 21.0 , si spegne alto 24.0
    // --- CON AWP ---
    val= 0;
-   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Hot[1])); // Value Default  ON: -2.0°C -> 22.0°C -2.0° = 20.0°C
-   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Hot[0])); // Value Default OFF: +1.5°C -> 22.0°C +1.5° = 23.5°C
+   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Hot[1])); // Value Default  ON: -2.0ï¿½C -> 22.0ï¿½C -2.0ï¿½ = 20.0ï¿½C
+   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Hot[0])); // Value Default OFF: +1.5ï¿½C -> 22.0ï¿½C +1.5ï¿½ = 23.5ï¿½C
 
    if(Ton < -100) {
       Ton = -100;
@@ -953,8 +953,8 @@ Byte ctrl_lim_histTemp()
  
     // ---  SENZA AWP ----
    val = 0;     
-   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[1])); // Value default  ON: -2.0°C -> 22.0 -2.0°C = 20.0°C  
-   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[0]));  // Value default OFF: +5.0°C -> 22.0 +5.0°C = 27.0°C
+   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[1])); // Value default  ON: -2.0ï¿½C -> 22.0 -2.0ï¿½C = 20.0ï¿½C  
+   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[0]));  // Value default OFF: +5.0ï¿½C -> 22.0 +5.0ï¿½C = 27.0ï¿½C
   
    if(Ton < -100) {
       Ton = -100;
@@ -987,8 +987,8 @@ Byte ctrl_lim_histTemp()
    //  si accende alto es: 26.0 , si spegne basso 21.0
    val = 0;
     
-   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Cold[1])); // Value default  ON: +4.0°C -> 22.0°C + 4.0°C = 26.0 °C
-   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Cold[0])); // Value default OFF: +1.0°C -> 22.0°C + 1.0°C = 23.0 °C  
+   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Cold[1])); // Value default  ON: +4.0ï¿½C -> 22.0ï¿½C + 4.0ï¿½C = 26.0 ï¿½C
+   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_AWP_Temp_Cold[0])); // Value default OFF: +1.0ï¿½C -> 22.0ï¿½C + 1.0ï¿½C = 23.0 ï¿½C  
    
    if (Ton > 100) {
       Ton  = 100; 
@@ -1017,8 +1017,8 @@ Byte ctrl_lim_histTemp()
    }
    
    val = 0;
-   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Cold[1]));  // Value default  ON: +5.0°C -> 22.0°C + 4.0°C = 27.0 °C   
-   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Cold[0]));  // Value default OFF: +0.0°C -> 22.0°C - 1.0°C = 21.0 °C  
+   Ton  = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Cold[1]));  // Value default  ON: +5.0ï¿½C -> 22.0ï¿½C + 4.0ï¿½C = 27.0 ï¿½C   
+   Toff = (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Cold[0]));  // Value default OFF: +0.0ï¿½C -> 22.0ï¿½C - 1.0ï¿½C = 21.0 ï¿½C  
    
    if (Ton > 100) {
       Ton  = 100; 
@@ -1053,7 +1053,7 @@ Byte ctrl_lim_histTemp()
 
 //------------------------------------------------------------------
 // Aggiorna la eeprom, dopo aver fatto i controlli dei dati
-// se c'è un errore di parametri ritorna -1
+// se c'ï¿½ un errore di parametri ritorna -1
 //------------------------------------------------------------------
  int update_data_eeprom(unsigned short start_addr, unsigned short end_addr, Byte *buff)
  {
@@ -1085,13 +1085,13 @@ Byte ctrl_lim_histTemp()
        cnt_update_eep = read_byte_eeprom(addr2); 
        cnt_update_eep++;
                         
-       //1.  se vi è un Upgrade della Type_func, attiviamo tutte le funzioni.
+       //1.  se vi ï¿½ un Upgrade della Type_func, attiviamo tutte le funzioni.
        addr1 = ADDR_EEP(Type_func);
        if((Shadow_eep_preview[addr1] != Shadow_eep[addr1]) && Shadow_eep[addr1]) 
            upgrade_type_func();          
        
        
-       //2. Se è cambiata una configurazione delle funzioni facciamo attenzione che rispetti i parametri EXTRA/ BASIC
+       //2. Se ï¿½ cambiata una configurazione delle funzioni facciamo attenzione che rispetti i parametri EXTRA/ BASIC
        addr1 = ADDR_EEP(Enab_Fuction);
        if (Shadow_eep_preview[addr1] != Shadow_eep[addr1]) {        
            if (Shadow_eep[ADDR_EEP(Type_func)])
