@@ -58,7 +58,18 @@ Unita di misura rilevanti:
 - In `BPD_EXT_CTRL`, iniettare livelli equivalenti a <2.5V e >6.1V e confermare la direzione comando.
 - In `BPD_AUTO_ON_OFF`, verificare cicli ON (60) e OFF (360) e ripristino standby.
 
-## Racconto operativo (per utente/service)
+## Spazio tecnico (mappa firmware e righe)
+- Test bypass attivo: `src/Clima_Func.c:103`
+- Lettura configurazione bypass: `src/Clima_Func.c:107`
+- Modalita manuale chiuso: `src/Clima_Func.c:126`
+- Modalita manuale aperto: `src/Clima_Func.c:131`
+- Modalita auto on/off freecooling: `src/Clima_Func.c:136`
+- Modalita automatica da temperature: `src/Clima_Func.c:207`
+- Modalita comando esterno ingressi: `src/Clima_Func.c:271`
+- Decisione comando apertura/chiusura (flag cmd): `src/Clima_Func.c:355`
+- Esecuzione movimento bypass (open/close): `src/Clima_Func.c:356` e `src/Clima_Func.c:358`
+
+## Racconto operativo (utente finale)
 Questa logica decide se far passare l'aria dentro lo scambiatore oppure nel canale bypass. In pratica, il sistema prova a scegliere la strada che aiuta di piu a raggiungere la temperatura desiderata con meno consumo.
 
 Se il bypass e in manuale, il comportamento e semplice: resta sempre aperto o sempre chiuso, in base all'impostazione scelta. Se invece e in automatico, il controllo guarda soprattutto due temperature: aria esterna e aria di ritorno ambiente.
@@ -70,3 +81,22 @@ Un punto importante sul campo e che il sistema non cambia stato in modo "nervoso
 In modalita con comando esterno, il bypass segue direttamente il segnale elettrico di ingresso. In quel caso, se il bypass non si apre o non si chiude, il primo controllo pratico da fare e verificare livello del segnale in ingresso e configurazione della modalita di ingresso.
 
 In modalita auto on/off (freecooling), il sistema puo perfino accendere o spegnere l'unita per sfruttare meglio l'aria esterna. Se sul campo sembra "riaccendersi da solo", spesso e proprio questa funzione che sta lavorando come previsto.
+
+## Operativo service (diagnosi sul campo)
+### Errori bloccanti a monte
+- Modalita test/manutenzione attiva: il bypass non viene gestito automaticamente.
+- Allarmi sonde aria esterna o aria di ritorno: il controllo passa in comportamento prudente e tende a non aprire.
+- Configurazione non coerente tra modalita bypass e comando disponibile (manuale/automatico/ingresso esterno).
+- Segnale ingresso esterno non valido o fuori soglia quando il bypass e comandato da ingresso.
+- Guasto attuatore bypass o catena di potenza/comando: comando presente ma nessun movimento reale.
+- Stato gia raggiunto: se il bypass e gia nella posizione richiesta, non c'e nuova manovra.
+
+### Checklist problem solving (dati da controllare)
+- Modalita bypass impostata: manuale chiuso, manuale aperto, automatico, comando esterno, auto on/off.
+- Temperatura richiesta e temperatura reale: confrontare aria di ritorno e aria esterna.
+- Soglia minima per usare il bypass: verificare che l'aria esterna sia sopra la soglia minima prevista.
+- Delta termico utile: verificare se l'aria esterna e realmente favorevole rispetto all'aria interna.
+- Isteresi e persistenza: confermare che siano trascorsi i tempi minimi prima di aspettarsi il cambio stato.
+- Stato riscaldamento/raffreddamento attivo: se sono gia attivi possono inibire l'apertura bypass.
+- Stato allarmi sonde: con allarmi attivi il bypass puo restare chiuso per sicurezza.
+- Comando inviato vs effetto fisico: verificare se la serranda si muove davvero (feedback, posizione, assorbimento, rumore motore).

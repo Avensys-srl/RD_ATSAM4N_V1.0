@@ -79,7 +79,21 @@ Unita di misura rilevanti:
 - Verifica comandi I2C su accessori e scrittura `Set_EHD_mod` in ogni transizione.
 - Verifica temporalita preheater e regolatore DXD con scheduler reale a 5 s.
 
-## Racconto operativo (per utente/service)
+## Spazio tecnico (mappa firmware e righe)
+- Lettura configurazioni base (`Enab_Fuction`, `Config_Bypass`): `src/Clima_Func.c:377` e `src/Clima_Func.c:378`
+- Uscita rapida unita spenta (caso principale): `src/Clima_Func.c:388`
+- Richiamo gestione bypass: `src/Clima_Func.c:428`
+- Uscita se nessun accessorio clima disponibile: `src/Clima_Func.c:432`
+- Spegnimento fail-safe su guasto motori/allarme fan: `src/Clima_Func.c:435`
+- Blocco gestione preheater: `src/Clima_Func.c:455`
+- Selezione riferimento temperatura (`Ref_T_setting`): `src/Clima_Func.c:542`
+- Blocco regolazione DXD: `src/Clima_Func.c:567`
+- Blocco immediato su allarme compressore DXD: `src/Clima_Func.c:647`
+- Uscita se clima classico assente (heater/cooler/SSR): `src/Clima_Func.c:776`
+- Regolazione inverno: `src/Clima_Func.c:830`
+- Regolazione estate: `src/Clima_Func.c:885`
+
+## Racconto operativo (utente finale)
 Questa e la regia generale della climatizzazione: ogni pochi secondi guarda lo stato macchina, le temperature e gli allarmi, poi decide cosa tenere acceso e cosa spegnere tra bypass, preheater, riscaldamento, raffreddamento e compressore DXD.
 
 Dal punto di vista pratico, se l'unita e ferma o c'e un guasto importante ai ventilatori, la funzione mette tutto in sicurezza e spegne gli attuatori clima. Questo spiega molti casi in cui sul campo "non parte il caldo/freddo": il blocco puo dipendere da una condizione di protezione a monte.
@@ -91,3 +105,24 @@ Il preheater viene gestito in modo protettivo, soprattutto per evitare rischio g
 Se e presente DXD, la macchina puo regolare la potenza in modo progressivo invece che solo acceso/spento. Sul campo questo si percepisce come funzionamento piu "morbido": il compressore aumenta o riduce gradualmente in base a quanto la temperatura reale e lontana da quella desiderata.
 
 Un aspetto chiave per assistenza e che il bypass viene valutato prima del raffreddamento attivo: quando l'aria esterna aiuta, la macchina prova prima a sfruttarla. Quindi in alcuni casi il cooler resta spento non per guasto, ma per scelta energetica corretta del controllo.
+
+## Operativo service (diagnosi sul campo)
+### Errori bloccanti a monte
+- Unita non autorizzata al funzionamento clima (stato macchina o modalita operative non compatibili).
+- Nessun attuatore disponibile o abilitato per caldo/freddo: la regolazione non puo produrre effetto.
+- Protezioni attive su ventilazione/motori: il sistema spegne clima per sicurezza.
+- Modalita test/manutenzione attiva su preheater o altri rami di regolazione.
+- Allarme compressore o protezione specifica del raffreddamento/riscaldamento attivo.
+- Stagione/funzione non abilitate (es. ne caldo ne freddo): il controllo resta in stand-by.
+- Comunicazione non affidabile con accessori o sensori: la logica decide, ma l'effetto reale non arriva.
+
+### Checklist problem solving (dati da controllare)
+- Setpoint richiesto: temperatura desiderata per ambiente/mandata in base alla configurazione.
+- Temperatura rilevata reale: confrontare la temperatura usata dal controllo con il setpoint.
+- Isteresi attive: verificare soglia di accensione e soglia di spegnimento (non sono uguali).
+- Ritardi e persistenze: attendere i tempi previsti prima di dichiarare mancata risposta.
+- Stato stagione e consensi: inverno, estate, eventuale modalita speciale, comandi manuali.
+- Stato allarmi: ventilatori, compressore, sonde, protezioni generali.
+- Disponibilita accessori: riscaldatore, raffreddatore, preheater, eventuale modulo modulante.
+- Priorita energetica: verificare se il bypass sta gia fornendo supporto e quindi riduce richiesta al raffreddatore.
+- Comando vs risultato: verificare se l'uscita e comandata ma il dispositivo reale non segue (teleruttore, alimentazione, rele, attuatore).

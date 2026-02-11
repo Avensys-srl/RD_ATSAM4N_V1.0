@@ -60,7 +60,15 @@ Offset applicati nel codice:
 - Testare con frame modbus e dati I2C variabili per confermare l'aggiornamento a ogni ciclo.
 - Se si riattiva la parte commentata in futuro, introdurre test dedicati per i vincoli di coerenza termica e influenza stato bypass.
 
-## Racconto operativo (per utente/service)
+## Spazio tecnico (mappa firmware e righe)
+- Ingresso funzione e tolleranze locali: `src/Clima_Func.c:935` e `src/Clima_Func.c:938`
+- Inizializzazione al primo giro (`Tcheck == 0`): `src/Clima_Func.c:941`
+- Caricamento iniziale S2/T3/T4/T5: `src/Clima_Func.c:943`, `src/Clima_Func.c:946`, `src/Clima_Func.c:948`, `src/Clima_Func.c:949`
+- Aggiornamento ciclico S1/S4/T1/T2: `src/Clima_Func.c:954`, `src/Clima_Func.c:956`, `src/Clima_Func.c:959`, `src/Clima_Func.c:960`
+- Correzione ciclica S2/T3/T4/T5: `src/Clima_Func.c:966`, `src/Clima_Func.c:969`, `src/Clima_Func.c:971`, `src/Clima_Func.c:972`
+- Uscita funzione: `src/Clima_Func.c:1107`
+
+## Racconto operativo (utente finale)
 Questa funzione non comanda direttamente caldo o freddo, ma prepara e aggiorna le temperature "di lavoro" che il resto del controllo usa per prendere decisioni.
 
 In parole semplici, raccoglie i valori dalle varie sonde (aria esterna, ritorno, mandata, punti circuito) e applica piccole correzioni numeriche. Queste correzioni servono ad allineare le letture in modo coerente con la taratura prevista dal sistema.
@@ -70,3 +78,19 @@ Per chi e sul campo, il risultato e che i numeri interni usati dalla regolazione
 Alla prima esecuzione inizializza alcuni riferimenti, poi ad ogni ciclo aggiorna i valori. Quindi se una sonda cambia rapidamente, anche i valori di questa funzione seguono quel cambiamento al ciclo successivo.
 
 La parte avanzata che farebbe controlli di coerenza piu spinti tra una sonda e l'altra, nel codice attuale, e disattivata (commentata). Di conseguenza oggi la funzione lavora come "normalizzazione e aggiornamento continuo" dei dati termici.
+
+## Operativo service (diagnosi sul campo)
+### Errori bloccanti a monte
+- Sensori non disponibili, scollegati o fuori campo: i dati diventano poco affidabili per le decisioni successive.
+- Dati da rete esterna non aggiornati: alcune temperature restano ferme o incoerenti rispetto all'impianto reale.
+- Problemi di comunicazione con sensori/accessori: la normalizzazione continua ma su valori non attendibili.
+- Inizializzazione non corretta dopo avvio: i riferimenti iniziali possono essere sbilanciati nei primi cicli.
+- Mancanza di controllo avanzato di plausibilita attivo: eventuali incoerenze tra sonde possono propagarsi ad altre logiche.
+
+### Checklist problem solving (dati da controllare)
+- Coerenza tra temperatura richiesta e temperature disponibili: verificare che i valori usati dal controllo siano realistici.
+- Confronto tra sensori vicini: differenze eccessive tra punti fisicamente correlati indicano possibile anomalia.
+- Stabilita nel tempo: controllare se un valore resta fisso troppo a lungo mentre l'impianto cambia.
+- Correzioni/offset applicati: considerare che il valore interno puo differire dalla lettura grezza.
+- Sequenza di avvio: verificare i primi cicli dopo accensione, quando vengono inizializzati i riferimenti.
+- Presenza allarmi sensori/comunicazione: con allarmi attivi i valori possono essere non utilizzabili per una regolazione affidabile.

@@ -28,23 +28,52 @@ Descrivere i casi particolari e il comportamento previsto.
 ## Verifica
 Indicare come validare la funzione (test, log, segnali HW attesi).
 
-## Racconto operativo (per utente/service)
-Scrivere un racconto descrittivo, meno tecnico ma molto dettagliato, pensato per utente finale, service man o cliente generico.
+## Spazio tecnico (mappa firmware e righe)
+Per ogni passo descritto in `Logica dettagliata`, aggiungere sempre dove si trova nel codice firmware:
+- `Passo`: descrizione breve del comportamento
+- `Dove`: file e riga (esempio: `src/Clima_Func.c:428`)
+- `Cosa osservare`: variabile, condizione o comando che conferma quel passo
+
+Regola di qualita:
+- nessun passo senza riferimento riga
+- usare riferimenti puntuali e verificabili (evitare "circa" o range lunghi)
+- aggiornare le righe se il firmware viene modificato
+
+## Racconto operativo (utente finale)
+Scrivere un racconto descrittivo, meno tecnico ma molto dettagliato, pensato per utente finale o cliente generico.
 
 Obiettivo della sezione:
 - spiegare cosa fa la funzione nella pratica quotidiana
 - chiarire perche un comportamento puo avvenire (es. bypass che si apre/non si apre)
-- aiutare la diagnosi sul campo senza richiedere conoscenza del codice
+- aiutare la comprensione d'uso senza richiedere conoscenza del codice
 
 Standard da mantenere sempre:
 - linguaggio semplice, frasi chiare, niente gergo interno non spiegato
 - descrizione concreta dei comportamenti osservabili
 - indicare le cause principali che portano a uno stato ON/OFF o apertura/chiusura
 - evidenziare eventuali attese temporali o ritardi voluti (isteresi, persistenze, timer)
-- distinguere comportamento normale da possibile anomalia
+- distinguere comportamento normale da possibile anomalia percepita
 
-Struttura consigliata:
-- come si comporta normalmente la funzione
-- in quali condizioni cambia comportamento
-- cosa controllare per primo durante un intervento sul campo
-- quali casi possono sembrare un guasto ma sono invece logica prevista
+## Operativo service (diagnosi sul campo)
+Scrivere una sezione dedicata al service sul campo, con linguaggio pratico e orientato al controllo dati.
+Non citare file firmware, righe di codice, nomi di macro o nomi funzione.
+
+### Errori bloccanti a monte
+Descrivere in modo completo tutte le condizioni che possono impedire alla funzione di produrre effetto reale, anche se la funzione viene chiamata.
+
+Includere sempre:
+- modalita test/manutenzione che bloccano la regolazione normale
+- allarmi che mettono il sistema in protezione
+- prerequisiti mancanti (funzione disabilitata, accessorio assente, consenso non valido)
+- guasti comunicazione/sensori/attuatori che impediscono l'effetto reale
+- differenza tra "logica non autorizzata a intervenire" e "logica in protezione"
+
+### Checklist problem solving (dati da controllare)
+Per ogni funzione inserire una checklist concreta con almeno:
+- setpoint richiesto
+- valore rilevato reale
+- soglie di intervento (ON/OFF)
+- isteresi e tempi di ritardo/persistenza
+- stato allarmi
+- stato consensi/modalita (estate, inverno, manuale, automatico)
+- stato attuatore finale (comando dato vs effetto fisico osservato)
