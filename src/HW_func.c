@@ -88,13 +88,13 @@ void PowerMode(Byte sts)
      PowerMotors = POWER_SAVE;
      //digitalWrite(pPowerMotors, HIGH); // Diseccita il rele'
 	 ioport_set_pin_level(pPowerMotors, IOPORT_PIN_LEVEL_HIGH);    
-   ioport_set_pin_level(pIPEHD, IOPORT_PIN_LEVEL_HIGH);       
+   ioport_set_pin_level(pIPEHD, IOPORT_PIN_LEVEL_LOW);       
    }else {
 
      PowerMotors = POWER_ON;
      //digitalWrite(pPowerMotors, LOW); // eccita il rele' 
 	 ioport_set_pin_level(pPowerMotors, IOPORT_PIN_LEVEL_LOW);
-   ioport_set_pin_level(pIPEHD, IOPORT_PIN_LEVEL_LOW);   
+   ioport_set_pin_level(pIPEHD, IOPORT_PIN_LEVEL_HIGH);   
    }  
 }
 
