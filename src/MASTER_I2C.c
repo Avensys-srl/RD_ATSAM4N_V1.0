@@ -21,6 +21,8 @@
 //
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
+uint32_t Zaki3 = 0;
+uint32_t Zaki4 = 0;
 
 //------------------------------------------------------------------
 //
@@ -134,6 +136,8 @@ int ReadSlave(Byte addressSlave, Byte addrData, Byte *pDataRD, Byte nByte)
   
 	//------------ leggiamo l'ultimo byte il cksum ----------------//
 	checksum = I2C_readData();
+	Zaki3 = checksum;
+	Zaki4 = checksum_calc;
   
 	if(checksum != checksum_calc) { 
 		I2C_sendNak(); // errore Cksum : send acknowledge 

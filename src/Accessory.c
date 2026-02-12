@@ -108,8 +108,6 @@ uint8_t BPD_FW = 0;
 
 extern Bool Buzzer_Off;
 
-uint32_t Zaki3 = 0;
-
 //----------------------------------------------------
 //        CONFIGURAZIONI   HARDWARE
 //----------------------------------------------------
@@ -469,6 +467,10 @@ void RemoveDigitAccessory(int nAcc_I2C)
      
      sData.AccI2C[nAcc_I2C].numCmdDisable = 0;
      
+	 sData.AccI2C[nAcc_I2C].level_link  = 0;        // livello della comunicazione (valore espresso in 10/10)
+	 sData.AccI2C[nAcc_I2C].cnt_link_ok = 0;         // Contatore Link buoni
+	 sData.AccI2C[nAcc_I2C].cnt_link_ko = 0;         // Contatore Link falliti
+	 
      sData.AccI2C[nAcc_I2C].sts = 0;
      sData.AccI2C[nAcc_I2C].comand   = 0;
      sData.AccI2C[nAcc_I2C].measure1 = 0;            // misura 1
