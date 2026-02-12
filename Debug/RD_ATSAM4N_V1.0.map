@@ -304,6 +304,7 @@ Discarded input sections
  .group         0x00000000        0x8 src/Accessory.o
  .group         0x00000000        0x8 src/Accessory.o
  .group         0x00000000        0x8 src/Accessory.o
+ .group         0x00000000        0x8 src/Accessory.o
  .text          0x00000000        0x0 src/Accessory.o
  .data          0x00000000        0x0 src/Accessory.o
  .bss           0x00000000        0x0 src/Accessory.o
@@ -313,6 +314,7 @@ Discarded input sections
                 0x00000000        0x2 src/Accessory.o
  .bss.CO2_2_old_Value
                 0x00000000        0x2 src/Accessory.o
+ .bss.Zaki3     0x00000000        0x4 src/Accessory.o
  .bss.cpu_irq_critical_section_counter
                 0x00000000        0x4 src/Accessory.o
  .bss.cpu_irq_prev_interrupt_state
@@ -12423,48 +12425,48 @@ OUTPUT(RD_ATSAM4N_V1.0.elf elf32-littlearm)
  .comment       0x00000059       0x5a src/HW_func.o
  .comment       0x00000059       0x5a src/main.o
 
-.debug_info     0x00000000    0x49dc0
- .debug_info    0x00000000     0x39a5 src/Accessory.o
- .debug_info    0x000039a5     0x1d08 src/ADC.o
- .debug_info    0x000056ad     0x3cfb src/Admin_Messages.o
- .debug_info    0x000093a8     0x1396 src/Alarm.o
- .debug_info    0x0000a73e      0xa8e src/ASF/common/services/sleepmgr/sam/sleepmgr.o
- .debug_info    0x0000b1cc     0x1e3d src/ASF/sam/drivers/adc/adc2.o
- .debug_info    0x0000d009     0x10b7 src/ASF/sam/drivers/efc/efc.o
- .debug_info    0x0000e0c0      0xde1 src/ASF/sam/drivers/pdc/pdc.o
- .debug_info    0x0000eea1      0xc54 src/ASF/sam/drivers/rstc/rstc.o
- .debug_info    0x0000faf5     0x115b src/ASF/sam/drivers/rtc/rtc.o
- .debug_info    0x00010c50     0x145b src/ASF/sam/drivers/twi/twi.o
- .debug_info    0x000120ab     0x1db7 src/ASF/sam/drivers/usart/usart.o
- .debug_info    0x00013e62      0xc0b src/ASF/sam/drivers/wdt/wdt.o
- .debug_info    0x00014a6d     0x1d25 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_info    0x00016792     0x1d69 src/MASTER_I2C.o
- .debug_info    0x000184fb     0x4999 src/motor_speed.o
- .debug_info    0x0001ce94      0xbc7 src/Scheduler.o
- .debug_info    0x0001da5b     0x18c8 src/Serial1_Class.o
- .debug_info    0x0001f323     0x129e src/Serial2_Class.o
- .debug_info    0x000205c1      0xc9d src/Seriale_1.o
- .debug_info    0x0002125e      0xd68 src/Seriale_2.o
- .debug_info    0x00021fc6     0x466f src/shell.o
- .debug_info    0x00026635     0x4a8d src/Testing_HW.o
- .debug_info    0x0002b0c2     0x17a4 src/Weekly_Prog.o
- .debug_info    0x0002c866     0x1143 src/ASF/common/services/serial/usart_serial.o
- .debug_info    0x0002d9a9      0xa45 src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_info    0x0002e3ee     0x10d2 src/ASF/common/services/clock/sam4n/sysclk.o
- .debug_info    0x0002f4c0     0x187b src/ASF/sam/drivers/pmc/pmc.o
- .debug_info    0x00030d3b     0x1309 src/ASF/sam/drivers/tc/tc.o
- .debug_info    0x00032044     0x119c src/ASF/sam/drivers/uart/uart.o
- .debug_info    0x000331e0     0x29a8 src/ASF/common/boards/user_board/init.o
- .debug_info    0x00035b88      0xaff src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
- .debug_info    0x00036687       0xdc src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
- .debug_info    0x00036763      0x677 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
- .debug_info    0x00036dda      0xda3 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
- .debug_info    0x00037b7d      0xdb0 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_info    0x0003892d     0x2903 src/Clima_Func.o
- .debug_info    0x0003b230     0x279d src/eeprom_func.o
- .debug_info    0x0003d9cd     0x22a8 src/Filter_Func.o
- .debug_info    0x0003fc75     0x4efe src/HW_func.o
- .debug_info    0x00044b73     0x524d src/main.o
+.debug_info     0x00000000    0x49dd2
+ .debug_info    0x00000000     0x39b7 src/Accessory.o
+ .debug_info    0x000039b7     0x1d08 src/ADC.o
+ .debug_info    0x000056bf     0x3cfb src/Admin_Messages.o
+ .debug_info    0x000093ba     0x1396 src/Alarm.o
+ .debug_info    0x0000a750      0xa8e src/ASF/common/services/sleepmgr/sam/sleepmgr.o
+ .debug_info    0x0000b1de     0x1e3d src/ASF/sam/drivers/adc/adc2.o
+ .debug_info    0x0000d01b     0x10b7 src/ASF/sam/drivers/efc/efc.o
+ .debug_info    0x0000e0d2      0xde1 src/ASF/sam/drivers/pdc/pdc.o
+ .debug_info    0x0000eeb3      0xc54 src/ASF/sam/drivers/rstc/rstc.o
+ .debug_info    0x0000fb07     0x115b src/ASF/sam/drivers/rtc/rtc.o
+ .debug_info    0x00010c62     0x145b src/ASF/sam/drivers/twi/twi.o
+ .debug_info    0x000120bd     0x1db7 src/ASF/sam/drivers/usart/usart.o
+ .debug_info    0x00013e74      0xc0b src/ASF/sam/drivers/wdt/wdt.o
+ .debug_info    0x00014a7f     0x1d25 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_info    0x000167a4     0x1d69 src/MASTER_I2C.o
+ .debug_info    0x0001850d     0x4999 src/motor_speed.o
+ .debug_info    0x0001cea6      0xbc7 src/Scheduler.o
+ .debug_info    0x0001da6d     0x18c8 src/Serial1_Class.o
+ .debug_info    0x0001f335     0x129e src/Serial2_Class.o
+ .debug_info    0x000205d3      0xc9d src/Seriale_1.o
+ .debug_info    0x00021270      0xd68 src/Seriale_2.o
+ .debug_info    0x00021fd8     0x466f src/shell.o
+ .debug_info    0x00026647     0x4a8d src/Testing_HW.o
+ .debug_info    0x0002b0d4     0x17a4 src/Weekly_Prog.o
+ .debug_info    0x0002c878     0x1143 src/ASF/common/services/serial/usart_serial.o
+ .debug_info    0x0002d9bb      0xa45 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_info    0x0002e400     0x10d2 src/ASF/common/services/clock/sam4n/sysclk.o
+ .debug_info    0x0002f4d2     0x187b src/ASF/sam/drivers/pmc/pmc.o
+ .debug_info    0x00030d4d     0x1309 src/ASF/sam/drivers/tc/tc.o
+ .debug_info    0x00032056     0x119c src/ASF/sam/drivers/uart/uart.o
+ .debug_info    0x000331f2     0x29a8 src/ASF/common/boards/user_board/init.o
+ .debug_info    0x00035b9a      0xaff src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
+ .debug_info    0x00036699       0xdc src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
+ .debug_info    0x00036775      0x677 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
+ .debug_info    0x00036dec      0xda3 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
+ .debug_info    0x00037b8f      0xdb0 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_info    0x0003893f     0x2903 src/Clima_Func.o
+ .debug_info    0x0003b242     0x279d src/eeprom_func.o
+ .debug_info    0x0003d9df     0x22a8 src/Filter_Func.o
+ .debug_info    0x0003fc87     0x4efe src/HW_func.o
+ .debug_info    0x00044b85     0x524d src/main.o
 
 .debug_abbrev   0x00000000     0x7d1d
  .debug_abbrev  0x00000000      0x467 src/Accessory.o
@@ -12673,329 +12675,330 @@ OUTPUT(RD_ATSAM4N_V1.0.elf elf32-littlearm)
  .debug_ranges  0x000011f8       0xd0 src/HW_func.o
  .debug_ranges  0x000012c8       0xb8 src/main.o
 
-.debug_macro    0x00000000    0x1b8e1
- .debug_macro   0x00000000      0x6d0 src/Accessory.o
- .debug_macro   0x000006d0      0x8c8 src/Accessory.o
- .debug_macro   0x00000f98      0x16d src/Accessory.o
- .debug_macro   0x00001105      0x71d src/Accessory.o
- .debug_macro   0x00001822       0x76 src/Accessory.o
- .debug_macro   0x00001898       0x16 src/Accessory.o
- .debug_macro   0x000018ae      0x6da src/Accessory.o
- .debug_macro   0x00001f88       0x22 src/Accessory.o
- .debug_macro   0x00001faa       0x87 src/Accessory.o
- .debug_macro   0x00002031       0x51 src/Accessory.o
- .debug_macro   0x00002082       0xef src/Accessory.o
- .debug_macro   0x00002171       0x6a src/Accessory.o
- .debug_macro   0x000021db      0x1df src/Accessory.o
- .debug_macro   0x000023ba       0x27 src/Accessory.o
- .debug_macro   0x000023e1       0x1c src/Accessory.o
- .debug_macro   0x000023fd       0x22 src/Accessory.o
- .debug_macro   0x0000241f       0xdf src/Accessory.o
- .debug_macro   0x000024fe     0x102d src/Accessory.o
- .debug_macro   0x0000352b      0x11f src/Accessory.o
- .debug_macro   0x0000364a      0x93f src/Accessory.o
- .debug_macro   0x00003f89      0x2ab src/Accessory.o
- .debug_macro   0x00004234      0x162 src/Accessory.o
- .debug_macro   0x00004396      0x106 src/Accessory.o
- .debug_macro   0x0000449c       0x1c src/Accessory.o
- .debug_macro   0x000044b8      0x1df src/Accessory.o
- .debug_macro   0x00004697       0xbe src/Accessory.o
- .debug_macro   0x00004755     0x26bd src/Accessory.o
- .debug_macro   0x00006e12      0x71b src/Accessory.o
- .debug_macro   0x0000752d      0x257 src/Accessory.o
- .debug_macro   0x00007784       0x7c src/Accessory.o
- .debug_macro   0x00007800      0x2d6 src/Accessory.o
- .debug_macro   0x00007ad6       0x64 src/Accessory.o
- .debug_macro   0x00007b3a      0x37c src/Accessory.o
- .debug_macro   0x00007eb6      0x686 src/Accessory.o
- .debug_macro   0x0000853c      0x654 src/Accessory.o
- .debug_macro   0x00008b90      0x344 src/Accessory.o
- .debug_macro   0x00008ed4      0x283 src/Accessory.o
- .debug_macro   0x00009157      0x561 src/Accessory.o
- .debug_macro   0x000096b8       0x76 src/Accessory.o
- .debug_macro   0x0000972e       0x88 src/Accessory.o
- .debug_macro   0x000097b6      0x12b src/Accessory.o
- .debug_macro   0x000098e1       0x88 src/Accessory.o
- .debug_macro   0x00009969       0x88 src/Accessory.o
- .debug_macro   0x000099f1       0xb2 src/Accessory.o
- .debug_macro   0x00009aa3       0xa6 src/Accessory.o
- .debug_macro   0x00009b49       0xa6 src/Accessory.o
- .debug_macro   0x00009bef       0xa6 src/Accessory.o
- .debug_macro   0x00009c95       0x64 src/Accessory.o
- .debug_macro   0x00009cf9       0x88 src/Accessory.o
- .debug_macro   0x00009d81       0x7c src/Accessory.o
- .debug_macro   0x00009dfd       0x40 src/Accessory.o
- .debug_macro   0x00009e3d       0x34 src/Accessory.o
- .debug_macro   0x00009e71       0x88 src/Accessory.o
- .debug_macro   0x00009ef9       0x7c src/Accessory.o
- .debug_macro   0x00009f75       0x16 src/Accessory.o
- .debug_macro   0x00009f8b       0x7c src/Accessory.o
- .debug_macro   0x0000a007       0x22 src/Accessory.o
- .debug_macro   0x0000a029      0x12b src/Accessory.o
- .debug_macro   0x0000a154      0x12b src/Accessory.o
- .debug_macro   0x0000a27f       0x1c src/Accessory.o
- .debug_macro   0x0000a29b       0x2e src/Accessory.o
- .debug_macro   0x0000a2c9       0x22 src/Accessory.o
- .debug_macro   0x0000a2eb       0x1c src/Accessory.o
- .debug_macro   0x0000a307       0x52 src/Accessory.o
- .debug_macro   0x0000a359       0x10 src/Accessory.o
- .debug_macro   0x0000a369      0x1c4 src/Accessory.o
- .debug_macro   0x0000a52d      0x51e src/Accessory.o
- .debug_macro   0x0000aa4b       0xcf src/Accessory.o
- .debug_macro   0x0000ab1a       0x58 src/Accessory.o
- .debug_macro   0x0000ab72       0x35 src/Accessory.o
- .debug_macro   0x0000aba7       0x9c src/Accessory.o
- .debug_macro   0x0000ac43       0x16 src/Accessory.o
- .debug_macro   0x0000ac59       0x35 src/Accessory.o
- .debug_macro   0x0000ac8e      0x34d src/Accessory.o
- .debug_macro   0x0000afdb       0x10 src/Accessory.o
- .debug_macro   0x0000afeb       0x58 src/Accessory.o
- .debug_macro   0x0000b043       0x1f src/Accessory.o
- .debug_macro   0x0000b062       0x43 src/Accessory.o
- .debug_macro   0x0000b0a5       0x20 src/Accessory.o
- .debug_macro   0x0000b0c5      0x187 src/Accessory.o
- .debug_macro   0x0000b24c       0x10 src/Accessory.o
- .debug_macro   0x0000b25c       0x1c src/Accessory.o
- .debug_macro   0x0000b278       0x52 src/Accessory.o
- .debug_macro   0x0000b2ca       0x40 src/Accessory.o
- .debug_macro   0x0000b30a       0x10 src/Accessory.o
- .debug_macro   0x0000b31a       0x40 src/Accessory.o
- .debug_macro   0x0000b35a       0xd7 src/Accessory.o
- .debug_macro   0x0000b431       0x16 src/Accessory.o
- .debug_macro   0x0000b447      0x18b src/Accessory.o
- .debug_macro   0x0000b5d2       0x22 src/Accessory.o
- .debug_macro   0x0000b5f4       0x16 src/Accessory.o
- .debug_macro   0x0000b60a       0x16 src/Accessory.o
- .debug_macro   0x0000b620       0x29 src/Accessory.o
- .debug_macro   0x0000b649       0x73 src/Accessory.o
- .debug_macro   0x0000b6bc       0x3e src/Accessory.o
- .debug_macro   0x0000b6fa      0x3ca src/Accessory.o
- .debug_macro   0x0000bac4       0x16 src/Accessory.o
- .debug_macro   0x0000bada      0x13c src/Accessory.o
- .debug_macro   0x0000bc16       0x1c src/Accessory.o
- .debug_macro   0x0000bc32       0x28 src/Accessory.o
- .debug_macro   0x0000bc5a      0x2df src/Accessory.o
- .debug_macro   0x0000bf39       0x70 src/Accessory.o
- .debug_macro   0x0000bfa9       0x64 src/Accessory.o
- .debug_macro   0x0000c00d       0x40 src/Accessory.o
- .debug_macro   0x0000c04d       0x7b src/Accessory.o
- .debug_macro   0x0000c0c8       0x28 src/Accessory.o
- .debug_macro   0x0000c0f0       0x22 src/Accessory.o
- .debug_macro   0x0000c112       0x9a src/Accessory.o
- .debug_macro   0x0000c1ac       0x16 src/Accessory.o
- .debug_macro   0x0000c1c2       0x88 src/Accessory.o
- .debug_macro   0x0000c24a       0x34 src/Accessory.o
- .debug_macro   0x0000c27e       0x3b src/Accessory.o
- .debug_macro   0x0000c2b9       0x10 src/Accessory.o
- .debug_macro   0x0000c2c9       0x4c src/Accessory.o
- .debug_macro   0x0000c315       0x10 src/Accessory.o
- .debug_macro   0x0000c325       0x16 src/Accessory.o
- .debug_macro   0x0000c33b       0x1c src/Accessory.o
- .debug_macro   0x0000c357       0x2e src/Accessory.o
- .debug_macro   0x0000c385       0x46 src/Accessory.o
- .debug_macro   0x0000c3cb       0x10 src/Accessory.o
- .debug_macro   0x0000c3db      0x147 src/Accessory.o
- .debug_macro   0x0000c522       0x1d src/Accessory.o
- .debug_macro   0x0000c53f      0x1e1 src/Accessory.o
- .debug_macro   0x0000c720      0x106 src/Accessory.o
- .debug_macro   0x0000c826       0x70 src/Accessory.o
- .debug_macro   0x0000c896      0x6c9 src/ADC.o
- .debug_macro   0x0000cf5f      0x728 src/Admin_Messages.o
- .debug_macro   0x0000d687       0x82 src/Admin_Messages.o
- .debug_macro   0x0000d709       0x23 src/Admin_Messages.o
- .debug_macro   0x0000d72c      0x141 src/Admin_Messages.o
- .debug_macro   0x0000d86d       0x16 src/Admin_Messages.o
- .debug_macro   0x0000d883      0x680 src/Alarm.o
- .debug_macro   0x0000df03      0x4d3 src/ASF/common/services/sleepmgr/sam/sleepmgr.o
- .debug_macro   0x0000e3d6      0x571 src/ASF/sam/drivers/adc/adc2.o
- .debug_macro   0x0000e947      0x4d4 src/ASF/sam/drivers/efc/efc.o
- .debug_macro   0x0000ee1b       0x94 src/ASF/sam/drivers/efc/efc.o
- .debug_macro   0x0000eeaf      0x4b7 src/ASF/sam/drivers/pdc/pdc.o
- .debug_macro   0x0000f366      0x4c3 src/ASF/sam/drivers/rstc/rstc.o
- .debug_macro   0x0000f829       0x35 src/ASF/sam/drivers/rstc/rstc.o
- .debug_macro   0x0000f85e      0x4cf src/ASF/sam/drivers/rtc/rtc.o
- .debug_macro   0x0000fd2d      0x4e6 src/ASF/sam/drivers/twi/twi.o
- .debug_macro   0x00010213       0x46 src/ASF/sam/drivers/twi/twi.o
- .debug_macro   0x00010259      0x4f8 src/ASF/sam/drivers/usart/usart.o
- .debug_macro   0x00010751       0x28 src/ASF/sam/drivers/usart/usart.o
- .debug_macro   0x00010779      0x4cf src/ASF/sam/drivers/wdt/wdt.o
- .debug_macro   0x00010c48      0x56e src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x000111b6       0x52 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x00011208       0x8d src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x00011295       0x57 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x000112ec      0x353 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x0001163f       0x10 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x0001164f       0x16 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x00011665       0xd9 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x0001173e       0x1c src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x0001175a       0x10 src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_macro   0x0001176a      0x66f src/MASTER_I2C.o
- .debug_macro   0x00011dd9      0x6e5 src/motor_speed.o
- .debug_macro   0x000124be      0x66f src/Scheduler.o
- .debug_macro   0x00012b2d       0x10 src/Scheduler.o
- .debug_macro   0x00012b3d      0x6aa src/Serial1_Class.o
- .debug_macro   0x000131e7      0x6bb src/Serial2_Class.o
- .debug_macro   0x000138a2       0x8e src/Serial2_Class.o
- .debug_macro   0x00013930      0x6b1 src/Seriale_1.o
- .debug_macro   0x00013fe1      0x6cf src/Seriale_2.o
- .debug_macro   0x000146b0      0x6b8 src/shell.o
- .debug_macro   0x00014d68      0x6d0 src/Testing_HW.o
- .debug_macro   0x00015438      0x683 src/Weekly_Prog.o
- .debug_macro   0x00015abb      0x55f src/ASF/common/services/serial/usart_serial.o
- .debug_macro   0x0001601a      0x4bc src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_macro   0x000164d6       0x22 src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_macro   0x000164f8      0x52c src/ASF/common/services/clock/sam4n/sysclk.o
- .debug_macro   0x00016a24      0x2d9 src/ASF/common/services/clock/sam4n/sysclk.o
- .debug_macro   0x00016cfd      0x4c2 src/ASF/sam/drivers/pmc/pmc.o
- .debug_macro   0x000171bf       0x6a src/ASF/sam/drivers/pmc/pmc.o
- .debug_macro   0x00017229      0x4c8 src/ASF/sam/drivers/tc/tc.o
- .debug_macro   0x000176f1      0x4bc src/ASF/sam/drivers/uart/uart.o
- .debug_macro   0x00017bad       0x16 src/ASF/sam/drivers/uart/uart.o
- .debug_macro   0x00017bc3      0x671 src/ASF/common/boards/user_board/init.o
- .debug_macro   0x00018234      0x4ad src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
- .debug_macro   0x000186e1      0x2b4 src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
- .debug_macro   0x00018995      0x2aa src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
- .debug_macro   0x00018c3f      0x4c5 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
- .debug_macro   0x00019104      0x1d6 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x000192da       0x97 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x00019371       0xf6 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x00019467       0x4c src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x000194b3       0x16 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x000194c9       0x10 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x000194d9       0x10 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x000194e9       0x35 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x0001951e      0x122 src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_macro   0x00019640      0x6b4 src/Clima_Func.o
- .debug_macro   0x00019cf4      0x69a src/eeprom_func.o
- .debug_macro   0x0001a38e      0x696 src/Filter_Func.o
- .debug_macro   0x0001aa24      0x6fe src/HW_func.o
- .debug_macro   0x0001b122      0x7bf src/main.o
+.debug_macro    0x00000000    0x1b90d
+ .debug_macro   0x00000000      0x6da src/Accessory.o
+ .debug_macro   0x000006da      0x8c8 src/Accessory.o
+ .debug_macro   0x00000fa2      0x16d src/Accessory.o
+ .debug_macro   0x0000110f      0x71d src/Accessory.o
+ .debug_macro   0x0000182c       0x76 src/Accessory.o
+ .debug_macro   0x000018a2       0x16 src/Accessory.o
+ .debug_macro   0x000018b8      0x6da src/Accessory.o
+ .debug_macro   0x00001f92       0x22 src/Accessory.o
+ .debug_macro   0x00001fb4       0x87 src/Accessory.o
+ .debug_macro   0x0000203b       0x51 src/Accessory.o
+ .debug_macro   0x0000208c       0xef src/Accessory.o
+ .debug_macro   0x0000217b       0x6a src/Accessory.o
+ .debug_macro   0x000021e5      0x1df src/Accessory.o
+ .debug_macro   0x000023c4       0x27 src/Accessory.o
+ .debug_macro   0x000023eb       0x1c src/Accessory.o
+ .debug_macro   0x00002407       0x22 src/Accessory.o
+ .debug_macro   0x00002429       0xdf src/Accessory.o
+ .debug_macro   0x00002508     0x102d src/Accessory.o
+ .debug_macro   0x00003535      0x11f src/Accessory.o
+ .debug_macro   0x00003654      0x93f src/Accessory.o
+ .debug_macro   0x00003f93      0x2ab src/Accessory.o
+ .debug_macro   0x0000423e      0x162 src/Accessory.o
+ .debug_macro   0x000043a0      0x106 src/Accessory.o
+ .debug_macro   0x000044a6       0x1c src/Accessory.o
+ .debug_macro   0x000044c2      0x1df src/Accessory.o
+ .debug_macro   0x000046a1       0xbe src/Accessory.o
+ .debug_macro   0x0000475f     0x26bd src/Accessory.o
+ .debug_macro   0x00006e1c      0x71b src/Accessory.o
+ .debug_macro   0x00007537      0x257 src/Accessory.o
+ .debug_macro   0x0000778e       0x7c src/Accessory.o
+ .debug_macro   0x0000780a      0x2d6 src/Accessory.o
+ .debug_macro   0x00007ae0       0x64 src/Accessory.o
+ .debug_macro   0x00007b44      0x37c src/Accessory.o
+ .debug_macro   0x00007ec0      0x686 src/Accessory.o
+ .debug_macro   0x00008546      0x654 src/Accessory.o
+ .debug_macro   0x00008b9a      0x344 src/Accessory.o
+ .debug_macro   0x00008ede      0x283 src/Accessory.o
+ .debug_macro   0x00009161      0x561 src/Accessory.o
+ .debug_macro   0x000096c2       0x76 src/Accessory.o
+ .debug_macro   0x00009738       0x88 src/Accessory.o
+ .debug_macro   0x000097c0      0x12b src/Accessory.o
+ .debug_macro   0x000098eb       0x88 src/Accessory.o
+ .debug_macro   0x00009973       0x88 src/Accessory.o
+ .debug_macro   0x000099fb       0xb2 src/Accessory.o
+ .debug_macro   0x00009aad       0xa6 src/Accessory.o
+ .debug_macro   0x00009b53       0xa6 src/Accessory.o
+ .debug_macro   0x00009bf9       0xa6 src/Accessory.o
+ .debug_macro   0x00009c9f       0x64 src/Accessory.o
+ .debug_macro   0x00009d03       0x88 src/Accessory.o
+ .debug_macro   0x00009d8b       0x7c src/Accessory.o
+ .debug_macro   0x00009e07       0x40 src/Accessory.o
+ .debug_macro   0x00009e47       0x34 src/Accessory.o
+ .debug_macro   0x00009e7b       0x88 src/Accessory.o
+ .debug_macro   0x00009f03       0x7c src/Accessory.o
+ .debug_macro   0x00009f7f       0x16 src/Accessory.o
+ .debug_macro   0x00009f95       0x7c src/Accessory.o
+ .debug_macro   0x0000a011       0x22 src/Accessory.o
+ .debug_macro   0x0000a033      0x12b src/Accessory.o
+ .debug_macro   0x0000a15e      0x12b src/Accessory.o
+ .debug_macro   0x0000a289       0x1c src/Accessory.o
+ .debug_macro   0x0000a2a5       0x2e src/Accessory.o
+ .debug_macro   0x0000a2d3       0x22 src/Accessory.o
+ .debug_macro   0x0000a2f5       0x1c src/Accessory.o
+ .debug_macro   0x0000a311       0x52 src/Accessory.o
+ .debug_macro   0x0000a363       0x10 src/Accessory.o
+ .debug_macro   0x0000a373      0x1c4 src/Accessory.o
+ .debug_macro   0x0000a537      0x51e src/Accessory.o
+ .debug_macro   0x0000aa55       0xcf src/Accessory.o
+ .debug_macro   0x0000ab24       0x58 src/Accessory.o
+ .debug_macro   0x0000ab7c       0x35 src/Accessory.o
+ .debug_macro   0x0000abb1       0x9c src/Accessory.o
+ .debug_macro   0x0000ac4d       0x16 src/Accessory.o
+ .debug_macro   0x0000ac63       0x35 src/Accessory.o
+ .debug_macro   0x0000ac98      0x34d src/Accessory.o
+ .debug_macro   0x0000afe5       0x10 src/Accessory.o
+ .debug_macro   0x0000aff5       0x58 src/Accessory.o
+ .debug_macro   0x0000b04d       0x1f src/Accessory.o
+ .debug_macro   0x0000b06c       0x43 src/Accessory.o
+ .debug_macro   0x0000b0af       0x20 src/Accessory.o
+ .debug_macro   0x0000b0cf      0x187 src/Accessory.o
+ .debug_macro   0x0000b256       0x10 src/Accessory.o
+ .debug_macro   0x0000b266       0x1c src/Accessory.o
+ .debug_macro   0x0000b282       0x52 src/Accessory.o
+ .debug_macro   0x0000b2d4       0x40 src/Accessory.o
+ .debug_macro   0x0000b314       0x10 src/Accessory.o
+ .debug_macro   0x0000b324       0x40 src/Accessory.o
+ .debug_macro   0x0000b364       0xd7 src/Accessory.o
+ .debug_macro   0x0000b43b       0x16 src/Accessory.o
+ .debug_macro   0x0000b451      0x18b src/Accessory.o
+ .debug_macro   0x0000b5dc       0x22 src/Accessory.o
+ .debug_macro   0x0000b5fe       0x16 src/Accessory.o
+ .debug_macro   0x0000b614       0x16 src/Accessory.o
+ .debug_macro   0x0000b62a       0x29 src/Accessory.o
+ .debug_macro   0x0000b653       0x73 src/Accessory.o
+ .debug_macro   0x0000b6c6       0x3e src/Accessory.o
+ .debug_macro   0x0000b704      0x3ca src/Accessory.o
+ .debug_macro   0x0000bace       0x16 src/Accessory.o
+ .debug_macro   0x0000bae4      0x13c src/Accessory.o
+ .debug_macro   0x0000bc20       0x1c src/Accessory.o
+ .debug_macro   0x0000bc3c       0x28 src/Accessory.o
+ .debug_macro   0x0000bc64      0x2df src/Accessory.o
+ .debug_macro   0x0000bf43       0x70 src/Accessory.o
+ .debug_macro   0x0000bfb3       0x64 src/Accessory.o
+ .debug_macro   0x0000c017       0x40 src/Accessory.o
+ .debug_macro   0x0000c057       0x7b src/Accessory.o
+ .debug_macro   0x0000c0d2       0x28 src/Accessory.o
+ .debug_macro   0x0000c0fa       0x22 src/Accessory.o
+ .debug_macro   0x0000c11c       0x9a src/Accessory.o
+ .debug_macro   0x0000c1b6       0x16 src/Accessory.o
+ .debug_macro   0x0000c1cc       0x88 src/Accessory.o
+ .debug_macro   0x0000c254       0x34 src/Accessory.o
+ .debug_macro   0x0000c288       0x3b src/Accessory.o
+ .debug_macro   0x0000c2c3       0x10 src/Accessory.o
+ .debug_macro   0x0000c2d3       0x4c src/Accessory.o
+ .debug_macro   0x0000c31f       0x10 src/Accessory.o
+ .debug_macro   0x0000c32f       0x16 src/Accessory.o
+ .debug_macro   0x0000c345       0x1c src/Accessory.o
+ .debug_macro   0x0000c361       0x2e src/Accessory.o
+ .debug_macro   0x0000c38f       0x46 src/Accessory.o
+ .debug_macro   0x0000c3d5       0x10 src/Accessory.o
+ .debug_macro   0x0000c3e5       0x22 src/Accessory.o
+ .debug_macro   0x0000c407      0x147 src/Accessory.o
+ .debug_macro   0x0000c54e       0x1d src/Accessory.o
+ .debug_macro   0x0000c56b      0x1e1 src/Accessory.o
+ .debug_macro   0x0000c74c      0x106 src/Accessory.o
+ .debug_macro   0x0000c852       0x70 src/Accessory.o
+ .debug_macro   0x0000c8c2      0x6c9 src/ADC.o
+ .debug_macro   0x0000cf8b      0x728 src/Admin_Messages.o
+ .debug_macro   0x0000d6b3       0x82 src/Admin_Messages.o
+ .debug_macro   0x0000d735       0x23 src/Admin_Messages.o
+ .debug_macro   0x0000d758      0x141 src/Admin_Messages.o
+ .debug_macro   0x0000d899       0x16 src/Admin_Messages.o
+ .debug_macro   0x0000d8af      0x680 src/Alarm.o
+ .debug_macro   0x0000df2f      0x4d3 src/ASF/common/services/sleepmgr/sam/sleepmgr.o
+ .debug_macro   0x0000e402      0x571 src/ASF/sam/drivers/adc/adc2.o
+ .debug_macro   0x0000e973      0x4d4 src/ASF/sam/drivers/efc/efc.o
+ .debug_macro   0x0000ee47       0x94 src/ASF/sam/drivers/efc/efc.o
+ .debug_macro   0x0000eedb      0x4b7 src/ASF/sam/drivers/pdc/pdc.o
+ .debug_macro   0x0000f392      0x4c3 src/ASF/sam/drivers/rstc/rstc.o
+ .debug_macro   0x0000f855       0x35 src/ASF/sam/drivers/rstc/rstc.o
+ .debug_macro   0x0000f88a      0x4cf src/ASF/sam/drivers/rtc/rtc.o
+ .debug_macro   0x0000fd59      0x4e6 src/ASF/sam/drivers/twi/twi.o
+ .debug_macro   0x0001023f       0x46 src/ASF/sam/drivers/twi/twi.o
+ .debug_macro   0x00010285      0x4f8 src/ASF/sam/drivers/usart/usart.o
+ .debug_macro   0x0001077d       0x28 src/ASF/sam/drivers/usart/usart.o
+ .debug_macro   0x000107a5      0x4cf src/ASF/sam/drivers/wdt/wdt.o
+ .debug_macro   0x00010c74      0x56e src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x000111e2       0x52 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x00011234       0x8d src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x000112c1       0x57 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x00011318      0x353 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x0001166b       0x10 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x0001167b       0x16 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x00011691       0xd9 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x0001176a       0x1c src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x00011786       0x10 src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_macro   0x00011796      0x66f src/MASTER_I2C.o
+ .debug_macro   0x00011e05      0x6e5 src/motor_speed.o
+ .debug_macro   0x000124ea      0x66f src/Scheduler.o
+ .debug_macro   0x00012b59       0x10 src/Scheduler.o
+ .debug_macro   0x00012b69      0x6aa src/Serial1_Class.o
+ .debug_macro   0x00013213      0x6bb src/Serial2_Class.o
+ .debug_macro   0x000138ce       0x8e src/Serial2_Class.o
+ .debug_macro   0x0001395c      0x6b1 src/Seriale_1.o
+ .debug_macro   0x0001400d      0x6cf src/Seriale_2.o
+ .debug_macro   0x000146dc      0x6b8 src/shell.o
+ .debug_macro   0x00014d94      0x6d0 src/Testing_HW.o
+ .debug_macro   0x00015464      0x683 src/Weekly_Prog.o
+ .debug_macro   0x00015ae7      0x55f src/ASF/common/services/serial/usart_serial.o
+ .debug_macro   0x00016046      0x4bc src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_macro   0x00016502       0x22 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_macro   0x00016524      0x52c src/ASF/common/services/clock/sam4n/sysclk.o
+ .debug_macro   0x00016a50      0x2d9 src/ASF/common/services/clock/sam4n/sysclk.o
+ .debug_macro   0x00016d29      0x4c2 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_macro   0x000171eb       0x6a src/ASF/sam/drivers/pmc/pmc.o
+ .debug_macro   0x00017255      0x4c8 src/ASF/sam/drivers/tc/tc.o
+ .debug_macro   0x0001771d      0x4bc src/ASF/sam/drivers/uart/uart.o
+ .debug_macro   0x00017bd9       0x16 src/ASF/sam/drivers/uart/uart.o
+ .debug_macro   0x00017bef      0x671 src/ASF/common/boards/user_board/init.o
+ .debug_macro   0x00018260      0x4ad src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
+ .debug_macro   0x0001870d      0x2b4 src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
+ .debug_macro   0x000189c1      0x2aa src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
+ .debug_macro   0x00018c6b      0x4c5 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
+ .debug_macro   0x00019130      0x1d6 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x00019306       0x97 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x0001939d       0xf6 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x00019493       0x4c src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x000194df       0x16 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x000194f5       0x10 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x00019505       0x10 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x00019515       0x35 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x0001954a      0x122 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_macro   0x0001966c      0x6b4 src/Clima_Func.o
+ .debug_macro   0x00019d20      0x69a src/eeprom_func.o
+ .debug_macro   0x0001a3ba      0x696 src/Filter_Func.o
+ .debug_macro   0x0001aa50      0x6fe src/HW_func.o
+ .debug_macro   0x0001b14e      0x7bf src/main.o
 
-.debug_line     0x00000000    0x250b7
- .debug_line    0x00000000     0x15d2 src/Accessory.o
- .debug_line    0x000015d2      0xfc7 src/ADC.o
- .debug_line    0x00002599     0x14be src/Admin_Messages.o
- .debug_line    0x00003a57      0xf79 src/Alarm.o
- .debug_line    0x000049d0      0xa4e src/ASF/common/services/sleepmgr/sam/sleepmgr.o
- .debug_line    0x0000541e      0xd8e src/ASF/sam/drivers/adc/adc2.o
- .debug_line    0x000061ac      0xb34 src/ASF/sam/drivers/efc/efc.o
- .debug_line    0x00006ce0      0xac1 src/ASF/sam/drivers/pdc/pdc.o
- .debug_line    0x000077a1      0xa6a src/ASF/sam/drivers/rstc/rstc.o
- .debug_line    0x0000820b      0xbd5 src/ASF/sam/drivers/rtc/rtc.o
- .debug_line    0x00008de0      0xc57 src/ASF/sam/drivers/twi/twi.o
- .debug_line    0x00009a37      0xe93 src/ASF/sam/drivers/usart/usart.o
- .debug_line    0x0000a8ca      0xa38 src/ASF/sam/drivers/wdt/wdt.o
- .debug_line    0x0000b302      0xdfd src/ASF/sam/services/flash_efc/flash_efc.o
- .debug_line    0x0000c0ff     0x1104 src/MASTER_I2C.o
- .debug_line    0x0000d203     0x1845 src/motor_speed.o
- .debug_line    0x0000ea48      0xf97 src/Scheduler.o
- .debug_line    0x0000f9df     0x110b src/Serial1_Class.o
- .debug_line    0x00010aea     0x1003 src/Serial2_Class.o
- .debug_line    0x00011aed      0xf7e src/Seriale_1.o
- .debug_line    0x00012a6b      0xfb1 src/Seriale_2.o
- .debug_line    0x00013a1c     0x151c src/shell.o
- .debug_line    0x00014f38     0x143e src/Testing_HW.o
- .debug_line    0x00016376      0xfac src/Weekly_Prog.o
- .debug_line    0x00017322      0xc2f src/ASF/common/services/serial/usart_serial.o
- .debug_line    0x00017f51      0x9ec src/ASF/common/services/delay/sam/cycle_counter.o
- .debug_line    0x0001893d      0xb2d src/ASF/common/services/clock/sam4n/sysclk.o
- .debug_line    0x0001946a      0xebd src/ASF/sam/drivers/pmc/pmc.o
- .debug_line    0x0001a327      0xb84 src/ASF/sam/drivers/tc/tc.o
- .debug_line    0x0001aeab      0xb9e src/ASF/sam/drivers/uart/uart.o
- .debug_line    0x0001ba49     0x109a src/ASF/common/boards/user_board/init.o
- .debug_line    0x0001cae3      0x9fb src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
- .debug_line    0x0001d4de      0x762 src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
- .debug_line    0x0001dc40      0x799 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
- .debug_line    0x0001e3d9      0xa46 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
- .debug_line    0x0001ee1f      0x40b src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_line    0x0001f22a     0x125b src/Clima_Func.o
- .debug_line    0x00020485     0x144b src/eeprom_func.o
- .debug_line    0x000218d0     0x1054 src/Filter_Func.o
- .debug_line    0x00022924     0x122e src/HW_func.o
- .debug_line    0x00023b52     0x1565 src/main.o
+.debug_line     0x00000000    0x250d7
+ .debug_line    0x00000000     0x15f2 src/Accessory.o
+ .debug_line    0x000015f2      0xfc7 src/ADC.o
+ .debug_line    0x000025b9     0x14be src/Admin_Messages.o
+ .debug_line    0x00003a77      0xf79 src/Alarm.o
+ .debug_line    0x000049f0      0xa4e src/ASF/common/services/sleepmgr/sam/sleepmgr.o
+ .debug_line    0x0000543e      0xd8e src/ASF/sam/drivers/adc/adc2.o
+ .debug_line    0x000061cc      0xb34 src/ASF/sam/drivers/efc/efc.o
+ .debug_line    0x00006d00      0xac1 src/ASF/sam/drivers/pdc/pdc.o
+ .debug_line    0x000077c1      0xa6a src/ASF/sam/drivers/rstc/rstc.o
+ .debug_line    0x0000822b      0xbd5 src/ASF/sam/drivers/rtc/rtc.o
+ .debug_line    0x00008e00      0xc57 src/ASF/sam/drivers/twi/twi.o
+ .debug_line    0x00009a57      0xe93 src/ASF/sam/drivers/usart/usart.o
+ .debug_line    0x0000a8ea      0xa38 src/ASF/sam/drivers/wdt/wdt.o
+ .debug_line    0x0000b322      0xdfd src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_line    0x0000c11f     0x1104 src/MASTER_I2C.o
+ .debug_line    0x0000d223     0x1845 src/motor_speed.o
+ .debug_line    0x0000ea68      0xf97 src/Scheduler.o
+ .debug_line    0x0000f9ff     0x110b src/Serial1_Class.o
+ .debug_line    0x00010b0a     0x1003 src/Serial2_Class.o
+ .debug_line    0x00011b0d      0xf7e src/Seriale_1.o
+ .debug_line    0x00012a8b      0xfb1 src/Seriale_2.o
+ .debug_line    0x00013a3c     0x151c src/shell.o
+ .debug_line    0x00014f58     0x143e src/Testing_HW.o
+ .debug_line    0x00016396      0xfac src/Weekly_Prog.o
+ .debug_line    0x00017342      0xc2f src/ASF/common/services/serial/usart_serial.o
+ .debug_line    0x00017f71      0x9ec src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_line    0x0001895d      0xb2d src/ASF/common/services/clock/sam4n/sysclk.o
+ .debug_line    0x0001948a      0xebd src/ASF/sam/drivers/pmc/pmc.o
+ .debug_line    0x0001a347      0xb84 src/ASF/sam/drivers/tc/tc.o
+ .debug_line    0x0001aecb      0xb9e src/ASF/sam/drivers/uart/uart.o
+ .debug_line    0x0001ba69     0x109a src/ASF/common/boards/user_board/init.o
+ .debug_line    0x0001cb03      0x9fb src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
+ .debug_line    0x0001d4fe      0x762 src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
+ .debug_line    0x0001dc60      0x799 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
+ .debug_line    0x0001e3f9      0xa46 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
+ .debug_line    0x0001ee3f      0x40b src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_line    0x0001f24a     0x125b src/Clima_Func.o
+ .debug_line    0x000204a5     0x144b src/eeprom_func.o
+ .debug_line    0x000218f0     0x1054 src/Filter_Func.o
+ .debug_line    0x00022944     0x122e src/HW_func.o
+ .debug_line    0x00023b72     0x1565 src/main.o
 
-.debug_str      0x00000000    0x4bba6
- .debug_str     0x00000000    0x41ff3 src/Accessory.o
-                              0x42583 (size before relaxing)
- .debug_str     0x00041ff3      0x1b2 src/ADC.o
+.debug_str      0x00000000    0x4bbf0
+ .debug_str     0x00000000    0x4202d src/Accessory.o
+                              0x425bd (size before relaxing)
+ .debug_str     0x0004202d      0x1fe src/ADC.o
                               0x415db (size before relaxing)
- .debug_str     0x000421a5     0x2aea src/Admin_Messages.o
+ .debug_str     0x0004222b     0x2aea src/Admin_Messages.o
                               0x43fbc (size before relaxing)
- .debug_str     0x00044c8f       0x3a src/Alarm.o
+ .debug_str     0x00044d15       0x3a src/Alarm.o
                               0x405bb (size before relaxing)
- .debug_str     0x00044cc9       0xaa src/ASF/common/services/sleepmgr/sam/sleepmgr.o
+ .debug_str     0x00044d4f       0xaa src/ASF/common/services/sleepmgr/sam/sleepmgr.o
                               0x3cf4a (size before relaxing)
- .debug_str     0x00044d73      0xe03 src/ASF/sam/drivers/adc/adc2.o
+ .debug_str     0x00044df9      0xe03 src/ASF/sam/drivers/adc/adc2.o
                               0x3f806 (size before relaxing)
- .debug_str     0x00045b76      0x2fa src/ASF/sam/drivers/efc/efc.o
+ .debug_str     0x00045bfc      0x2fa src/ASF/sam/drivers/efc/efc.o
                               0x3d2f1 (size before relaxing)
- .debug_str     0x00045e70      0x1dc src/ASF/sam/drivers/pdc/pdc.o
+ .debug_str     0x00045ef6      0x1dc src/ASF/sam/drivers/pdc/pdc.o
                               0x3cf81 (size before relaxing)
- .debug_str     0x0004604c      0x140 src/ASF/sam/drivers/rstc/rstc.o
+ .debug_str     0x000460d2      0x140 src/ASF/sam/drivers/rstc/rstc.o
                               0x3cff0 (size before relaxing)
- .debug_str     0x0004618c      0x2d1 src/ASF/sam/drivers/rtc/rtc.o
+ .debug_str     0x00046212      0x2d1 src/ASF/sam/drivers/rtc/rtc.o
                               0x3d12a (size before relaxing)
- .debug_str     0x0004645d      0x3d7 src/ASF/sam/drivers/twi/twi.o
+ .debug_str     0x000464e3      0x3d7 src/ASF/sam/drivers/twi/twi.o
                               0x3d31b (size before relaxing)
- .debug_str     0x00046834      0x793 src/ASF/sam/drivers/usart/usart.o
+ .debug_str     0x000468ba      0x793 src/ASF/sam/drivers/usart/usart.o
                               0x3d69c (size before relaxing)
- .debug_str     0x00046fc7       0xdd src/ASF/sam/drivers/wdt/wdt.o
+ .debug_str     0x0004704d       0xdd src/ASF/sam/drivers/wdt/wdt.o
                               0x3cecb (size before relaxing)
- .debug_str     0x000470a4      0x59f src/ASF/sam/services/flash_efc/flash_efc.o
+ .debug_str     0x0004712a      0x59f src/ASF/sam/services/flash_efc/flash_efc.o
                               0x3f0d1 (size before relaxing)
- .debug_str     0x00047643      0x176 src/MASTER_I2C.o
+ .debug_str     0x000476c9      0x176 src/MASTER_I2C.o
                               0x3fe6d (size before relaxing)
- .debug_str     0x000477b9      0x81e src/motor_speed.o
+ .debug_str     0x0004783f      0x810 src/motor_speed.o
                               0x42604 (size before relaxing)
- .debug_str     0x00047fd7      0x103 src/Scheduler.o
+ .debug_str     0x0004804f      0x103 src/Scheduler.o
                               0x3f6b0 (size before relaxing)
- .debug_str     0x000480da      0x27c src/Serial1_Class.o
+ .debug_str     0x00048152      0x27c src/Serial1_Class.o
                               0x4019d (size before relaxing)
- .debug_str     0x00048356      0x18d src/Serial2_Class.o
+ .debug_str     0x000483ce      0x18d src/Serial2_Class.o
                               0x40206 (size before relaxing)
- .debug_str     0x000484e3       0x86 src/Seriale_1.o
+ .debug_str     0x0004855b       0x86 src/Seriale_1.o
                               0x3f93e (size before relaxing)
- .debug_str     0x00048569       0xdc src/Seriale_2.o
+ .debug_str     0x000485e1       0xdc src/Seriale_2.o
                               0x3fac5 (size before relaxing)
- .debug_str     0x00048645      0x7d2 src/shell.o
+ .debug_str     0x000486bd      0x7d2 src/shell.o
                               0x41425 (size before relaxing)
- .debug_str     0x00048e17      0x393 src/Testing_HW.o
+ .debug_str     0x00048e8f      0x393 src/Testing_HW.o
                               0x41023 (size before relaxing)
- .debug_str     0x000491aa       0x4b src/Weekly_Prog.o
+ .debug_str     0x00049222       0x4b src/Weekly_Prog.o
                               0x40786 (size before relaxing)
- .debug_str     0x000491f5       0xa0 src/ASF/common/services/serial/usart_serial.o
+ .debug_str     0x0004926d       0xa0 src/ASF/common/services/serial/usart_serial.o
                               0x3ed0c (size before relaxing)
- .debug_str     0x00049295       0x35 src/ASF/common/services/delay/sam/cycle_counter.o
+ .debug_str     0x0004930d       0x35 src/ASF/common/services/delay/sam/cycle_counter.o
                               0x3cf32 (size before relaxing)
- .debug_str     0x000492ca      0x2a9 src/ASF/common/services/clock/sam4n/sysclk.o
+ .debug_str     0x00049342      0x2a9 src/ASF/common/services/clock/sam4n/sysclk.o
                               0x3ea5f (size before relaxing)
- .debug_str     0x00049573      0x579 src/ASF/sam/drivers/pmc/pmc.o
+ .debug_str     0x000495eb      0x579 src/ASF/sam/drivers/pmc/pmc.o
                               0x3d803 (size before relaxing)
- .debug_str     0x00049aec      0x2f0 src/ASF/sam/drivers/tc/tc.o
+ .debug_str     0x00049b64      0x2f0 src/ASF/sam/drivers/tc/tc.o
                               0x3d1ae (size before relaxing)
- .debug_str     0x00049ddc      0x1d8 src/ASF/sam/drivers/uart/uart.o
+ .debug_str     0x00049e54      0x1d8 src/ASF/sam/drivers/uart/uart.o
                               0x3d183 (size before relaxing)
- .debug_str     0x00049fb4      0x1e4 src/ASF/common/boards/user_board/init.o
+ .debug_str     0x0004a02c      0x1e4 src/ASF/common/boards/user_board/init.o
                               0x3fcca (size before relaxing)
- .debug_str     0x0004a198       0x65 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
+ .debug_str     0x0004a210       0x65 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
                               0x3ce0e (size before relaxing)
- .debug_str     0x0004a1fd       0x4d src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
+ .debug_str     0x0004a275       0x4d src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
                               0x2c584 (size before relaxing)
- .debug_str     0x0004a24a      0x3e6 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
+ .debug_str     0x0004a2c2      0x3e6 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
                               0x2c992 (size before relaxing)
- .debug_str     0x0004a630      0x156 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
+ .debug_str     0x0004a6a8      0x156 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
                               0x3d064 (size before relaxing)
- .debug_str     0x0004a786      0x768 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+ .debug_str     0x0004a7fe      0x768 src/ASF/sam/utils/syscalls/gcc/syscalls.o
                                0x7421 (size before relaxing)
- .debug_str     0x0004aeee      0x2a7 src/Clima_Func.o
-                              0x4130e (size before relaxing)
- .debug_str     0x0004b195      0x167 src/eeprom_func.o
+ .debug_str     0x0004af66      0x2a7 src/Clima_Func.o
+                              0x412ec (size before relaxing)
+ .debug_str     0x0004b20d      0x167 src/eeprom_func.o
                               0x41062 (size before relaxing)
- .debug_str     0x0004b2fc      0x184 src/Filter_Func.o
+ .debug_str     0x0004b374      0x184 src/Filter_Func.o
                               0x40e5c (size before relaxing)
- .debug_str     0x0004b480      0x282 src/HW_func.o
+ .debug_str     0x0004b4f8      0x26a src/HW_func.o
                               0x41bbe (size before relaxing)
- .debug_str     0x0004b702      0x4a4 src/main.o
+ .debug_str     0x0004b762      0x48e src/main.o
                               0x428c9 (size before relaxing)
 
 .debug_frame    0x00000000     0x3dec
@@ -13508,6 +13511,7 @@ Write_Buffer                                      src/Accessory.o
 Write_Message_Ser1                                src/Seriale_1.o
                                                   src/Admin_Messages.o
 Write_To_Dsc                                      src/Accessory.o
+Zaki3                                             src/Accessory.o
 _Balloc                                           c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-mprec.o)
                                                   c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-dtoa.o)
 _Bfree                                            c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libc.a(lib_a-mprec.o)

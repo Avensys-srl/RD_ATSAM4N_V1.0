@@ -17,23 +17,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   6 .comment      00000059  00000000  00000000  00030aaa  2**0
                   CONTENTS, READONLY
-  7 .debug_info   00049dc0  00000000  00000000  00030b03  2**0
+  7 .debug_info   00049dd2  00000000  00000000  00030b03  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00007d1d  00000000  00000000  0007a8c3  2**0
+  8 .debug_abbrev 00007d1d  00000000  00000000  0007a8d5  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_loc    00014b72  00000000  00000000  000825e0  2**0
+  9 .debug_loc    00014b72  00000000  00000000  000825f2  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_aranges 00001318  00000000  00000000  00097152  2**0
+ 10 .debug_aranges 00001318  00000000  00000000  00097164  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00001380  00000000  00000000  0009846a  2**0
+ 11 .debug_ranges 00001380  00000000  00000000  0009847c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  0001b8e1  00000000  00000000  000997ea  2**0
+ 12 .debug_macro  0001b90d  00000000  00000000  000997fc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   000250b7  00000000  00000000  000b50cb  2**0
+ 13 .debug_line   000250d7  00000000  00000000  000b5109  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    0004bba6  00000000  00000000  000da182  2**0
+ 14 .debug_str    0004bbf0  00000000  00000000  000da1e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  00003dec  00000000  00000000  00125d28  2**2
+ 15 .debug_frame  00003dec  00000000  00000000  00125dd0  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -3665,7 +3665,7 @@ else if (flow ==K_FLOW2)
       if(temp >= 4) 
   4019be:	2a03      	cmp	r2, #3
   4019c0:	d90b      	bls.n	4019da <pollingDigitAccessory+0x85e>
-          sData.AccI2C[idxAcc].level_link = ((temp  - sData.AccI2C[idxAcc].cnt_link_ko) * 10) / temp;            
+          sData.AccI2C[idxAcc].level_link = ((temp  - sData.AccI2C[idxAcc].cnt_link_ko) * 10) / temp;
   4019c2:	eb04 0184 	add.w	r1, r4, r4, lsl #2
   4019c6:	4822      	ldr	r0, [pc, #136]	; (401a50 <pollingDigitAccessory+0x8d4>)
   4019c8:	eb00 0181 	add.w	r1, r0, r1, lsl #2
@@ -4397,6 +4397,12 @@ int intercepts_messages_serial_1()
   401f8e:	4a4b      	ldr	r2, [pc, #300]	; (4020bc <intercepts_messages_serial_1+0x2c8>)
   401f90:	f8a2 3220 	strh.w	r3, [r2, #544]	; 0x220
   401f94:	e031      	b.n	401ffa <intercepts_messages_serial_1+0x206>
+		bool level)
+{
+	Pio *base = arch_ioport_pin_to_base(pin);
+
+	if (level) {
+		base->PIO_SODR = arch_ioport_pin_to_mask(pin);
   401f96:	f44f 0200 	mov.w	r2, #8388608	; 0x800000
   401f9a:	4b4a      	ldr	r3, [pc, #296]	; (4020c4 <intercepts_messages_serial_1+0x2d0>)
   401f9c:	631a      	str	r2, [r3, #48]	; 0x30
@@ -4409,6 +4415,7 @@ int intercepts_messages_serial_1()
   401fac:	f043 0303 	orr.w	r3, r3, #3
   401fb0:	f882 321f 	strb.w	r3, [r2, #543]	; 0x21f
   401fb4:	e021      	b.n	401ffa <intercepts_messages_serial_1+0x206>
+	} else {
 		base->PIO_CODR = arch_ioport_pin_to_mask(pin);
   401fb6:	f44f 0200 	mov.w	r2, #8388608	; 0x800000
   401fba:	4b42      	ldr	r3, [pc, #264]	; (4020c4 <intercepts_messages_serial_1+0x2d0>)
@@ -25753,7 +25760,7 @@ void managementBypass(unsigned short enab_func)
   Bool  cmd_bypass_open = false, cmd_bypass_close = false;
   
   
-  // per prima cosa verifichiamo se è in test
+  // per prima cosa verifichiamo se ï¿½ in test
   if( (sData.status_test & MSK_TEST_BYPASS) )
   40ab4a:	4b9f      	ldr	r3, [pc, #636]	; (40adc8 <managementBypass+0x280>)
   40ab4c:	f8b3 3220 	ldrh.w	r3, [r3, #544]	; 0x220
@@ -26252,7 +26259,7 @@ int TemperatureRegulate()
 #endif
 //''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' x_dbg   
 
-  //---- (1) Se l'unità non è in funzione esci dalla funzione ----
+  //---- (1) Se l'unitï¿½ non ï¿½ in funzione esci dalla funzione ----
   if((sData.status_unit & (1 << POS_BIT_UNIT_RUN)) == 0  &&  ( cfg_bypass != BPD_AUTO_ON_OFF ) && !(enab_func & (1 << ENAB_MBF))  )  {
   40ae6e:	4b97      	ldr	r3, [pc, #604]	; (40b0cc <TemperatureRegulate+0x270>)
   40ae70:	f8b3 3219 	ldrh.w	r3, [r3, #537]	; 0x219
@@ -26370,14 +26377,14 @@ int TemperatureRegulate()
   40af04:	4b77      	ldr	r3, [pc, #476]	; (40b0e4 <TemperatureRegulate+0x288>)
   40af06:	4798      	blx	r3
 
-  //---- (3)  Se è attivo almeno un accessorio di Riscaldamento o raffreddamento procedi ----
+  //---- (3)  Se ï¿½ attivo almeno un accessorio di Riscaldamento o raffreddamento procedi ----
   if(!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_PREHEATER) && !AccessoryPresent_EepList(ACC_EEP_DXD) && !AccessoryPresent_EepList(ACC_EEP_SSR))
   40af08:	2000      	movs	r0, #0
   40af0a:	4b77      	ldr	r3, [pc, #476]	; (40b0e8 <TemperatureRegulate+0x28c>)
   40af0c:	4798      	blx	r3
   40af0e:	2800      	cmp	r0, #0
   40af10:	d037      	beq.n	40af82 <TemperatureRegulate+0x126>
-    return 1;       // se non vi è nessuno sistema per riscaldare o raffreddare, che ci sto a fà qui ??? Esco.
+    return 1;       // se non vi ï¿½ nessuno sistema per riscaldare o raffreddare, che ci sto a fï¿½ qui ??? Esco.
 
   //---- (4) In caso di guasto di uno dei motori spegni subito gli accessori clima a meno che non sia il MODBUS a comandare i motori   
   if ((sData.StatusMotorsR & 0xF0) || (sData.StatusMotorsF &0xF0) || CkAlarm(ALM_EB_CTRL_FAN) && !(enab_func & (1 << ENAB_MBF))) {
@@ -26511,7 +26518,7 @@ int TemperatureRegulate()
   if((ref_T_setting & 0x02) == 0) {
   40afe6:	f010 0902 	ands.w	r9, r0, #2
   40afea:	f000 80a4 	beq.w	40b136 <TemperatureRegulate+0x2da>
-	TempRif = sData.measure_Temp[I_PROBE_RETURN];
+     TempRif = sData.measure_Temp[I_PROBE_RETURN];
   40afee:	4b37      	ldr	r3, [pc, #220]	; (40b0cc <TemperatureRegulate+0x270>)
   40aff0:	f9b3 61fd 	ldrsh.w	r6, [r3, #509]	; 0x1fd
   if(AccessoryPresent_EepList(ACC_EEP_DXD)) 
@@ -26576,12 +26583,12 @@ int TemperatureRegulate()
   40b062:	d05b      	beq.n	40b11c <TemperatureRegulate+0x2c0>
   40b064:	f414 5f80 	tst.w	r4, #4096	; 0x1000
   40b068:	d058      	beq.n	40b11c <TemperatureRegulate+0x2c0>
-      if(sData.AccI2C[ACC_I2C_PREHEATER].sts & STS_ACC_ELECT)  // se l'accessorio è elettrico non mi preoccupo della formazione di ghiaccio sullo stesso
+      if(sData.AccI2C[ACC_I2C_PREHEATER].sts & STS_ACC_ELECT)  // se l'accessorio ï¿½ elettrico non mi preoccupo della formazione di ghiaccio sullo stesso
   40b06a:	4b18      	ldr	r3, [pc, #96]	; (40b0cc <TemperatureRegulate+0x270>)
   40b06c:	f893 302f 	ldrb.w	r3, [r3, #47]	; 0x2f
   40b070:	f013 0f08 	tst.w	r3, #8
   40b074:	d042      	beq.n	40b0fc <TemperatureRegulate+0x2a0>
-        if( (sData.measure_Temp[I_PROBE_EXHAUST] < 30) && (count_preHeaterOn == 0) ) // se si forma condensa può ghiacciare, accendo il preheater per 3 min e tengo acceso se T_EX non è > 3°C
+        if( (sData.measure_Temp[I_PROBE_EXHAUST] < 30) && (count_preHeaterOn == 0) ) // se si forma condensa puï¿½ ghiacciare, accendo il preheater per 3 min e tengo acceso se T_EX non ï¿½ > 3ï¿½C
   40b076:	4b15      	ldr	r3, [pc, #84]	; (40b0cc <TemperatureRegulate+0x270>)
   40b078:	f9b3 3201 	ldrsh.w	r3, [r3, #513]	; 0x201
   40b07c:	2b1d      	cmp	r3, #29
@@ -26611,7 +26618,7 @@ int TemperatureRegulate()
   40b0a2:	4b14      	ldr	r3, [pc, #80]	; (40b0f4 <TemperatureRegulate+0x298>)
   40b0a4:	681b      	ldr	r3, [r3, #0]
   40b0a6:	e7f2      	b.n	40b08e <TemperatureRegulate+0x232>
-        }else if ((sData.measure_Temp[I_PROBE_EXHAUST] > 30) && (count_preHeaterOn == 0)) // se si è scaldato abbastanza spengo e inserisco una pausa di 3 min prima del prossimo controllo
+        }else if ((sData.measure_Temp[I_PROBE_EXHAUST] > 30) && (count_preHeaterOn == 0)) // se si ï¿½ scaldato abbastanza spengo e inserisco una pausa di 3 min prima del prossimo controllo
   40b0a8:	2b1e      	cmp	r3, #30
   40b0aa:	ddec      	ble.n	40b086 <TemperatureRegulate+0x22a>
   40b0ac:	4b11      	ldr	r3, [pc, #68]	; (40b0f4 <TemperatureRegulate+0x298>)
@@ -26675,7 +26682,7 @@ int TemperatureRegulate()
   40b130:	4bad      	ldr	r3, [pc, #692]	; (40b3e8 <TemperatureRegulate+0x58c>)
   40b132:	601a      	str	r2, [r3, #0]
   40b134:	e747      	b.n	40afc6 <TemperatureRegulate+0x16a>
-     if(DigitAccessoryOperating(ACC_I2C_AWP)) 
+     if(DigitAccessoryOperating(ACC_I2C_AWP)) {
   40b136:	2008      	movs	r0, #8
   40b138:	4bac      	ldr	r3, [pc, #688]	; (40b3ec <TemperatureRegulate+0x590>)
   40b13a:	4798      	blx	r3
@@ -26684,7 +26691,7 @@ int TemperatureRegulate()
   40b13e:	4ba6      	ldr	r3, [pc, #664]	; (40b3d8 <TemperatureRegulate+0x57c>)
   40b140:	f9b3 60ab 	ldrsh.w	r6, [r3, #171]	; 0xab
   40b144:	e756      	b.n	40aff4 <TemperatureRegulate+0x198>
-			if(DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_HEATER))  //solo COOLER
+     } else if (DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_HEATER)) {  // solo COOLER
   40b146:	2001      	movs	r0, #1
   40b148:	4ba8      	ldr	r3, [pc, #672]	; (40b3ec <TemperatureRegulate+0x590>)
   40b14a:	4798      	blx	r3
@@ -26693,43 +26700,43 @@ int TemperatureRegulate()
   40b150:	4ba6      	ldr	r3, [pc, #664]	; (40b3ec <TemperatureRegulate+0x590>)
   40b152:	4798      	blx	r3
   40b154:	b918      	cbnz	r0, 40b15e <TemperatureRegulate+0x302>
-				TempRif = sData.AccI2C[ACC_I2C_COOLER].measure1;
+        TempRif = sData.AccI2C[ACC_I2C_COOLER].measure1;
   40b156:	4ba0      	ldr	r3, [pc, #640]	; (40b3d8 <TemperatureRegulate+0x57c>)
   40b158:	f9b3 601d 	ldrsh.w	r6, [r3, #29]
   40b15c:	e74a      	b.n	40aff4 <TemperatureRegulate+0x198>
-					if(DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER))  //solo HEATER
+     } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER)) {  // solo HEATER
   40b15e:	2000      	movs	r0, #0
   40b160:	4ba2      	ldr	r3, [pc, #648]	; (40b3ec <TemperatureRegulate+0x590>)
   40b162:	4798      	blx	r3
   40b164:	b118      	cbz	r0, 40b16e <TemperatureRegulate+0x312>
-						TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
+        TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
   40b166:	4b9c      	ldr	r3, [pc, #624]	; (40b3d8 <TemperatureRegulate+0x57c>)
   40b168:	f9b3 6009 	ldrsh.w	r6, [r3, #9]
   40b16c:	e742      	b.n	40aff4 <TemperatureRegulate+0x198>
-					if(DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER))  //solo HEATER
+     } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER)) {  // solo HEATER
   40b16e:	2001      	movs	r0, #1
   40b170:	4b9e      	ldr	r3, [pc, #632]	; (40b3ec <TemperatureRegulate+0x590>)
   40b172:	4798      	blx	r3
   40b174:	2800      	cmp	r0, #0
   40b176:	d0f6      	beq.n	40b166 <TemperatureRegulate+0x30a>
-							if(DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER))   // entrambi
+     } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER)) {   // entrambi
   40b178:	2000      	movs	r0, #0
   40b17a:	4b9c      	ldr	r3, [pc, #624]	; (40b3ec <TemperatureRegulate+0x590>)
   40b17c:	4798      	blx	r3
   40b17e:	b118      	cbz	r0, 40b188 <TemperatureRegulate+0x32c>
-								TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
+        TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
   40b180:	4b95      	ldr	r3, [pc, #596]	; (40b3d8 <TemperatureRegulate+0x57c>)
   40b182:	f9b3 6009 	ldrsh.w	r6, [r3, #9]
   40b186:	e735      	b.n	40aff4 <TemperatureRegulate+0x198>
-							if(DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER))   // entrambi
+     } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER)) {   // entrambi
   40b188:	2001      	movs	r0, #1
   40b18a:	4b98      	ldr	r3, [pc, #608]	; (40b3ec <TemperatureRegulate+0x590>)
   40b18c:	4798      	blx	r3
   40b18e:	2800      	cmp	r0, #0
   40b190:	d1f6      	bne.n	40b180 <TemperatureRegulate+0x324>
-								TempRif = sData.measure_Temp[I_PROBE_RETURN];  // se c'è l'AWP, la Treturn diventa quella dell'accessorio.
+        TempRif = sData.measure_Temp[I_PROBE_SUPPLY];
   40b192:	4b91      	ldr	r3, [pc, #580]	; (40b3d8 <TemperatureRegulate+0x57c>)
-  40b194:	f9b3 61fd 	ldrsh.w	r6, [r3, #509]	; 0x1fd
+  40b194:	f9b3 61ff 	ldrsh.w	r6, [r3, #511]	; 0x1ff
   40b198:	e72c      	b.n	40aff4 <TemperatureRegulate+0x198>
      if (((enab_func & (1 << ENAB_SUMMER)) == 0) && ((enab_func & (1 << ENAB_WINTER)) == 0))
   40b19a:	f414 6f40 	tst.w	r4, #3072	; 0xc00
@@ -26747,7 +26754,7 @@ int TemperatureRegulate()
           if(SetPointTemp > hist_T)
   40b1b0:	b280      	uxth	r0, r0
   40b1b2:	4287      	cmp	r7, r0
-            SetPointTemp -= hist_T; // es: 22.0 - 12.0 => 10.0 è la temperature in uscita per raffreddare l'ambiente e portare la temperatura interna a 22.0 
+            SetPointTemp -= hist_T; // es: 22.0 - 12.0 => 10.0 ï¿½ la temperature in uscita per raffreddare l'ambiente e portare la temperatura interna a 22.0 
   40b1b4:	bf86      	itte	hi
   40b1b6:	1a3f      	subhi	r7, r7, r0
   40b1b8:	b2bf      	uxthhi	r7, r7
@@ -26850,7 +26857,7 @@ int TemperatureRegulate()
   40b28a:	2095      	movs	r0, #149	; 0x95
   40b28c:	4b58      	ldr	r3, [pc, #352]	; (40b3f0 <TemperatureRegulate+0x594>)
   40b28e:	4798      	blx	r3
-          SetPointTemp += hist_T; // es: 22.0 + 12.0 => 34.0 è la temperature in uscita per scadare l'ambiente e portare la temperatura interna a 22.0 
+          SetPointTemp += hist_T; // es: 22.0 + 12.0 => 34.0 ï¿½ la temperature in uscita per scadare l'ambiente e portare la temperatura interna a 22.0 
   40b290:	4407      	add	r7, r0
   40b292:	b2bf      	uxth	r7, r7
   40b294:	e792      	b.n	40b1bc <TemperatureRegulate+0x360>
@@ -26956,7 +26963,7 @@ int TemperatureRegulate()
   40b374:	4b18      	ldr	r3, [pc, #96]	; (40b3d8 <TemperatureRegulate+0x57c>)
   40b376:	223c      	movs	r2, #60	; 0x3c
   40b378:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
-                 sData.RegDXD.count     = -24;  // Diamo +2 minuti in più (24 x 5sec. = 120 sec), in modo da dare il tempo al compressore di arrivare a regime
+                 sData.RegDXD.count     = -24;  // Diamo +2 minuti in piï¿½ (24 x 5sec. = 120 sec), in modo da dare il tempo al compressore di arrivare a regime
   40b37c:	f06f 0217 	mvn.w	r2, #23
   40b380:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
   40b384:	f04f 32ff 	mov.w	r2, #4294967295
@@ -27054,7 +27061,7 @@ int TemperatureRegulate()
   40b464:	4b7f      	ldr	r3, [pc, #508]	; (40b664 <TemperatureRegulate+0x808>)
   40b466:	223c      	movs	r2, #60	; 0x3c
   40b468:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
-              sData.RegDXD.count     =  -24;  // Diamo +2 minuti in più, in modo da dare il tempo al compressore di arrivare a regime
+              sData.RegDXD.count     =  -24;  // Diamo +2 minuti in piï¿½, in modo da dare il tempo al compressore di arrivare a regime
   40b46c:	f06f 0217 	mvn.w	r2, #23
   40b470:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
   40b474:	f04f 32ff 	mov.w	r2, #4294967295

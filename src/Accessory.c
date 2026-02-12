@@ -108,6 +108,8 @@ uint8_t BPD_FW = 0;
 
 extern Bool Buzzer_Off;
 
+uint32_t Zaki3 = 0;
+
 //----------------------------------------------------
 //        CONFIGURAZIONI   HARDWARE
 //----------------------------------------------------
@@ -1128,13 +1130,13 @@ int pollingDigitAccessory(void)
       temp = (sData.AccI2C[idxAcc].cnt_link_ok + sData.AccI2C[idxAcc].cnt_link_ko);
       
       if(temp >= 4) 
-          sData.AccI2C[idxAcc].level_link = ((temp  - sData.AccI2C[idxAcc].cnt_link_ko) * 10) / temp;            
+          sData.AccI2C[idxAcc].level_link = ((temp  - sData.AccI2C[idxAcc].cnt_link_ko) * 10) / temp;
 
       if(temp >= 10) {        
          sData.AccI2C[idxAcc].cnt_link_ko = 0;
          sData.AccI2C[idxAcc].cnt_link_ok = 0;
       }      
-     
+		
       /*if(idxAcc == ACC_I2C_DSC) {
           Serial_println1(" ");
           Serial_print1("Link OK: ");
@@ -1150,9 +1152,6 @@ int pollingDigitAccessory(void)
       
    }
           
-
-          
-             
    return 1;  // tieni attiva la funzione nello scheduler..
 }  
 
