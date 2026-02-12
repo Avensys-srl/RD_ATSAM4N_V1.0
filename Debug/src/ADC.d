@@ -133,7 +133,7 @@ src/ADC.d src/ADC.o: ../src/ADC.c ../src/asf.h \
  ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/sam_uart/uart_serial.h \
  ../src/ASF/sam/drivers/usart/usart.h ../src/config/conf_uart_serial.h \
- ../src/ASF/sam/drivers/wdt/wdt.h \
+ ../src/ASF/sam/drivers/wdt/wdt.h ../src/common/build_config.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h \
  ../src/data.h ../src/eeprom_map.h ../src/alarm.h
 
@@ -422,6 +422,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/config/conf_uart_serial.h:
 
 ../src/ASF/sam/drivers/wdt/wdt.h:
+
+../src/common/build_config.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\math.h:
 

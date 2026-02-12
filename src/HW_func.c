@@ -88,12 +88,13 @@ void PowerMode(Byte sts)
      PowerMotors = POWER_SAVE;
      //digitalWrite(pPowerMotors, HIGH); // Diseccita il rele'
 	 ioport_set_pin_level(pPowerMotors, IOPORT_PIN_LEVEL_HIGH);    
-          
+   ioport_set_pin_level(pIPEHD, IOPORT_PIN_LEVEL_LOW);       
    }else {
 
      PowerMotors = POWER_ON;
      //digitalWrite(pPowerMotors, LOW); // eccita il rele' 
-	 ioport_set_pin_level(pPowerMotors, IOPORT_PIN_LEVEL_LOW);   
+	 ioport_set_pin_level(pPowerMotors, IOPORT_PIN_LEVEL_LOW);
+   ioport_set_pin_level(pIPEHD, IOPORT_PIN_LEVEL_HIGH);   
    }  
 }
 
@@ -447,12 +448,12 @@ void Active_Procedure_Bypass_OpCl(Byte OpenClose, int SecondsWait)
       return;
 
     // segnaliamo che il bypass sta iniziando il cambiamento di stato (OPEN->CLOSE 0 CLOSE->OPEN).
-    // quindi il regolatore porterÃ  la velocitÃ  al minimo.
+    // quindi il regolatore porterï¿½  la velocitï¿½  al minimo.
     sData.status_unit &= ~MSK_STS_BYPASS; //pulisco lo stato
     sData.status_unit |= (1 << POS_BIT_BYPASS_RUN); //imposto la rotazione
 
 
-	// Se c'è presente l'accessorio bypass (vite senza fine) inviamo il comando di cambio di stato.
+	// Se c'ï¿½ presente l'accessorio bypass (vite senza fine) inviamo il comando di cambio di stato.
 	
 	if( AccessoryPresent_EepList(ACC_EEP_EBPD) && !(enab_func & (1 << ENAB_MBF)) )
 	{
@@ -475,7 +476,7 @@ void Active_Procedure_Bypass_OpCl(Byte OpenClose, int SecondsWait)
 		
 	}
 	else 
-	if(read_byte_eeprom(ADDR_EEP(SerialString[7])) == '6') // Sono una unità della serie 6 il bypass è eseguito come stop/avvio rotore dello scambiatore Je suis un appareil de la série 6 ; la dérivation est réalisée par un rotor d'échangeur marche/arrêt		
+	if(read_byte_eeprom(ADDR_EEP(SerialString[7])) == '6') // Sono una unitï¿½ della serie 6 il bypass ï¿½ eseguito come stop/avvio rotore dello scambiatore Je suis un appareil de la sï¿½rie 6 ; la dï¿½rivation est rï¿½alisï¿½e par un rotor d'ï¿½changeur marche/arrï¿½t		
 	{
 			if(RotaBypass == ANTIORARIO)
 			{
@@ -570,7 +571,7 @@ void Ctrl_FunzionamentoBPD()
 			 {
 				//StopMotor = true;  ///////////////////////////////////////////////////////////
             
-				// se non riecso a superare i 50 dg, c'è comunque un errore... 
+				// se non riecso a superare i 50 dg, c'ï¿½ comunque un errore... 
 #ifndef _DISABLE_ALARM_BYPASS_    
 				if(read_byte_eeprom(ADDR_EEP(Config_Bypass)) != BPD_MANUAL_CLOSE){  
 				  if(numStepBypass < (MIN_STEP_CTRL_CURRENT_BPD + 100))
@@ -637,7 +638,7 @@ void Ctrl_FunzionamentoBPD()
 // Description:
 //   Funzione che gira nello scheduler (Sample: 1,5 sec.) 
 //   Verifica l'assorbimento del KTS connesso alla MB. Se supera  0,18 A
-//   oppure se per 30 secondi non comunica com l'unità, Resetta la sua 
+//   oppure se per 30 secondi non comunica com l'unitï¿½, Resetta la sua 
 //   alimentazione.
 //---------------------------------------------------------------------
 static Byte Procedure_reset_KTS_ON = 0; 
@@ -715,18 +716,18 @@ int Gestione_Relays()
    {
       // sEep.Set_Output[i]:  0= Disable                 (il rele rimane non alimentato)                   
       //                      1= Bypass Status Open      (il rele passa in attrazione se: Bypass Open)	
-      //                      2= Common Fault Status     (il rele passa in attrazione se: Unità in allarme)		
-      //                      3= Unit is Run (ex: SDD)   (il rele passa in attrazione se: Unita è in funz.)	
-      //                      4= Pilota la valvola       (il rele passa in attrazione se: AWP è minore del Setpoint di temperatura)
-      //                      5= Estate / Inverno        (il rele passa in attrazione se: Fresh è minore della temperatura Bypass_minTempExt)
-	  //                      6= Max Speed			     (il rele passa in attrazione se: L'unità raggiunge il 100% di ventilazione)
+      //                      2= Common Fault Status     (il rele passa in attrazione se: Unitï¿½ in allarme)		
+      //                      3= Unit is Run (ex: SDD)   (il rele passa in attrazione se: Unita ï¿½ in funz.)	
+      //                      4= Pilota la valvola       (il rele passa in attrazione se: AWP ï¿½ minore del Setpoint di temperatura)
+      //                      5= Estate / Inverno        (il rele passa in attrazione se: Fresh ï¿½ minore della temperatura Bypass_minTempExt)
+	  //                      6= Max Speed			     (il rele passa in attrazione se: L'unitï¿½ raggiunge il 100% di ventilazione)
       //                    128= Disable                 (il rele rimane in attrazione)
       //                    129= Bypass Status Open      (il rele si Diseccita se: Bypass Open)
-      //                    130= Common Fault Status     (il rele si Diseccita se: Unità in allarme)
-      //                    131= Unit is Run (ex: SDD)   (il rele si Diseccita se: Unita è in funz.)    
-      //                    132= Pilota la valvola       (il rele si Diseccita se: AWP è minore del Setpoint di temperatura)
-      //                    133= Estate / Inverno        (il rele si Diseccita se: Fresh è minore della temperatura Bypass_minTempExt) 
-	  //                    134= Max Speed			     (il rele si Diseccita se: L'unità raggiunge il 100% di ventilazione)	  
+      //                    130= Common Fault Status     (il rele si Diseccita se: Unitï¿½ in allarme)
+      //                    131= Unit is Run (ex: SDD)   (il rele si Diseccita se: Unita ï¿½ in funz.)    
+      //                    132= Pilota la valvola       (il rele si Diseccita se: AWP ï¿½ minore del Setpoint di temperatura)
+      //                    133= Estate / Inverno        (il rele si Diseccita se: Fresh ï¿½ minore della temperatura Bypass_minTempExt) 
+	  //                    134= Max Speed			     (il rele si Diseccita se: L'unitï¿½ raggiunge il 100% di ventilazione)	  
       cfg_relay = read_byte_eeprom(ADDR_EEP(Set_Output[i])); 
       
       //   0x80 = il rele passa da Attrazione a Riposo se soddisfa la condizione 
@@ -814,7 +815,7 @@ int Gestione_Relays()
             }
             else
             {
-                  condizione_on = 0;  // se la macchina è spenta non devo pilotare niente
+                  condizione_on = 0;  // se la macchina ï¿½ spenta non devo pilotare niente
                   output_on = 0;
                   if(soft_start <= 0)
                   soft_start = 0;
@@ -841,7 +842,7 @@ int Gestione_Relays()
       //---- pilotiamo i rele' ----
       if(rele_disseccitato_condiz_on) {
          if(condizione_on) {     
-            // il relè si dissecita     
+            // il relï¿½ si dissecita     
             //digitalWrite(pRelay[i],   LOW);
 			if ( i == 0 )
 				ioport_set_pin_level(pOut1, IOPORT_PIN_LEVEL_LOW);
@@ -850,7 +851,7 @@ int Gestione_Relays()
             sData.StatusOutput &= ~(1 << i);
             
          }else{
-            // il relè si eccita, perchè non viene soddisfatta la condizione
+            // il relï¿½ si eccita, perchï¿½ non viene soddisfatta la condizione
             //digitalWrite(pRelay[i],   HIGH);
 			if ( i == 0 )
 				ioport_set_pin_level(pOut1, IOPORT_PIN_LEVEL_HIGH);
@@ -861,7 +862,7 @@ int Gestione_Relays()
          }  
       }else {
          if(condizione_on) { 
-            // il relè si eccita, perchè viene soddisfatta la condizione
+            // il relï¿½ si eccita, perchï¿½ viene soddisfatta la condizione
             //digitalWrite(pRelay[i],   HIGH);
 			if ( i == 0 )
 				ioport_set_pin_level(pOut1, IOPORT_PIN_LEVEL_HIGH);
@@ -870,7 +871,7 @@ int Gestione_Relays()
             sData.StatusOutput |= (1 << i);
             
          }else {
-            // il relè si dissecita
+            // il relï¿½ si dissecita
             //digitalWrite(pRelay[i],   LOW);
 			if ( i == 0 )
 				ioport_set_pin_level(pOut1, IOPORT_PIN_LEVEL_LOW);
@@ -889,7 +890,7 @@ int Gestione_Relays()
 // Function: Check_SerialNumber
 //
 // Description:
-//   Controlla la validita' del serial number, se è default,
+//   Controlla la validita' del serial number, se ï¿½ default,
 //   Imposta il depotenziamento in base alla lettura del canale AN9
 //   secondo una certa tabella.
 //---------------------------------------------------------------------
@@ -904,13 +905,13 @@ void Check_SerialNumber()
     if(read_byte_eeprom(ADDR_EEP(SerialString[i])) == '0')
       ord_vent++;
   } 
-  // 2. se la data è = '0','0','0','0'  
+  // 2. se la data ï¿½ = '0','0','0','0'  
   for(i=11, data_prod=0; i < 15; i++) {     
     if(read_byte_eeprom(ADDR_EEP(SerialString[i])) == '0')
       data_prod++;
   } 
   
-  // se 1 && 2  si verificano allora il serial number è default
+  // se 1 && 2  si verificano allora il serial number ï¿½ default
   // quindi andiamo a prendere il valore del livello HW
   if((data_prod >= 4) && (ord_vent >= 4)) {   
      i = 0;

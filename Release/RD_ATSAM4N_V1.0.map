@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Archive member included to satisfy reference by file (symbol)
 
 c:/program files (x86)/atmel/studio/7.0/toolchain/arm/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m\libm.a(lib_a-w_log.o)
@@ -5333,3 +5334,5 @@ write_word_eeprom                                 src/eeprom_func.o
                                                   src/Accessory.o
 year1                                             src/Admin_Messages.o
 zaki1                                             src/Seriale_1.o
+=======
+>>>>>>> 679fae7630e052acff3a9c583aafa3d7b305ec66

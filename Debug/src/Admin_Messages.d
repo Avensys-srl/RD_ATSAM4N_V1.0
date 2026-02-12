@@ -134,8 +134,9 @@ src/Admin_Messages.d src/Admin_Messages.o: ../src/Admin_Messages.c \
  ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/sam_uart/uart_serial.h \
  ../src/ASF/sam/drivers/usart/usart.h ../src/config/conf_uart_serial.h \
- ../src/ASF/sam/drivers/wdt/wdt.h ../src/Protocol_Ser1.h \
- ../src/Protocol_Ser2.h ../src/eeprom_map.h ../src/alarm.h ../src/data.h \
+ ../src/ASF/sam/drivers/wdt/wdt.h ../src/common/build_config.h \
+ ../src/Protocol_Ser1.h ../src/Protocol_Ser2.h ../src/eeprom_map.h \
+ ../src/alarm.h ../src/data.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\string.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\xlocale.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-none-eabi\include\sys\string.h
@@ -425,6 +426,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/config/conf_uart_serial.h:
 
 ../src/ASF/sam/drivers/wdt/wdt.h:
+
+../src/common/build_config.h:
 
 ../src/Protocol_Ser1.h:
 

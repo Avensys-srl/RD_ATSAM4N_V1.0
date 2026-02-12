@@ -133,8 +133,9 @@ src/HW_func.d src/HW_func.o: ../src/HW_func.c ../src/asf.h \
  ../src/ASF/common/services/serial/serial.h \
  ../src/ASF/common/services/serial/sam_uart/uart_serial.h \
  ../src/ASF/sam/drivers/usart/usart.h ../src/config/conf_uart_serial.h \
- ../src/ASF/sam/drivers/wdt/wdt.h ../src/data.h ../src/Scheduler.h \
- ../src/eeprom_map.h ../src/alarm.h ../src/Protocol_Ser1.h
+ ../src/ASF/sam/drivers/wdt/wdt.h ../src/common/build_config.h \
+ ../src/data.h ../src/Scheduler.h ../src/eeprom_map.h ../src/alarm.h \
+ ../src/Protocol_Ser1.h
 
 ../src/asf.h:
 
@@ -421,6 +422,8 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\arm\arm-gnu-toolchain\arm-no
 ../src/config/conf_uart_serial.h:
 
 ../src/ASF/sam/drivers/wdt/wdt.h:
+
+../src/common/build_config.h:
 
 ../src/data.h:
 

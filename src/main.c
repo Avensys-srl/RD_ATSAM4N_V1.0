@@ -36,7 +36,7 @@
  Author | Relaise  |    Date   |                  Descripions
  +--------+----------+-----------+------------------------------------------------------------------------+
  Maury      2.01      18/12/13   - Cambiato HW MainBoard 4.0,e Cambiato totalmente il SW che
- gestisce l'unità
+ gestisce l'unitï¿½
  +--------+----------+-----------+------------------------------------------------------------------------+
  Maury      2.02      09/07/14   - Corretto errore nella task Weeklyprog.
  - Inserito la funzione CAP
@@ -48,18 +48,18 @@
  Nicola     2.04      23/08/14   - Inserito le modifiche per il CAP - CAF
  Maury                28/08/14   - Fatto modifiche per accessori Clima (Byte info, Byte size)
  +--------+----------+-----------+------------------------------------------------------------------------+
- Maury      2.05      30/08/14   - Corretto errore nella funz. Clima. Se c'è un motore guasto
+ Maury      2.05      30/08/14   - Corretto errore nella funz. Clima. Se c'ï¿½ un motore guasto
  non spegenvo l'heater.
  - Migliorata la funz. CAF
  +--------+----------+-----------+------------------------------------------------------------------------+
- Maury      2.06      10/09/14   - Inserita la possibilità di configurare il senso di rotazione
+ Maury      2.06      10/09/14   - Inserita la possibilitï¿½ di configurare il senso di rotazione
  del motorino per chiudere il Bypass
- - Inserita la possibilità di configurare la posizione delle sonde
+ - Inserita la possibilitï¿½ di configurare la posizione delle sonde
  di Temperatura
  +--------+----------+-----------+------------------------------------------------------------------------+
- Maury      2.07      16/09/14   - Inserito Possibilità di configurazione Unità tramite
+ Maury      2.07      16/09/14   - Inserito Possibilitï¿½ di configurazione Unitï¿½ tramite
  una stringa di 54 Byte nella shell
- - In fase di partenza controlla il SN, se vuoto blocca l'unità
+ - In fase di partenza controlla il SN, se vuoto blocca l'unitï¿½
  e segnala lo stato di blocco con un bip ad intermittenza.
  +--------+----------+-----------+------------------------------------------------------------------------+
  Maury      2.08      23/09/14    - Tolto i sensori Analogici RH, CO2, VOC.
@@ -71,16 +71,16 @@
  +--------+----------+-----------+------------------------------------------------------------------------+
  Maury      2.10     24/02/15     - Migliorato il driver della Seriale_2 (per i disturbi) con 10 sample sul bit
  - Per gli allarmi le sonde Temp. KO introdotto Delay (~30 sec.)
- - Cambiato sistema per lo spegnimento dell'unità dopo aver rilevato un guasto
- Motore, l'unità continua a girare per oltre 1 minuto, dopo di che si spegne per 80 sec.
+ - Cambiato sistema per lo spegnimento dell'unitï¿½ dopo aver rilevato un guasto
+ Motore, l'unitï¿½ continua a girare per oltre 1 minuto, dopo di che si spegne per 80 sec.
  Alla terza ripartenza va a scrivere in eeprom lo stato di off. e ci rimane.
  Questo fa si che se ricevo un comando da remoto di ripartire posso farlo,
- senza dover disalimentare l'unità.
+ senza dover disalimentare l'unitï¿½.
  - Inserito buffer sulla lettura degli stati dei motore, dopo la
  conferma di 3 dati uguali cambio le variabili di
  sData.StatusMotorsR & sData.StatusMotorsF.
  - Ridotte le soglie minime di bypass fault (nuovi motorini).
- 27/02/15     - Introdotto un controllo della velocità quando il PEHD è ON.
+ 27/02/15     - Introdotto un controllo della velocitï¿½ quando il PEHD ï¿½ ON.
  Si parte dalla soglia minima del 40% a salire fino a che l'allarme di
  Prox. o Press_ko. non sparisce.
  +--------+----------+-----------+------------------------------------------------------------------------+
@@ -108,14 +108,14 @@
  Maury      2.18      05/11/15    - Corretto Baco nella funzione BOOST (PARTY), non veniva azzerato il
  contatore dopo la disattivazione.
  +--------+----------+-----------+------------------------------------------------------------------------+
- Maury      2.19      19/11/15    - Inserito la possibilità di avere la funzione CAF per le unità 0073
+ Maury      2.19      19/11/15    - Inserito la possibilitï¿½ di avere la funzione CAF per le unitï¿½ 0073
  0123.
- - Aumentato i controlli per cancellare l'allarme BDP quando è in
+ - Aumentato i controlli per cancellare l'allarme BDP quando ï¿½ in
  Manuale Chiuso
  +--------+----------+-----------+------------------------------------------------------------------------+
- Nicola     2.20      16/02/16    - Possibilità di gestire le sonde di CO2 VOC e RH anche in modalità CAF
+ Nicola     2.20      16/02/16    - Possibilitï¿½ di gestire le sonde di CO2 VOC e RH anche in modalitï¿½ CAF
  - Fire Alarm: manual reset da KST
- - Freecooling Automatico, anche in caso di unità spenta
+ - Freecooling Automatico, anche in caso di unitï¿½ spenta
  - CAF/CAP Serie 8
  +--------+----------+-----------+------------------------------------------------------------------------+
  Nicola     2.21      04/04/17    - Introdotto tempo TIMER_KTS_KO in Hw_func dopo di che viene riavviato il KTS
@@ -124,7 +124,7 @@
  +--------+----------+-----------+------------------------------------------------------------------------+
  Nicola     2.22      14/11/17    - Gestione del pressostato per il filtro sporco
  - Inserite funzioni di verfica e calibrazione in Filter_Func
- - Possibilità di gestire DPS e DPP con il KTS
+ - Possibilitï¿½ di gestire DPS e DPP con il KTS
  - Modificato il Reset filtri nel caso DPP o DPS
  - Modificato lo stringone per l'accettazione del DPP
  - Modificata la shell accessori in modo che possa essere visualizzata
@@ -132,9 +132,9 @@
  +--------+----------+-----------+------------------------------------------------------------------------+
  Nicola     2.23      25/01/18    - Sbilanciamento attivo anche durante il controllo 0-10V esterno.
  +--------+----------+-----------+------------------------------------------------------------------------+
- Nicola     2.24      14/07/18    - Il modbus può comandare i motori singolarmente. Aggiungiamo un ENABLE
- per questa nuova modalità (MBF coil n.22) e 2 setpoint da 0 a 100 (il modbus
- può fermare i motori) uno per ogni motore. Quanto sono in questa funzione motor_speed
+ Nicola     2.24      14/07/18    - Il modbus puï¿½ comandare i motori singolarmente. Aggiungiamo un ENABLE
+ per questa nuova modalitï¿½ (MBF coil n.22) e 2 setpoint da 0 a 100 (il modbus
+ puï¿½ fermare i motori) uno per ogni motore. Quanto sono in questa funzione motor_speed
  passa completamente il comando.
  - Introdotto il nuovo msg in I2C per gli accessori con 4 sensori a bordo
  EXT1, EXT2, EXT3, EXT4.
@@ -165,7 +165,7 @@
  Nicola     2.32      10/04/21    - Corretto il baco sul EBPD/EBP2 : nel caso di controllo diretto (non MBF)
  non si sincronizzavano i bypass al ciclo di avvio. Causa: la variabile
  info_EBPD viene inizializzata con un valore valido di controllo, non
- stimolando così l'aggiornamento del comando sin dal principio. Soluzione:
+ stimolando cosï¿½ l'aggiornamento del comando sin dal principio. Soluzione:
  inizializzata ad un valore fuori range in modo che si sincronizzi fin da subito.
  +--------+----------+-----------+------------------------------------------------------------------------+
  Zakaria     2.33      04/06/21    - Introdotto nuovo accessorio in I2C: DSC
@@ -248,7 +248,7 @@ Zakaria / Nicola     2.68      26/01/26    - Added PIR strategy to RD firmware( 
 #include "common/build_config.h"
 
 // Versione el FW.
-const char VERSION_FW[5]= {' ','2', '.','6','8'};
+const char VERSION_FW[5]= {' ','2', '.','6','9'};
 
 //----------------------- Funzioni a custom sul FW -------------------------
 //#define _MAPPING_FUNC               // Se abilito la define Attivo la funzione di mappatura dei motori, stampando a video rmp etc..
@@ -258,7 +258,7 @@ const char VERSION_FW[5]= {' ','2', '.','6','8'};
 
 #ifdef  _EEP_SERIAL_NUMBER
 const char SN[18]= {'9', '9', '9', '9',  // Ordine di vendita
-	'0', '0', '3', '5',  // Portata unità & serie
+	'0', '0', '3', '5',  // Portata unitï¿½ & serie
 	'0', '1', '4',  // Configurazione
 	'1', '8', '3', '0',  // anno / Week
 '0', '0', '1'};
@@ -380,7 +380,7 @@ Byte connect_KTS         = 0;
 #define DIM_MAX_BUFF_SER2         128
 
 Byte buff_ser2[DIM_MAX_BUFF_SER2];   // buffer di appoggio
-int  available_ser2 = 0;             // numero di Byte che il buffer è riempito
+int  available_ser2 = 0;             // numero di Byte che il buffer ï¿½ riempito
 
 //-----------  Strutture Dati RAM / EEPROM -----------
 SDATA  sData;
@@ -588,7 +588,7 @@ void init_sdata()
 		sData.AccI2C[i].measure3    = 0;         // misura secondaria
 		sData.AccI2C[i].measure4    = 0;         // misura secondaria
 		sData.AccI2C[i].measure5    = 0;         // misura secondaria
-		sData.AccI2C[i].data        = 0;         // byte Data: Per gli accessori HWD, EHD, PEHD, è la taglia, per le sonde viene passato l'info. se sono da canale 'd', oppure d'ambiente 'a'
+		sData.AccI2C[i].data        = 0;         // byte Data: Per gli accessori HWD, EHD, PEHD, ï¿½ la taglia, per le sonde viene passato l'info. se sono da canale 'd', oppure d'ambiente 'a'
 		sData.AccI2C[i].level_link  = 0;         // livello  della comunicazione (valore espresso in 10/10)
 		sData.AccI2C[i].cnt_link_ok = 0;         // Contatore Link buoni
 		sData.AccI2C[i].cnt_link_ko = 0;         // Contatore Link falliti
@@ -614,13 +614,13 @@ void init_sdata()
 	sData.speed_motors_R = 0;                   // comando ai motori Returns, 0 -> 255 , il dato si puÃ² discostare dal valore in eeprom se vi Ã¨ in corso un Defrost, oppure una Co2 Alarm,...
 	sData.speed_motors_F = 0;                   // comando ai motori Returns, 0 -> 255 , il dato si puÃ² discostare dal valore in eeprom se vi Ã¨ in corso un Defrost, oppure una Co2 Alarm,...
 	
-	sData.increase_speed_RH_CO2 = 10;           // Coefficiente moltiplicativo per 10,  10= 1.0 ed è l'incremento della velocità rispetto al set-poin a causa: RH alta, o CO2 alta, o VOCs alta.
+	sData.increase_speed_RH_CO2 = 10;           // Coefficiente moltiplicativo per 10,  10= 1.0 ed ï¿½ l'incremento della velocitï¿½ rispetto al set-poin a causa: RH alta, o CO2 alta, o VOCs alta.
 	
 	// misure
 	sData.feedbk_v_speed_motors_R = 0;          // tensione letta sul comando dei motori ramo RETURN (0.00V a 11.00V) il valore Ã¨ moltipl. per 100, quindi 1100 = 11.00V
 	sData.feedbk_v_speed_motors_F = 0;          // tensione letta sul comando dei motori ramo FRESH  (0.00V a 11.00V) il valore Ã¨ moltipl. per 100, quindi 1100 = 11.00V
 	sData.measure_CO2_max         = 0;          // valore massimo di Co2 tra i vari sensori: espresso in PPM ( da 0 a 2000 PPM)
-	sData.measure_RH_max          = 0;          // valore massimo di UmiditÃ  tra i vari sensori: da 0% a 99%
+	sData.measure_RH_max          = 0;          // valore massimo di Umiditï¿½  tra i vari sensori: da 0% a 99%
 	sData.measure_VOC_max         = 0;          // valore massimo di VOC tra i vari sensori: da 0  a 10000 ug/M3
 	sData.measure_pressure        = 0;          // valore espresso in Pascal da 0 a 1000Pa
 	sData.measure_RH_Analogic     = 0;          // Misura della sonda RH  interna all'Unita'
@@ -990,7 +990,7 @@ void Setup ( void )
 	 
 	 wdt_restart(WATCH_DOG);
 	 
-	 //------------------ verifica la validità del serial Number, se è falso  blocca l'unità -------
+	 //------------------ verifica la validitï¿½ del serial Number, se ï¿½ falso  blocca l'unitï¿½ -------
 	 Check_SerialNumber();
 	 
 	 ioport_set_pin_level(pSwitchOFF_KTS, IOPORT_PIN_LEVEL_HIGH);  // KTS HIGH
