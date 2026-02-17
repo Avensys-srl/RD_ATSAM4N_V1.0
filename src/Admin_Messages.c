@@ -1489,9 +1489,121 @@ void polling_CTRL_FAN(void)
 //----------------------------------------------------------------------------------
 byte index_packet_data =0;
 
+typedef struct {
+    byte out_mask;
+    const int *alarms;
+    byte count;
+} SModbusAlarmMap;
+
+static Bool modbus_any_alarm_active(const int *alarms, byte count)
+{
+    byte i;
+
+    for(i = 0; i < count; i++) {
+        if(CkAlarm(alarms[i])) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+static byte modbus_build_alarm_byte(const SModbusAlarmMap *map, byte count)
+{
+    byte i;
+    byte out = 0;
+
+    for(i = 0; i < count; i++) {
+        if(modbus_any_alarm_active(map[i].alarms, map[i].count)) {
+            out |= map[i].out_mask;
+        }
+    }
+
+    return out;
+}
+
+static byte modbus_alarm_lo_from_events(void)
+{
+    static const int kAlarmMotorsR[] = {
+        ALM_MR1_NO_PWR, ALM_MR2_NO_PWR, ALM_MR3_NO_PWR,
+        ALM_MR1_NO_PULSE, ALM_MR2_NO_PULSE, ALM_MR3_NO_PULSE
+    };
+    static const int kAlarmMotorsF[] = {
+        ALM_MF1_NO_PWR, ALM_MF2_NO_PWR, ALM_MF3_NO_PWR,
+        ALM_MF1_NO_PULSE, ALM_MF2_NO_PULSE, ALM_MF3_NO_PULSE
+    };
+    static const int kAlarmCO2[] = {
+        ALM_PCO2_EX1_KO, ALM_PCO2_EX1_LINK, ALM_PCO2_EX2_KO, ALM_PCO2_EX2_LINK
+    };
+    static const int kAlarmRH[] = {
+        ALM_PRH_EX1_KO, ALM_PRH_EX1_LINK, ALM_PRH_EX2_KO, ALM_PRH_EX2_LINK
+    };
+    static const int kAlarmVOC[] = {
+        ALM_VOC_EX1_KO, ALM_VOC_EX1_LINK
+    };
+    static const int kAlarmTempAndAWP[] = {
+        ALM_PTFRESH_KO, ALM_PTRET_KO, ALM_PTSUP_KO, ALM_PTEXA_KO, ALM_AWP_KO, ALM_AWP_LINK
+    };
+    static const int kAlarmCAP[] = {
+        ALM_PCAP_KO, ALM_PCAP_LINK
+    };
+    static const int kAlarmCAF[] = {
+        ALM_PCAF_KO, ALM_PCAF_LINK
+    };
+
+    static const SModbusAlarmMap kMap[] = {
+        {0x01, kAlarmMotorsR, (byte)(sizeof(kAlarmMotorsR) / sizeof(kAlarmMotorsR[0]))},
+        {0x02, kAlarmMotorsF, (byte)(sizeof(kAlarmMotorsF) / sizeof(kAlarmMotorsF[0]))},
+        {0x04, kAlarmCO2, (byte)(sizeof(kAlarmCO2) / sizeof(kAlarmCO2[0]))},
+        {0x08, kAlarmRH, (byte)(sizeof(kAlarmRH) / sizeof(kAlarmRH[0]))},
+        {0x10, kAlarmVOC, (byte)(sizeof(kAlarmVOC) / sizeof(kAlarmVOC[0]))},
+        {0x20, kAlarmTempAndAWP, (byte)(sizeof(kAlarmTempAndAWP) / sizeof(kAlarmTempAndAWP[0]))},
+        {0x40, kAlarmCAP, (byte)(sizeof(kAlarmCAP) / sizeof(kAlarmCAP[0]))},
+        {0x80, kAlarmCAF, (byte)(sizeof(kAlarmCAF) / sizeof(kAlarmCAF[0]))}
+    };
+
+    return modbus_build_alarm_byte(kMap, (byte)(sizeof(kMap) / sizeof(kMap[0])));
+}
+
+static byte modbus_alarm_hi_from_events(void)
+{
+    static const int kAlarmDSP[] = {
+        ALM_DPP_KO, ALM_DPP_LINK
+    };
+    static const int kAlarmBypass[] = {
+        ALM_BYPASS_KO, ALM_EBPD_KO, ALM_EBPD_LINK, ALM_EBP2_KO, ALM_EBP2_LINK
+    };
+    static const int kAlarmHeater[] = {
+        ALM_EHD_NTC_KO, ALM_EHD_TW_DANGER, ALM_EHD_TW_OVR, ALM_EHD_ELECT,
+        ALM_EHD_TA_OVR, ALM_EHD_SIZE, ALM_EHD_PRESS, ALM_EHD_LINK
+    };
+    static const int kAlarmCooler[] = {
+        ALM_CWD_NTC_KO, ALM_CWD_TW_DANGER, ALM_CWD_TW_OVR, ALM_CWD_ELECT,
+        ALM_CWD_TA_OVR, ALM_CWD_SIZE, ALM_CWD_LINK
+    };
+    static const int kAlarmPreHeater[] = {
+        ALM_PEH_NTC_KO, ALM_PEH_TW_DANGER, ALM_PEH_TW_OVR, ALM_PEH_ELECT,
+        ALM_PEH_TA_OVR, ALM_PEH_SIZE, ALM_PEHD_PRESS, ALM_PEH_LINK
+    };
+    static const int kAlarmElectBoard[] = {
+        ALM_EB_CTRL_FAN, ALM_EB_REM_CTRL, ALM_BATT_KO, ALM_EEP_FAULT, ALM_KTS_FAULT
+    };
+
+    static const SModbusAlarmMap kMap[] = {
+        {0x01, kAlarmDSP, (byte)(sizeof(kAlarmDSP) / sizeof(kAlarmDSP[0]))},
+        {0x02, kAlarmBypass, (byte)(sizeof(kAlarmBypass) / sizeof(kAlarmBypass[0]))},
+        {0x04, kAlarmHeater, (byte)(sizeof(kAlarmHeater) / sizeof(kAlarmHeater[0]))},
+        {0x08, kAlarmCooler, (byte)(sizeof(kAlarmCooler) / sizeof(kAlarmCooler[0]))},
+        {0x10, kAlarmPreHeater, (byte)(sizeof(kAlarmPreHeater) / sizeof(kAlarmPreHeater[0]))},
+        {0x20, kAlarmElectBoard, (byte)(sizeof(kAlarmElectBoard) / sizeof(kAlarmElectBoard[0]))}
+    };
+
+    return modbus_build_alarm_byte(kMap, (byte)(sizeof(kMap) / sizeof(kMap[0])));
+}
+
 void polling_ModBus()
 {
-    byte byte_alarm, b, i;
+    byte b, i;
     byte buff[102];
     unsigned short size_unit, Caf_Max;
     short  stemp_16 =0;
@@ -1518,64 +1630,8 @@ void polling_ModBus()
         
         /*                            0x80          0x40           0x20              0x10            0x08            0x04            0x02            0x01
           BYTE_ALARM_LO:  (MSB)  CAF Acces.KO, CAP Acces.KO, Temper.Sensors KO, VOC Sensors KO,  RH Sensors KO, CO2 Sensors KO,  Motor Fresh KO,  Motor Return KO   */
-        b = 0;
-        byte_alarm = (ALM_MR1_NO_PWR >> 3);
-        if(sData.Events[byte_alarm])           b  = 0x01;    // tutti gli allarmi motorsR
-                        
-        byte_alarm = (ALM_MF1_NO_PWR >> 3);
-        if(sData.Events[byte_alarm])           b |= 0x02;  // tutti gli allarmi motorsF           
-        
-//-----  BEGIN -----  VANNO RIVISTI QUESTI ERRORI, SONO GESTITI POCO E MALE
-
-//        byte_alarm = (ALM_PCO2_EX1_KO >> 3);
-//        if(sData.Events[byte_alarm])           b |= 0x04;  // tutti gli allarmi Sensori CO2
-//                     
-//        byte_alarm = (ALM_PRH_EX1_KO >> 3);
-//        if(sData.Events[byte_alarm])           b |= 0x08;  // tutti gli allarmi Sensori RH                
-//            
-//        byte_alarm = (ALM_VOC_EX1_KO >> 3);
-//        if(sData.Events[byte_alarm])           b |= 0x10; // tutti gli allarmi Sensori VOC
-//                         
-//        byte_alarm = (ALM_PTFRESH_KO >> 3);
-//        if(sData.Events[byte_alarm] || 
-//           CkAlarm(ALM_AWP_KO)      || 
-//           CkAlarm(ALM_AWP_LINK))              b |= 0x20;  // tutti gli allarmi NTC + AWP
-//
-//   
-//
-//
-//        //   Events[06]:  SENSORS_PRESSURE: 7.DPP_LinkEr, 6.DPP_KO     , 5.- - - - - , 4.PCAF_LinkEr, 3.PCAF_KO     , 2.- - - - - , 1.PCAP_LinkE, 0.PCAP_KO    
-//        byte_alarm = ALM_PCAP_KO >> 3;     
-//        if(sData.Events[byte_alarm] & 0x03)    b |= 0x40;                    
-//        if(sData.Events[byte_alarm] & 0x18)    b |= 0x80;
-//                               
-         buff[IPK1U_BYTE_ALARM_LO]  = b;     
-         b=0;
-//        
-//        /*                            0x80          0x40           0x20              0x10            0x08            0x04            0x02            0x01
-//          BYTE_ALARM_HI:  (MSB)        - - - ,        - - -,   Electr.Board KO,   PreHeater KO,      Cooler KO,      Heater KO,    Bypass Fails,  DSP Access.KO     */  
-//        b=0;
-//        if(sData.Events[byte_alarm] & 0xC0)   b  = 0x01;                        
-//        if(CkAlarm(ALM_BYPASS_KO))            b |= 0x02;    
-//        
-//        byte_alarm = ALM_EHD_NTC_KO >> 3;  
-//        if(sData.Events[byte_alarm])          b |= 0x04;   
-//        
-//        byte_alarm = ALM_CWD_NTC_KO >> 3;  
-//        if(sData.Events[byte_alarm])          b |= 0x08;  
-//        
-//        byte_alarm = ALM_PEH_NTC_KO >> 3;  
-//        if(sData.Events[byte_alarm])          b |= 0x10;      
-//
-//
-//------ END ------    
-        
-             
-        //   Events[10] : 7.- - - - - , 6.KTS_FAULT  , 5.----, 4.EepFault   , 3.----    , 2.BattFault , 1.EB_RemCtrl, 0.EB_CtrlFan_KO 
-        byte_alarm = ALM_EB_CTRL_FAN >> 3; 
-        if(sData.Events[byte_alarm] & 0x57)   b |= 0x20;  // Electr.Board KO
-                    
-        buff[IPK1U_BYTE_ALARM_HI]      = b;              
+        buff[IPK1U_BYTE_ALARM_LO]      = modbus_alarm_lo_from_events();
+        buff[IPK1U_BYTE_ALARM_HI]      = modbus_alarm_hi_from_events();
         buff[IPK1U_STATUS_OUTPUT]      = (sData.StatusOutput & 0x03);    // bits: ..., [1]STS_OUT2, [0]STS_OUT1
         buff[IPK1U_STATUS_FILTER]      = CkAlarm(ALM_FILTER);
         
