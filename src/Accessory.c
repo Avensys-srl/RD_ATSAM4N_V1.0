@@ -467,6 +467,10 @@ void RemoveDigitAccessory(int nAcc_I2C)
      
      sData.AccI2C[nAcc_I2C].numCmdDisable = 0;
      
+	 sData.AccI2C[nAcc_I2C].level_link  = 0;        // livello della comunicazione (valore espresso in 10/10)
+	 sData.AccI2C[nAcc_I2C].cnt_link_ok = 0;         // Contatore Link buoni
+	 sData.AccI2C[nAcc_I2C].cnt_link_ko = 0;         // Contatore Link falliti
+	 
      sData.AccI2C[nAcc_I2C].sts = 0;
      sData.AccI2C[nAcc_I2C].comand   = 0;
      sData.AccI2C[nAcc_I2C].measure1 = 0;            // misura 1
@@ -1128,13 +1132,13 @@ int pollingDigitAccessory(void)
       temp = (sData.AccI2C[idxAcc].cnt_link_ok + sData.AccI2C[idxAcc].cnt_link_ko);
       
       if(temp >= 4) 
-          sData.AccI2C[idxAcc].level_link = ((temp  - sData.AccI2C[idxAcc].cnt_link_ko) * 10) / temp;            
+          sData.AccI2C[idxAcc].level_link = ((temp  - sData.AccI2C[idxAcc].cnt_link_ko) * 10) / temp;
 
       if(temp >= 10) {        
          sData.AccI2C[idxAcc].cnt_link_ko = 0;
          sData.AccI2C[idxAcc].cnt_link_ok = 0;
       }      
-     
+		
       /*if(idxAcc == ACC_I2C_DSC) {
           Serial_println1(" ");
           Serial_print1("Link OK: ");
@@ -1150,9 +1154,6 @@ int pollingDigitAccessory(void)
       
    }
           
-
-          
-             
    return 1;  // tieni attiva la funzione nello scheduler..
 }  
 
