@@ -38,7 +38,7 @@
     ' ','4','.','0',          //  4 Byte:  Ascii: versione hardware MB     Es: " 4.0"
     ' ',            //  5 Byte:  Ascii: versione software MB     Es: " 2.01" oppure " 2.10"
     '2', '.',
-    '6', '9', 
+    '7', '0', 
     
 #ifdef _EEP_SERIAL_NUMBER
     SN[0],  SN[1],  SN[2],  SN[3],

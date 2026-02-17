@@ -248,7 +248,7 @@ Zakaria / Nicola     2.68      26/01/26    - Added PIR strategy to RD firmware( 
 #include "common/build_config.h"
 
 // Versione el FW.
-const char VERSION_FW[5]= {' ','2', '.','6','9'};
+const char VERSION_FW[5]= {' ','2', '.','7','0'};
 
 //----------------------- Funzioni a custom sul FW -------------------------
 //#define _MAPPING_FUNC               // Se abilito la define Attivo la funzione di mappatura dei motori, stampando a video rmp etc..
