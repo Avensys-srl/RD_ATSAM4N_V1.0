@@ -1,100 +1,174 @@
-# Template descrizione funzione
+﻿# Funzione `managementBypass`
 
-## Nome funzione
+# ðŸ”· SEZIONE A â€” DOCUMENTAZIONE TECNICA (ENGINEERING)
+
+## A1. Nome funzione
 `managementBypass(unsigned short enab_func)`
 
-## File e posizione
+## A2. File e posizione
 `src/Clima_Func.c:93`
 
-## Scopo
-Gestisce apertura/chiusura del bypass aria in base alla configurazione EEPROM, allo stato sonde, allo stato accessori e al contesto operativo (automatico, manuale, controllo esterno, auto on/off con freecooling).
+## A3. Scopo tecnico
+Decide il comando logico di apertura/chiusura bypass in base a configurazione, stato macchina, temperature, allarmi e input esterni, quindi attiva la procedura firmware di manovra bypass.
 
-## Parametri e ritorno
-Parametro in ingresso:
-- `enab_func`: bitmask funzioni abilitate (estate, inverno, altre modalita); usata in particolare per la logica bypass in automatico.
+## A4. Parametri e ritorno
+### Parametri in ingresso
+- `enab_func`:
+  - Tipo: `unsigned short` (bitmask funzioni abilitate)
+  - Unita di misura: non applicabile
+  - Range ammesso: 0..65535 (bit significativi secondo mappa firmware)
+  - Valori invalidi gestiti: bit non previsti ignorati dalle condizioni specifiche
 
-Valore di ritorno:
-- Nessuno (`void`).
+### Valore di ritorno
+- Tipo: `void`
+- Significato: nessun valore restituito; effetto su stato e comando bypass
 
-Unita di misura rilevanti:
-- Temperature in decimi di grado C.
-- Tensioni ingressi analogici in decimi/centesimi di volt scalati ADC (soglie usate: `250` e `610`).
+## A5. Logica dettagliata
+- Esce subito se e attivo test bypass.
+- Legge la modalita bypass da EEPROM e seleziona il ramo operativo.
+- Manuale: forza `cmd_bypass` a chiuso o aperto.
+- Auto on/off: gestisce cicli temporizzati di freecooling con contatori ON/OFF e possibile cambio stato unita.
+- Automatico: usa temperature return/fresh, setpoint, isteresi minima esterna, stato heater/cooler/DXD e allarmi sonde.
+- Controllo esterno: interpreta ingresso analogico secondo modalita 12V-open o 0V-open.
+- Applica filtri temporali con persistenza (`persist_temp_bypass_on`) e contatori freecooling.
+- Esegue comando fisico solo se la posizione richiesta e diversa da quella attuale.
 
-## Logica dettagliata
-- Se il test bypass e attivo (`MSK_TEST_BYPASS`), esce subito senza agire.
-- Legge `Config_Bypass` da EEPROM e imposta il comportamento:
-- `BPD_MANUAL_CLOSE`: forza comando chiusura.
-- `BPD_MANUAL_OPEN`: forza comando apertura.
-- `BPD_AUTO_ON_OFF`: gestisce una logica di freecooling con cicli ON/OFF temporizzati e possibile accensione/spegnimento unita via `Set_Power_ON` e `PowerMode`.
-- In fase ON mantiene attivazione per 60 cicli scheduler.
-- In fase OFF attende 360 cicli prima di riesaminare riaccensione.
-- Se prima era in standby (`standby_before`), ripristina lo stato precedente.
-- `BPD_AUTOMATIC`: se DXD e acceso chiude bypass; altrimenti valuta temperatura ritorno/fresh e soglie EEPROM:
-- Apertura con condizioni combinate: ritorno alta vs setpoint, fresh sopra minima, fresh abbastanza piu fredda di return, cooler spento.
-- Chiusura con condizioni di esclusione: fresh >= return, fresh sotto minima, return sotto setpoint-hysteresis, heater/cooler accesi.
-- Usa persistenza (`persist_temp_bypass_on`) per evitare commutazioni impulsive.
-- `BPD_EXT_CTRL`: usa input esterno configurato (`Set_Input[0]/[1]`) per tradurre tensione ingresso in comando apertura/chiusura con due modalita:
-- `INP_12V_BYPASS_OPEN` (12V=open, 0V=close).
-- `INP_0V_BYPASS_OPEN` (0V=open, 12V=close).
-- Al termine calcola un tempo di attesa dipendente da velocita motori, poi esegue realmente il movimento bypass con `Active_Procedure_Bypass_OpCl(OPEN_BPD/CLOSE_BPD, 9)` solo se lo stato corrente lo richiede.
+## A6. Mappa firmware con riferimenti puntuali
+- **Passo**: blocco test bypass, uscita anticipata  
+  **Dove**: `src/Clima_Func.c:103`  
+  **Cosa osservare**: `sData.status_test & MSK_TEST_BYPASS`
+- **Passo**: acquisizione configurazione bypass  
+  **Dove**: `src/Clima_Func.c:107`  
+  **Cosa osservare**: `cfg_bypass = read_byte_eeprom(...)`
+- **Passo**: inizializzazione stato freecooling per modalita automatica/esterna/auto on-off  
+  **Dove**: `src/Clima_Func.c:111`  
+  **Cosa osservare**: `count_active_freecooling_off = 1`
+- **Passo**: ramo manuale chiuso  
+  **Dove**: `src/Clima_Func.c:126`  
+  **Cosa osservare**: `cmd_bypass = 0`
+- **Passo**: ramo manuale aperto  
+  **Dove**: `src/Clima_Func.c:131`  
+  **Cosa osservare**: `cmd_bypass = 1`
+- **Passo**: ramo auto on/off con gestione standby e timer ON/OFF  
+  **Dove**: `src/Clima_Func.c:136`  
+  **Cosa osservare**: `count_active_freecooling_on`, `count_active_freecooling_off`, `standby_before`
+- **Passo**: ramo automatico su temperature e allarmi  
+  **Dove**: `src/Clima_Func.c:207`  
+  **Cosa osservare**: `measure_Temp[...]`, `set_point_temp`, `persist_temp_bypass_on`
+- **Passo**: ramo controllo esterno da input analogico  
+  **Dove**: `src/Clima_Func.c:271`  
+  **Cosa osservare**: `Set_Input[0/1]`, `measure_ADC_input[...]`, soglie `250` e `610`
+- **Passo**: decisione finale manovra e attesa in base velocita motori  
+  **Dove**: `src/Clima_Func.c:305`  
+  **Cosa osservare**: `second_to_wait`, `cmd_bypass`
+- **Passo**: comando apertura bypass  
+  **Dove**: `src/Clima_Func.c:356`  
+  **Cosa osservare**: `Active_Procedure_Bypass_OpCl(OPEN_BPD, 9)`
+- **Passo**: comando chiusura bypass  
+  **Dove**: `src/Clima_Func.c:358`  
+  **Cosa osservare**: `Active_Procedure_Bypass_OpCl(CLOSE_BPD, 9)`
 
-## Dipendenze
-- EEPROM: `read_byte_eeprom`, `read_word_eeprom`, `write_byte_eeprom`.
-- Stato unita e misure: `sData` (`status_unit`, `measure_Temp`, `measure_ADC_input`, `speed_motors_F`).
-- Accessori/stato allarmi: `DigitAccessoryOn`, `DigitAccessoryOperating`, `CkAlarm`.
-- Comandi attuatori: `Active_Procedure_Bypass_OpCl`, `PowerMode`.
-- Parametri e macro: `Config_Bypass`, `Bypass_minTempExt`, `SetPointTemp[]`, `idxSetPointT`, `Set_Power_ON`, `MSK_STS_BYPASS`, `POS_BIT_BYPASS_CLOSE`.
-- Variabili globali di persistenza: `persist_temp_bypass_on`, `count_active_freecooling_on`, `count_active_freecooling_off`, `standby_before`.
+## A7. Interfacce esterne (livello astratto)
+### Segnali generati dallâ€™RD
+- Attivazione manovra bypass tramite procedura firmware:
+  - Pin MCU / periferica: non diretto in questa funzione (instradato da `Active_Procedure_Bypass_OpCl`)
+  - Tipo: comando digitale logico verso catena attuatore
+  - Livello attivo: `OPEN_BPD` o `CLOSE_BPD`
+  - Condizione di attivazione: `cmd_bypass` diverso da stato corrente
+  - Persistenza: impulso di comando con tempo interno procedura
 
-## Casi limite
-- Se sonde fresh/return sono in allarme (`ALM_PTFRESH_KO` o `ALM_PTRET_KO`), in automatico forza comportamento prudente di chiusura bypass.
-- In `BPD_EXT_CTRL` se input 1 non e configurato per bypass, prova input 2.
-- La commutazione e filtrata con contatori di persistenza per ridurre oscillazioni.
-- Il codice usa un controllo stato in chiusura con confronto su negazione logica del bitmask (`== !mskBPD_Close`), da verificare in validazione per coerenza con il bitmask stato bypass.
+### Segnali letti dallâ€™RD
+- Temperature fresh/return:
+  - Tipo ingresso: sonde temperatura
+  - Modalita lettura: campi `sData.measure_Temp[...]`
+  - Frequenza campionamento: ciclo regolazione firmware
+  - Condizione di validita: assenza allarmi sonde dedicate
+- Input analogico esterno bypass:
+  - Tipo ingresso: analogico
+  - Modalita lettura: `sData.measure_ADC_input[...]` con soglie codificate
+  - Frequenza campionamento: ciclo funzione
+  - Condizione di validita: ingresso configurato come bypass
 
-## Verifica
-- Forzare ciascun `Config_Bypass` e osservare comando/stato bypass su log diagnostico e stato `sData.status_unit`.
-- Simulare temperature per trigger di apertura e chiusura in automatico e verificare persistenza.
-- In `BPD_EXT_CTRL`, iniettare livelli equivalenti a <2.5V e >6.1V e confermare la direzione comando.
-- In `BPD_AUTO_ON_OFF`, verificare cicli ON (60) e OFF (360) e ripristino standby.
+## A8. Catena causale (livello sistema)
+| Livello | Descrizione |
+|----------|------------|
+| Decisione | Definizione `cmd_bypass` da logica firmware |
+| Interfaccia | Comando logico OPEN/CLOSE verso procedura bypass |
+| Elettronica esterna | Driver e catena potenza attuatore |
+| Attuatore | Motore/servo serranda bypass |
+| Effetto | Variazione percorso aria (bypass o scambio) |
 
-## Spazio tecnico (mappa firmware e righe)
-- Test bypass attivo: `src/Clima_Func.c:103`
-- Lettura configurazione bypass: `src/Clima_Func.c:107`
-- Modalita manuale chiuso: `src/Clima_Func.c:126`
-- Modalita manuale aperto: `src/Clima_Func.c:131`
-- Modalita auto on/off freecooling: `src/Clima_Func.c:136`
-- Modalita automatica da temperature: `src/Clima_Func.c:207`
-- Modalita comando esterno ingressi: `src/Clima_Func.c:271`
-- Decisione comando apertura/chiusura (flag cmd): `src/Clima_Func.c:355`
-- Esecuzione movimento bypass (open/close): `src/Clima_Func.c:356` e `src/Clima_Func.c:358`
+## A9. Feedback disponibile
+- Conferma reale: parziale (stato logico posizione bypass, non misura meccanica diretta in questa funzione)
+- Tipo comando: principalmente fire-and-forget con verifica stato logico
+- Dove viene letto: `src/Clima_Func.c:305` (confronto stato bypass), `src/Clima_Func.c:355` (decisione comando)
+- Affidabilita: media; conferma logica alta, conferma meccanica dipende da catena esterna
 
-## Racconto operativo (utente finale)
-Questa logica decide se far passare l'aria dentro lo scambiatore oppure nel canale bypass. In pratica, il sistema prova a scegliere la strada che aiuta di piu a raggiungere la temperatura desiderata con meno consumo.
+## A10. Punti critici firmware
+- Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
+- Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
+- Verificare priorità dei rami decisionali e dei ritorni anticipati.
+- Verificare possibili ambiguità tra flag di stato e comandi calcolati nello stesso ciclo.
+## A11. Punti di disaccoppiamento (sistema)
+- Errore logico firmware:
+  - Configurazione bypass non coerente con modalita attesa
+  - Allarmi/condizioni che inibiscono apertura
+  - Input esterno non mappato correttamente
+- Errore interfaccia:
+  - Procedura comando bypass non eseguita correttamente
+  - Segnale ingresso analogico fuori soglia utile
+- Errore elettrico esterno:
+  - Driver attuatore non alimentato
+  - Cablaggio comando/ritorno interrotto
+- Errore meccanico:
+  - Serranda bloccata
+  - Attuatore bloccato o usurato
 
-Se il bypass e in manuale, il comportamento e semplice: resta sempre aperto o sempre chiuso, in base all'impostazione scelta. Se invece e in automatico, il controllo guarda soprattutto due temperature: aria esterna e aria di ritorno ambiente.
+## A12. Limite di responsabilità firmware
+Il firmware RD:
+- Decide quando generare un segnale
+- Imposta livelli logici
+- Monitora feedback disponibili
+- Applica logiche di sicurezza
 
-Il bypass tende ad aprirsi quando fuori c'e una condizione utile a raffrescare naturalmente l'ambiente, quindi quando l'aria esterna e favorevole rispetto all'interno. Al contrario tende a chiudersi quando fuori non conviene, quando fa troppo freddo, oppure quando stanno gia lavorando riscaldamento o raffreddamento attivo.
+Il firmware RD NON garantisce:
+- Integrita circuiti esterni
+- Corretto cablaggio
+- Presenza attuatore
+- Effettiva esecuzione meccanica
+- Corretta alimentazione esterna
 
-Un punto importante sul campo e che il sistema non cambia stato in modo "nervoso": usa tempi di persistenza e attese prima di confermare apertura o chiusura. Quindi e normale non vedere la serranda muoversi subito al primo cambio di temperatura.
+# ðŸŸ¢ SEZIONE B â€” DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
 
-In modalita con comando esterno, il bypass segue direttamente il segnale elettrico di ingresso. In quel caso, se il bypass non si apre o non si chiude, il primo controllo pratico da fare e verificare livello del segnale in ingresso e configurazione della modalita di ingresso.
+## B1. Racconto operativo
+Il sistema decide quando aprire o chiudere il bypass aria in base alla modalita impostata. In manuale mantiene una posizione fissa. In automatico valuta condizioni termiche e apre solo quando e utile al bilancio energetico. Con comando esterno segue il livello del segnale ingresso. Sono previsti ritardi e persistenze per evitare continui cambi posizione.
 
-In modalita auto on/off (freecooling), il sistema puo perfino accendere o spegnere l'unita per sfruttare meglio l'aria esterna. Se sul campo sembra "riaccendersi da solo", spesso e proprio questa funzione che sta lavorando come previsto.
+## B2. Comportamento normale vs percezione anomala
+E normale che la serranda non cambi subito al primo cambio temperatura: la logica usa filtri temporali. In modalita freecooling auto on/off l'unita puo riattivarsi dopo una pausa; puo sembrare anomalo ma e comportamento previsto.
 
-## Operativo service (diagnosi sul campo)
-### Errori bloccanti a monte
-- Modalita test/manutenzione attiva: il bypass non viene gestito automaticamente.
-- Allarmi sonde aria esterna o aria di ritorno: il controllo passa in comportamento prudente e tende a non aprire.
-- Configurazione non coerente tra modalita bypass e comando disponibile (manuale/automatico/ingresso esterno).
-- Segnale ingresso esterno non valido o fuori soglia quando il bypass e comandato da ingresso.
-- Guasto attuatore bypass o catena di potenza/comando: comando presente ma nessun movimento reale.
-- Stato gia raggiunto: se il bypass e gia nella posizione richiesta, non c'e nuova manovra.
+## B3. Errori bloccanti a monte
+- Logica non autorizzata: modalita test bypass attiva, funzione non abilitata
+- Logica in protezione: allarmi sonde fresh/return, condizioni termiche non idonee
+- Logica attiva ma attuatore non funzionante: comando presente, nessun movimento reale per guasto catena esterna
 
-### Checklist problem solving (dati da controllare)
-- Obiettivo richiesto: capire se in questo momento il bypass dovrebbe essere aperto o chiuso in base alla modalita selezionata.
-- Dati reali disponibili: rilevare temperature aria esterna/ritorno, stato bypass attuale, stato riscaldamento/raffreddamento e tipo comando (manuale, automatico, esterno).
-- Condizioni di autorizzazione o blocco: verificare soglia minima aria esterna, delta termico utile e presenza di condizioni che inibiscono apertura (es. altri attuatori clima gia attivi).
-- Filtri temporali: confermare isteresi, persistenze e tempi minimi prima della manovra; evitare diagnosi immediata senza attendere il ciclo logico completo.
-- Protezioni/allarmi: controllare allarmi sonde o stati di sicurezza che forzano comportamento prudente.
-- Verifica effetto reale: confrontare comando dato con movimento fisico serranda (posizione, feedback, assorbimento, rumorosita attuatore).
+## B4. Checklist problem solving
+1. Cosa dovrebbe accadere: bypass aperto o chiuso secondo modalita attiva
+2. Dati reali disponibili: temperature fresh/return, stato bypass, livello ingresso esterno
+3. Modalita attiva corretta?
+4. Consensi presenti?
+5. Soglie rispettate?
+6. Timer completati?
+7. Allarmi attivi?
+8. Comando generato?
+9. Segnale elettrico presente?
+10. Effetto fisico osservato?
+
+Separazione diagnosi:
+- Problema configurazione
+- Problema elettrico
+- Problema meccanico
+- Problema installazione
+
+## B5. Nota gestionale (facoltativa)
+L'attribuzione della responsabilita non puo essere dedotta dal solo esito firmware: richiede verifica tecnica complessiva di logica, interfaccia e campo.
+

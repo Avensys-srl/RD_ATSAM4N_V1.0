@@ -1,125 +1,184 @@
-# Template descrizione funzione
+﻿# Funzione `TemperatureRegulate`
 
-## Nome funzione
+# ðŸ”· SEZIONE A â€” DOCUMENTAZIONE TECNICA (ENGINEERING)
+
+## A1. Nome funzione
 `TemperatureRegulate()`
 
-## File e posizione
+## A2. File e posizione
 `src/Clima_Func.c:370`
 
-## Scopo
-Esegue la regolazione clima periodica (scheduler 5 s): gestione bypass, preheater, heater, cooler, DXD e uscita SSR/EHD in base a modalita operative, allarmi, disponibilita accessori e temperature misurate.
+## A3. Scopo tecnico
+Esegue la regolazione termica principale a ciclo periodico: valuta stato unita, bypass, preheater, heater, cooler, modulazione DXD e uscita SSR/EHD secondo configurazioni, allarmi e misure.
 
-## Parametri e ritorno
-Parametro in ingresso:
-- Nessuno.
+## A4. Parametri e ritorno
+### Parametri in ingresso
+- Nessuno
 
-Valore di ritorno:
-- `int` (nel codice ritorna `1` in tutti i percorsi).
+### Valore di ritorno
+- Tipo: `int`
+- Significato: ritorna `1` in tutti i percorsi correnti
 
-Unita di misura rilevanti:
-- Temperature in decimi di grado C.
-- Periodo scheduler atteso: 5 secondi.
-- Regolazione DXD 0-10V in percentuale (`val_0_10V` 0..100, step `STEP_REG_DXD=5`).
+## A5. Logica dettagliata
+- Legge configurazioni base e gestisce uscite rapide in caso di unita non in RUN.
+- Applica sempre la logica bypass chiamando `managementBypass`.
+- Verifica disponibilita attuatori clima; se assenti esce senza regolazione.
+- In fault ventilazione/allarmi critici impone stato fail-safe (spegnimento uscite clima).
+- Gestisce preheater con logica elettrica temporizzata o acqua antigelo.
+- Seleziona temperatura di riferimento (`TempRif`) in base a configurazione e disponibilita misure.
+- Gestisce ramo DXD con controllo funzione estate/inverno, allarme compressore, rampa 0-10V e tempi regolatore.
+- Calcola soglie ON/OFF heater e cooler con isteresi e persistenze.
+- In inverno privilegia heater/SSR, in estate privilegia cooler con vincoli aggiuntivi legati a condizioni aria.
 
-## Logica dettagliata
-- Legge configurazioni base (`Enab_Fuction`, `Config_Bypass`) e gestisce subito i casi di unita non in run:
-- Se unita spenta e non in auto-on/off bypass ne MBF, chiude bypass, spegne accessori clima, azzera comando SSR (`Set_EHD_mod`) e termina.
-- Se unita spenta ma in contesto MBF non applicabile, spegne comunque accessori e SSR.
-- Esegue sempre `managementBypass(enab_func)` per la logica bypass.
-- Se non esiste nessun attuatore utile (heater/cooler/preheater/DXD/SSR), esce.
-- Se rileva fault motori o allarme controllo ventilatori (non MBF), spegne subito preheater/heater/cooler/DXD, azzera SSR e termina.
-- Gestione preheater (`ACC_I2C_PREHEATER`) se non in test `MSK_TEST_IPEHD`:
-- Se elettrico: controllo temporizzato ON/OFF in funzione di temperatura exhaust con timer `count_preHeaterOn`.
-- Se ad acqua: anti-gelo semplice, ON sotto 5.0 C (`<=50`) e OFF sopra 7.0 C (`>70`).
-- Se funzione non operativa, forza spegnimento e reset timer.
-- Seleziona temperatura di riferimento (`TempRif`) in base a `Ref_T_setting`:
-- Se riferimento su supply, preferisce misura AWP oppure misura accessorio clima disponibile; fallback su sonda supply.
-- Se riferimento su return, usa direttamente sonda return.
-- Blocco dedicato DXD (se presente in EEPROM, anche se non operativo):
-- Imposta funzione compressore estate/inverno (`S`/`W`) e sincronizza verso accessorio tramite flag `processor_I2C`.
-- Se estate e inverno entrambe disabilitate: spegne DXD, azzera regolatore e termina.
-- Calcola tempo reazione regolatore da `Ref_T_setting` (min 30 s, max 180 s).
-- Applica eventuale delta supply (`DeltaTemp_Supply`) al setpoint quando riferimento e su supply.
-- In allarme compressore (`ALM_DXD_COMPRESS`) spegne DXD, porta 0-10V a zero, imposta update I2C e termina.
-- Ogni `time_regulator` aggiorna la potenza compressore:
-- In riscaldamento (`W`): aumenta o riduce `val_0_10V` in base a errore rispetto setpoint e limiti su supply.
-- In raffreddamento (`S`): logica simmetrica con soglie invertite.
-- Gestisce avvio con pre-carica 60% e tempi morti aggiuntivi (`count=-24`).
-- Se DXD non presente, azzera struttura regolatore DXD.
-- Se clima classico non disponibile (heater/cooler/SSR assenti), spegne uscite e termina.
-- Calcola soglie ON/OFF di heater/cooler usando setpoint e isteresi EEPROM (`hister_Temp_*`).
-- In inverno:
-- Spegne cooler.
-- Se heater o SSR presente: ON sotto soglia ON, OFF sopra soglia OFF con persistenza di spegnimento (`persist_Temp_heater_off`).
-- Se heater non disponibile, forza OFF e azzera persistenza.
-- In estate:
-- Spegne heater e SSR.
-- Gestisce cooler con condizione aggiuntiva legata al gradiente fresh/return per privilegiare bypass prima del raffreddamento attivo.
-- Se ne estate ne inverno (e non MBF), spegne tutti gli attuatori clima.
+## A6. Mappa firmware con riferimenti puntuali
+- **Passo**: lettura abilitazioni principali  
+  **Dove**: `src/Clima_Func.c:377`  
+  **Cosa osservare**: `enab_func = read_word_eeprom(...)`
+- **Passo**: uscita rapida unita non in run (caso base)  
+  **Dove**: `src/Clima_Func.c:388`  
+  **Cosa osservare**: condizione su `POS_BIT_UNIT_RUN`, `cfg_bypass`, `ENAB_MBF`
+- **Passo**: chiusura bypass forzata in stop  
+  **Dove**: `src/Clima_Func.c:391`  
+  **Cosa osservare**: `Active_Procedure_Bypass_OpCl(CLOSE_BPD, 2)`
+- **Passo**: azzeramento SSR/EHD in uscita di sicurezza  
+  **Dove**: `src/Clima_Func.c:404`  
+  **Cosa osservare**: `write_byte_eeprom(...Set_EHD_mod..., 0)`
+- **Passo**: chiamata gestione bypass  
+  **Dove**: `src/Clima_Func.c:428`  
+  **Cosa osservare**: `managementBypass(enab_func)`
+- **Passo**: fail-safe su fault motori/allarme fan  
+  **Dove**: `src/Clima_Func.c:435`  
+  **Cosa osservare**: spegnimento accessori clima + ritorno
+- **Passo**: controllo preheater con timer  
+  **Dove**: `src/Clima_Func.c:464`  
+  **Cosa osservare**: `count_preHeaterOn` e soglie su `I_PROBE_EXHAUST`
+- **Passo**: selezione riferimento temperatura  
+  **Dove**: `src/Clima_Func.c:542`  
+  **Cosa osservare**: `ref_T_setting` e scelta `TempRif`
+- **Passo**: ingresso ramo DXD  
+  **Dove**: `src/Clima_Func.c:567`  
+  **Cosa osservare**: presenza/abilitazione `ACC_I2C_DXD`
+- **Passo**: blocco immediato su allarme compressore  
+  **Dove**: `src/Clima_Func.c:647`  
+  **Cosa osservare**: `CkAlarm(ALM_DXD_COMPRESS)` con reset regolatore
+- **Passo**: uscita quando clima classico assente  
+  **Dove**: `src/Clima_Func.c:776`  
+  **Cosa osservare**: spegnimento heater/cooler + SSR
+- **Passo**: regolazione inverno  
+  **Dove**: `src/Clima_Func.c:830`  
+  **Cosa osservare**: soglie heater/SSR e `persist_Temp_heater_off`
+- **Passo**: regolazione estate  
+  **Dove**: `src/Clima_Func.c:885`  
+  **Cosa osservare**: condizioni cooler e blocco heater/SSR
 
-## Dipendenze
-- EEPROM/config: `read_byte_eeprom`, `read_word_eeprom`, `write_byte_eeprom`.
-- Bypass: `managementBypass`, `Active_Procedure_Bypass_OpCl`.
-- Accessori digitali: `DigitAccessoryOperating`, `DigitAccessoryOn`, `TAG_DigitAccessoryOn`, `TAG_DigitAccessoryOff`, `AccessoryPresent_EepList`.
-- Allarmi/stato: `CkAlarm`, `sData` (temperature, status unit, status motori, accessori, regolatore DXD).
-- Uscita SSR/EHD: parametro EEPROM `Set_EHD_mod`.
-- Variabili globali di persistenza: `count_preHeaterOn`, `persist_Temp_heater_off`.
+## A7. Interfacce esterne (livello astratto)
+### Segnali generati dallâ€™RD
+- Comandi digitali attuatori clima (heater, cooler, preheater, DXD):
+  - Pin MCU / periferica: uscita digitale/controllo accessori (astratta)
+  - Tipo: GPIO / comando bus accessorio
+  - Livello attivo: ON/OFF logico
+  - Condizione di attivazione: superamento soglie e consensi
+  - Persistenza: secondo isteresi, timer e stato allarmi
+- Comando SSR/EHD:
+  - Pin MCU / periferica: parametro di controllo memoria configurazione
+  - Tipo: valore percentuale logico (`Set_EHD_mod`)
+  - Livello attivo: 0..100
+  - Condizione di attivazione: logica stagione e domanda termica
+  - Persistenza: fino al prossimo ciclo regolazione
 
-## Casi limite
-- Tutti i percorsi di uscita ritornano `1`; non c'e un codice differenziato errore/successo.
-- In assenza accessori o con fault motori la funzione diventa fail-safe (spegne attuatori).
-- La selezione `TempRif` dipende da disponibilita accessori e puo cambiare dinamicamente se un accessorio non e operativo.
-- In DXD la rampa 0-10V e saturata in [0,100], con ritardi di riarmo per evitare stress compressore.
-- Il bypass viene sempre gestito prima della parte clima, quindi influenza direttamente la richiesta cooler.
+### Segnali letti dallâ€™RD
+- Sonde temperatura:
+  - Tipo ingresso: analogico/digitale acquisito in `sData.measure_Temp[...]`
+  - Modalita lettura: campionamento periodico e confronto soglie
+  - Frequenza campionamento: ciclo funzione (scheduler)
+  - Condizione di validita: assenza allarmi e disponibilita canale
+- Stato accessori/allarmi:
+  - Tipo ingresso: stati digitali/logici
+  - Modalita lettura: `DigitAccessoryOperating`, `CkAlarm`, status unit/motori
+  - Frequenza campionamento: ogni chiamata
+  - Condizione di validita: sincronismo con stato firmware
 
-## Verifica
-- Test funzionale per modalita: inverno, estate, disabilitato, MBF.
-- Test fault injection: allarme compressore DXD, guasto motori, allarmi sonde bypass.
-- Verifica soglie con dataset temperatura vicino ai punti ON/OFF per confermare isteresi e persistenze.
-- Verifica comandi I2C su accessori e scrittura `Set_EHD_mod` in ogni transizione.
-- Verifica temporalita preheater e regolatore DXD con scheduler reale a 5 s.
+## A8. Catena causale (livello sistema)
+| Livello | Descrizione |
+|----------|------------|
+| Decisione | Regole di regolazione termica e sicurezza |
+| Interfaccia | Comandi ON/OFF o modulazione verso attuatori/bus |
+| Elettronica esterna | Driver potenza e moduli attuazione |
+| Attuatore | Resistenze, valvole, compressore, ventilazione correlata |
+| Effetto | Variazione reale temperatura aria impianto |
 
-## Spazio tecnico (mappa firmware e righe)
-- Lettura configurazioni base (`Enab_Fuction`, `Config_Bypass`): `src/Clima_Func.c:377` e `src/Clima_Func.c:378`
-- Uscita rapida unita spenta (caso principale): `src/Clima_Func.c:388`
-- Richiamo gestione bypass: `src/Clima_Func.c:428`
-- Uscita se nessun accessorio clima disponibile: `src/Clima_Func.c:432`
-- Spegnimento fail-safe su guasto motori/allarme fan: `src/Clima_Func.c:435`
-- Blocco gestione preheater: `src/Clima_Func.c:455`
-- Selezione riferimento temperatura (`Ref_T_setting`): `src/Clima_Func.c:542`
-- Blocco regolazione DXD: `src/Clima_Func.c:567`
-- Blocco immediato su allarme compressore DXD: `src/Clima_Func.c:647`
-- Uscita se clima classico assente (heater/cooler/SSR): `src/Clima_Func.c:776`
-- Regolazione inverno: `src/Clima_Func.c:830`
-- Regolazione estate: `src/Clima_Func.c:885`
+## A9. Feedback disponibile
+- Conferma reale: parziale, principalmente tramite stati accessori/allarmi e misura temperatura
+- Tipo comando: misto (comando logico + osservazione feedback indiretto)
+- Dove viene letto: `src/Clima_Func.c:435` (fault), `src/Clima_Func.c:542` (misura riferimento), `src/Clima_Func.c:647` (allarme compressore)
+- Affidabilita: media; robusta lato logica, dipendente da qualita sensori/attuatori lato fisico
 
-## Racconto operativo (utente finale)
-Questa e la regia generale della climatizzazione: ogni pochi secondi guarda lo stato macchina, le temperature e gli allarmi, poi decide cosa tenere acceso e cosa spegnere tra bypass, preheater, riscaldamento, raffreddamento e compressore DXD.
+## A10. Punti critici firmware
+- Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
+- Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
+- Verificare priorità dei rami decisionali e dei ritorni anticipati.
+- Verificare possibili ambiguità tra flag di stato e comandi calcolati nello stesso ciclo.
+## A11. Punti di disaccoppiamento (sistema)
+- Errore logico firmware:
+  - Configurazione stagione/abilitazioni incoerente
+  - Soglie/isteresi non allineate al comportamento atteso
+  - Timer/persistenze non completate durante diagnosi rapida
+- Errore interfaccia:
+  - Comandi attuatore non propagati correttamente sul bus/interfaccia
+  - Stato accessorio non sincronizzato con comando
+- Errore elettrico esterno:
+  - Driver o alimentazioni attuatori assenti
+  - Cablaggio uscita danneggiato
+- Errore meccanico:
+  - Attuatore bloccato o inefficiente
+  - Scambio termico reale insufficiente nonostante comando corretto
 
-Dal punto di vista pratico, se l'unita e ferma o c'e un guasto importante ai ventilatori, la funzione mette tutto in sicurezza e spegne gli attuatori clima. Questo spiega molti casi in cui sul campo "non parte il caldo/freddo": il blocco puo dipendere da una condizione di protezione a monte.
+## A12. Limite di responsabilità firmware
+Il firmware RD:
+- Decide quando generare un segnale
+- Imposta livelli logici
+- Invia comandi su bus
+- Monitora feedback disponibili
+- Applica logiche di sicurezza
 
-Quando il sistema lavora in inverno, privilegia il riscaldamento; in estate privilegia il raffreddamento. Le soglie non sono un unico valore secco: ci sono margini di attacco e distacco (isteresi) per evitare continui ON/OFF. Per questo un utente puo vedere che il dispositivo non cambia stato esattamente al setpoint, ma un po' prima o un po' dopo.
+Il firmware RD NON garantisce:
+- Integrita circuiti esterni
+- Corretto cablaggio
+- Presenza attuatore
+- Effettiva esecuzione meccanica
+- Corretta alimentazione esterna
 
-Il preheater viene gestito in modo protettivo, soprattutto per evitare rischio gelo. In pratica, con aria molto fredda resta acceso o viene ciclicamente mantenuto per proteggere la batteria.
+# ðŸŸ¢ SEZIONE B â€” DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
 
-Se e presente DXD, la macchina puo regolare la potenza in modo progressivo invece che solo acceso/spento. Sul campo questo si percepisce come funzionamento piu "morbido": il compressore aumenta o riduce gradualmente in base a quanto la temperatura reale e lontana da quella desiderata.
+## B1. Racconto operativo
+Questa funzione e la regia della climatizzazione: a ogni ciclo decide cosa attivare tra preriscaldo, riscaldamento, raffreddamento, bypass e compressore modulante. Se rileva condizioni non sicure, spegne le uscite per proteggere il sistema. Le azioni non sono istantanee: sono previsti tempi di attesa e margini per evitare continui ON/OFF.
 
-Un aspetto chiave per assistenza e che il bypass viene valutato prima del raffreddamento attivo: quando l'aria esterna aiuta, la macchina prova prima a sfruttarla. Quindi in alcuni casi il cooler resta spento non per guasto, ma per scelta energetica corretta del controllo.
+## B2. Comportamento normale vs percezione anomala
+E normale che caldo/freddo non partano esattamente sul valore setpoint per presenza di isteresi. In alcuni casi il cooler resta spento anche con richiesta freddo perche la logica prova prima il bypass. Se ci sono fault ventilazione o allarmi compressore, lo spegnimento e comportamento corretto.
 
-## Operativo service (diagnosi sul campo)
-### Errori bloccanti a monte
-- Unita non autorizzata al funzionamento clima (stato macchina o modalita operative non compatibili).
-- Nessun attuatore disponibile o abilitato per caldo/freddo: la regolazione non puo produrre effetto.
-- Protezioni attive su ventilazione/motori: il sistema spegne clima per sicurezza.
-- Modalita test/manutenzione attiva su preheater o altri rami di regolazione.
-- Allarme compressore o protezione specifica del raffreddamento/riscaldamento attivo.
-- Stagione/funzione non abilitate (es. ne caldo ne freddo): il controllo resta in stand-by.
-- Comunicazione non affidabile con accessori o sensori: la logica decide, ma l'effetto reale non arriva.
+## B3. Errori bloccanti a monte
+- Logica non autorizzata: unita non in stato operativo o funzione stagionale disabilitata
+- Logica in protezione: fault motori, allarmi compressore, condizioni sicurezza attive
+- Logica attiva ma attuatore non funzionante: comando emesso ma nessun effetto termico reale
 
-### Checklist problem solving (dati da controllare)
-- Obiettivo richiesto: chiarire quale effetto clima e atteso nel punto operativo (riscaldare, raffreddare, mantenere, standby protetto).
-- Dati reali disponibili: confrontare setpoint, temperatura di riferimento usata dal controllo e temperature misurate dei punti principali.
-- Condizioni di autorizzazione o blocco: verificare modalita attiva (estate/inverno), consensi, disponibilita accessori e prerequisiti di funzionamento.
-- Filtri temporali: verificare isteresi ON/OFF, ritardi e persistenze prima di aspettare accensione/spegnimento di heater, cooler, preheater o modulazione DXD.
-- Protezioni/allarmi: controllare allarmi ventilazione, compressore, sonde e tutte le protezioni che possono forzare spegnimento o riduzione potenza.
-- Verifica effetto reale: confrontare il comando logico con l'effetto fisico (uscita attiva, assorbimento, stato attuatore, risposta termica reale in impianto).
+## B4. Checklist problem solving
+1. Cosa dovrebbe accadere: caldo, freddo, mantenimento o stop protetto
+2. Dati reali disponibili: setpoint, temperatura riferimento, stato uscite clima
+3. Modalita attiva corretta?
+4. Consensi presenti?
+5. Soglie rispettate?
+6. Timer completati?
+7. Allarmi attivi?
+8. Comando generato?
+9. Segnale elettrico presente?
+10. Effetto fisico osservato?
+
+Separazione diagnosi:
+- Problema configurazione
+- Problema elettrico
+- Problema meccanico
+- Problema installazione
+
+## B5. Nota gestionale (facoltativa)
+La responsabilita operativa va attribuita dopo verifica completa di condizioni logiche, interfacce e risposta impianto, non dal solo stato firmware.
+
