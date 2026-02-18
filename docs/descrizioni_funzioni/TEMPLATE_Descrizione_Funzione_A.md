@@ -149,6 +149,33 @@ Indicare:
 - Dove viene letto il feedback?
 - Quanto è affidabile?
 
+Valutare l'affidabilita con i seguenti criteri (valore `0` o `1` per ciascuno):
+
+| Criterio | Valore | Regola di assegnazione |
+|----------|--------|------------------------|
+| Origine diretta | 0/1 | `1` se il feedback proviene da sorgente che conferma esecuzione reale (bit stato HW, ACK dispositivo, misura sensore); `0` se solo conferma software interna (es. comando inviato). |
+| Correlazione temporale | 0/1 | `1` se esiste timeout esplicito e feedback entro tempo massimo definito; `0` se non esiste vincolo temporale verificabile. |
+| Correlazione univoca col comando | 0/1 | `1` se il feedback e associato in modo certo a quell'istanza comando (ID, sequenza, contesto univoco); `0` se ambiguo o generico. |
+| Gestione errore | 0/1 | `1` se sono gestiti esiti negativi espliciti (NACK, timeout, fault) con azione definita; `0` se non gestiti. |
+
+Classificazione finale:
+
+- Calcolare `PunteggioTotale = OrigineDiretta + CorrelazioneTemporale + CorrelazioneUnivoca + GestioneErrore`
+- Assegnare la classe:
+  - `0` = Nessun feedback (fire-and-forget puro)
+  - `1` = Feedback debole
+  - `2` = Feedback medio
+  - `3-4` = Feedback forte (alta affidabilita)
+
+Formato compilazione consigliato:
+
+- `Origine diretta: <0|1>`
+- `Correlazione temporale: <0|1>`
+- `Correlazione univoca col comando: <0|1>`
+- `Gestione errore: <0|1>`
+- `Punteggio totale: <0..4>`
+- `Classe finale: <Nessun feedback|Debole|Medio|Forte>`
+
 Scopo:
 Capire se il firmware può verificare l’esecuzione reale.
 
@@ -212,93 +239,3 @@ Formalizzare il confine tecnico.
 
 ---
 
-# 🟢 SEZIONE B — DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-> Sezione destinata a service, installatori e supporto tecnico.
-> Non citare file o righe firmware.
-
----
-
-## B1. Racconto operativo
-
-Descrivere in modo semplice:
-
-- Cosa accade nel sistema
-- Quando accade
-- Perché può non accadere
-- Eventuali ritardi voluti
-
-Rispondere alla domanda:
-> Cosa vede l’utente?
-
----
-
-## B2. Comportamento normale vs percezione anomala
-
-Spiegare:
-
-- Quando un comportamento è corretto ma può sembrare errato
-- Tempi di attesa normali
-- Condizioni che generano falsa diagnosi
-
-Scopo:
-Ridurre interventi non necessari.
-
----
-
-## B3. Errori bloccanti a monte
-
-Elencare condizioni che impediscono effetto fisico:
-
-- Modalità test
-- Allarmi attivi
-- Funzione disabilitata
-- Sensore non valido
-- Assenza alimentazione
-- Attuatore guasto
-
-Distinguere:
-
-- Logica non autorizzata
-- Logica in protezione
-- Logica attiva ma attuatore non funzionante
-
----
-
-## B4. Checklist problem solving
-
-1. Cosa dovrebbe accadere?
-2. Modalità selezionata?
-3. Valori reali coerenti?
-4. Consensi presenti?
-5. Allarmi attivi?
-6. Timer rispettati?
-7. Comando previsto coerente?
-8. Segnale elettrico presente?
-9. Movimento fisico osservato?
-
-Separare:
-
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
----
-
-## B5. Nota gestionale (facoltativa)
-
-⚠ L’attribuzione della responsabilità è una decisione gestionale.
-Non può essere dedotta automaticamente dal solo comportamento firmware.
-
----
-
-# Regola finale
-
-Una funzione è considerata documentata solo se:
-
-- È separata decisione logica da effetto fisico
-- Sono indicati punti critici firmware
-- Sono indicati punti di disaccoppiamento
-- È presente checklist operativa
-- È esplicitato limite responsabilità

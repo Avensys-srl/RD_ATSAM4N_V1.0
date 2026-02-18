@@ -139,11 +139,23 @@ Calcola e aggiorna i comandi di velocita dei motori `R` (return) e `F` (fresh) a
 | Effetto | Portata/pressione aria risultante in unita |
 
 ## A9. Feedback disponibile
-- Se esiste conferma reale: parziale
-- Tipo comando: comando diretto con feedback indiretto
-- Dove viene letto il feedback: `src/motor_speed.c:2328` (allarme controllo), `src/motor_speed.c:2716` (dati IAQ), `src/motor_speed.c:3058` (adattamento comando)
-- Affidabilita del feedback: media; robusta su stati/flag interni, dipende da qualitÃ  misure esterne
 
+- Esiste conferma reale?
+  - Si, parziale: legge stati motori/allarmi e rpm reali nel ciclo di controllo.
+- Il comando e "fire and forget"?
+  - No: il setpoint motori viene continuamente rivalutato a ogni ciclo scheduler.
+- Dove viene letto il feedback?
+  - In `motor_speed()` tramite `ctrl_comand_inputs()`, stati motori e flag runtime (`src/motor_speed.c:2314`, `src/motor_speed.c:2435`, `src/motor_speed.c:2515`, `src/motor_speed.c:2592`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 1` (rpm/stati/allarmi reali del sistema)
+- `Correlazione temporale: 0` (nessun timeout formale di conferma comando)
+- `Correlazione univoca col comando: 0` (nessuna associazione per-istanza comando)
+- `Gestione errore: 1` (rami di sicurezza: standby, bypass run, allarmi)
+- `Punteggio totale: 2`
+- `Classe finale: Medio`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -175,46 +187,4 @@ Il firmware RD NON garantisce:
 - Corretto cablaggio campo
 - Presenza o efficienza meccanica motori/ventilatori
 - Effettiva portata fisica se catena esterna e degradata
-
-# 🟢 SEZIONE B — DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-Questa funzione decide a che velocita devono girare i due ventilatori. Parte da una velocita base (manuale/weekly/CAP/CAF) e poi applica correzioni: sicurezza, input esterni, qualita aria, boost e sbilanciamento tra mandata/estrazione.
-
-## B2. Comportamento normale vs percezione anomala
-- E normale vedere velocita bloccata al minimo durante manovra bypass o in startup.
-- E normale vedere un ramo diverso dall'altro quando imbalance e attivo.
-- E normale che in standby i motori restino fermi anche se i setpoint sono validi.
-- Puo sembrare anomalo il passaggio a velocita alta, ma puo essere dovuto a VOC/RH/CO2 o boost.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata
-  - Unita in standby da input/weekly/power
-  - Controllo MBF che sovrascrive la logica locale
-- Logica in protezione
-  - Allarmi fan control o allarmi preheater acqua
-  - Modalita che impongono early return
-- Logica attiva ma attuatore non funzionante
-  - Comando aggiornato in firmware senza risposta reale motore
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: velocita attesa su ramo return/fresh
-2. Dati reali disponibili: speed command R/F, stato RUN/STANDBY, status allarmi
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separare:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-La responsabilita va attribuita distinguendo sempre decisione firmware, applicazione elettrica del comando e risultato meccanico reale.
 

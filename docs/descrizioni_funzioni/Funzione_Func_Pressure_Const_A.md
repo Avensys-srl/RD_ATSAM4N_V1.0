@@ -106,11 +106,23 @@ Regola la velocita dei motori per mantenere pressione/condizione CAP al setpoint
 | Effetto | Variazione pressione rete aria |
 
 ## A9. Feedback disponibile
-- Se esiste conferma reale: si, parziale
-- Se il comando e fire-and-forget: no, usa feedback misura/rpm
-- Dove viene letto il feedback: `src/motor_speed.c:1192`, `src/motor_speed.c:1177`, `src/motor_speed.c:1335`
-- Affidabilita del feedback: medio-alta se sensore/rpm validi, ridotta in assenza sensore pressione diretto
 
+- Esiste conferma reale?
+  - Si, con feedback di pressione quando presente `ACC_I2C_PCAP` (`src/motor_speed.c:1185`, `src/motor_speed.c:1192`); in fallback usa stima da modello (`CalcQW/CalcPW`).
+- Il comando e "fire and forget"?
+  - No: e un anello di regolazione che ri-legge misura/stima e corregge la velocita a ciclo.
+- Dove viene letto il feedback?
+  - Pressione/portata in `sData.measure_pressure` e `sData.measure_airflow`, e misura PCAP (`src/motor_speed.c:1201`, `src/motor_speed.c:1230`, `src/motor_speed.c:1339`, `src/motor_speed.c:1348`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 1` (diretta con PCAP; in fallback e stimata)
+- `Correlazione temporale: 0` (nessun timeout esplicito di validita misura)
+- `Correlazione univoca col comando: 1` (correzione chiusa su errore `pw` vs `setPoint` nello stesso ciclo)
+- `Gestione errore: 1` (limiti/saturazioni, uscita per rpm bassa, fallback minimo)
+- `Punteggio totale: 3`
+- `Classe finale: Forte`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -139,40 +151,4 @@ Il firmware RD NON garantisce:
 - Integrita fluidodinamica dell'impianto esterno
 - Correttezza meccanica dei ventilatori
 - Precisione assoluta del sensore pressione esterno
-
-# 🟢 SEZIONE B — DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-In CAP il sistema prova a mantenere costante la pressione dell'aria variando automaticamente la velocita dei ventilatori. Se la pressione e bassa aumenta la velocita, se e alta la riduce.
-
-## B2. Comportamento normale vs percezione anomala
-- E normale che la regolazione non sia istantanea: ci sono finestre temporali e step progressivi.
-- E normale vedere piccoli assestamenti continui attorno al valore target.
-- Se rpm sono troppo bassi la funzione sospende la regolazione.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: CAP non selezionato o sovrascritto da modalita prioritaria
-- Logica in protezione: condizioni safety generali che bloccano la gestione motori
-- Logica attiva ma attuatore non funzionante: comando speed presente ma pressione non reagisce
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: mantenimento pressione vicino al setpoint CAP
-2. Dati reali disponibili: setpoint CAP, pressione misurata/stimata, rpm, speed comando
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separare:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-La responsabilita dell'esito CAP va valutata separando calcolo firmware, qualita feedback e risposta reale impianto.
 

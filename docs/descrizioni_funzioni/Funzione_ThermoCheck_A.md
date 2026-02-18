@@ -93,11 +93,23 @@ Offset applicati:
 | Effetto | Dati termici usati dalle logiche di regolazione successive |
 
 ## A9. Feedback disponibile
-- Conferma reale: disponibile solo come coerenza tra misura raw e variabile aggiornata
-- Tipo comando: non applicabile (nessun comando fisico)
-- Dove viene letto: `src/Clima_Func.c:954`, `src/Clima_Func.c:966`
-- Affidabilita: dipendente da integrita misura a monte; la funzione non valida in modo attivo i range
 
+- Esiste conferma reale?
+  - No, non nel perimetro funzione: aggiorna variabili interne da misure gia acquisite altrove.
+- Il comando e "fire and forget"?
+  - Non applicabile: nessun comando attuatore o transazione bus in questa funzione.
+- Dove viene letto il feedback?
+  - Solo lettura strutture dati (`sData.AccI2C[...]`, `Temp_modbus[...]`) e assegnazioni locali (`src/Clima_Func.c:935`, `src/Clima_Func.c:954`, `src/Clima_Func.c:966`, `src/Clima_Func.c:971`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 0` (nessuna conferma diretta di esecuzione reale nel corpo funzione)
+- `Correlazione temporale: 0` (nessun timeout o freshness check)
+- `Correlazione univoca col comando: 0` (nessun comando da correlare)
+- `Gestione errore: 0` (controlli plausibilita presenti ma commentati)
+- `Punteggio totale: 0`
+- `Classe finale: Nessun feedback`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -127,38 +139,4 @@ Il firmware RD NON garantisce:
 - Integrita cablaggio misura
 - Stabilita comunicazione esterna
 - Coerenza fisica impianto in assenza feedback affidabili
-
-# ðŸŸ¢ SEZIONE B â€” DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-Questa funzione prepara i valori temperatura/umidita usati dal controllo clima. Non accende o spegne dispositivi, ma aggiorna i numeri che le altre logiche usano per decidere. E normale vedere differenze tra valore grezzo sonda e valore interno, perche sono applicate compensazioni fisse.
-
-## B2. Comportamento normale vs percezione anomala
-Una variazione rapida sonda viene riflessa al ciclo successivo, non in tempo continuo. Valori apparentemente "sfalsati" possono essere normali se corrispondono agli offset previsti. Un dato fermo nel tempo puo indicare blocco comunicazione, non necessariamente errore della funzione.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: non applicabile (funzione di aggiornamento dati)
-- Logica in protezione: dati sensore non validi o non aggiornati
-- Logica attiva ma attuatore non funzionante: non applicabile direttamente, ma dati errati possono portare a decisioni errate a valle
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: aggiornamento coerente variabili termiche interne
-2. Dati reali disponibili: valori raw sensori e valori compensati interni
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separazione diagnosi:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-L'analisi responsabilita richiede separare errore misura, errore comunicazione e uso a valle del dato nella regolazione.
 

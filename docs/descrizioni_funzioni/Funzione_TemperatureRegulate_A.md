@@ -108,11 +108,23 @@ Esegue la regolazione termica principale a ciclo periodico: valuta stato unita, 
 | Effetto | Variazione reale temperatura aria impianto |
 
 ## A9. Feedback disponibile
-- Conferma reale: parziale, principalmente tramite stati accessori/allarmi e misura temperatura
-- Tipo comando: misto (comando logico + osservazione feedback indiretto)
-- Dove viene letto: `src/Clima_Func.c:435` (fault), `src/Clima_Func.c:542` (misura riferimento), `src/Clima_Func.c:647` (allarme compressore)
-- Affidabilita: media; robusta lato logica, dipendente da qualita sensori/attuatori lato fisico
 
+- Esiste conferma reale?
+  - Parziale: usa stati accessori/allarmi e misure temperatura, ma i comandi ON/OFF sono mediati da task I2C separato.
+- Il comando e "fire and forget"?
+  - Parzialmente: invoca `TAG_DigitAccessoryOn/Off` senza attesa ack nella stessa funzione.
+- Dove viene letto il feedback?
+  - In `TemperatureRegulate()` su `DigitAccessoryOn/Operating`, allarmi e sonde (`src/Clima_Func.c:370`, `src/Clima_Func.c:431`, `src/Clima_Func.c:435`, `src/Clima_Func.c:647`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 1` (feedback da stato accessori e allarmi runtime)
+- `Correlazione temporale: 0` (nessun timeout esplicito di conferma comando)
+- `Correlazione univoca col comando: 0` (nessun legame per-istanza tra singolo comando e ack)
+- `Gestione errore: 1` (spegnimento forzato su fault/allarmi e rami protettivi)
+- `Punteggio totale: 2`
+- `Classe finale: Medio`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -147,38 +159,4 @@ Il firmware RD NON garantisce:
 - Presenza attuatore
 - Effettiva esecuzione meccanica
 - Corretta alimentazione esterna
-
-# ðŸŸ¢ SEZIONE B â€” DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-Questa funzione e la regia della climatizzazione: a ogni ciclo decide cosa attivare tra preriscaldo, riscaldamento, raffreddamento, bypass e compressore modulante. Se rileva condizioni non sicure, spegne le uscite per proteggere il sistema. Le azioni non sono istantanee: sono previsti tempi di attesa e margini per evitare continui ON/OFF.
-
-## B2. Comportamento normale vs percezione anomala
-E normale che caldo/freddo non partano esattamente sul valore setpoint per presenza di isteresi. In alcuni casi il cooler resta spento anche con richiesta freddo perche la logica prova prima il bypass. Se ci sono fault ventilazione o allarmi compressore, lo spegnimento e comportamento corretto.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: unita non in stato operativo o funzione stagionale disabilitata
-- Logica in protezione: fault motori, allarmi compressore, condizioni sicurezza attive
-- Logica attiva ma attuatore non funzionante: comando emesso ma nessun effetto termico reale
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: caldo, freddo, mantenimento o stop protetto
-2. Dati reali disponibili: setpoint, temperatura riferimento, stato uscite clima
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separazione diagnosi:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-La responsabilita operativa va attribuita dopo verifica completa di condizioni logiche, interfacce e risposta impianto, non dal solo stato firmware.
 

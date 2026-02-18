@@ -99,11 +99,23 @@ Decide il comando logico di apertura/chiusura bypass in base a configurazione, s
 | Effetto | Variazione percorso aria (bypass o scambio) |
 
 ## A9. Feedback disponibile
-- Conferma reale: parziale (stato logico posizione bypass, non misura meccanica diretta in questa funzione)
-- Tipo comando: principalmente fire-and-forget con verifica stato logico
-- Dove viene letto: `src/Clima_Func.c:305` (confronto stato bypass), `src/Clima_Func.c:355` (decisione comando)
-- Affidabilita: media; conferma logica alta, conferma meccanica dipende da catena esterna
 
+- Esiste conferma reale?
+  - Debole: la funzione usa principalmente stato firmware bypass (`MSK_STS_BYPASS`) e ingressi/sensori; non verifica direttamente il raggiungimento meccanico in questa routine.
+- Il comando e "fire and forget"?
+  - Parzialmente: emette `Active_Procedure_Bypass_OpCl(...)` senza attendere qui un ack esplicito.
+- Dove viene letto il feedback?
+  - Stato bypass e condizioni ingresso/sonde in `managementBypass()` (`src/Clima_Func.c:283`, `src/Clima_Func.c:322`, `src/Clima_Func.c:355`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 0` (feedback principalmente di stato firmware)
+- `Correlazione temporale: 0` (nessun timeout di conferma nella funzione)
+- `Correlazione univoca col comando: 0` (assenza di ID/ack comando)
+- `Gestione errore: 1` (inibizioni su allarmi sonde e condizioni di sicurezza)
+- `Punteggio totale: 1`
+- `Classe finale: Debole`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -137,38 +149,4 @@ Il firmware RD NON garantisce:
 - Presenza attuatore
 - Effettiva esecuzione meccanica
 - Corretta alimentazione esterna
-
-# ðŸŸ¢ SEZIONE B â€” DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-Il sistema decide quando aprire o chiudere il bypass aria in base alla modalita impostata. In manuale mantiene una posizione fissa. In automatico valuta condizioni termiche e apre solo quando e utile al bilancio energetico. Con comando esterno segue il livello del segnale ingresso. Sono previsti ritardi e persistenze per evitare continui cambi posizione.
-
-## B2. Comportamento normale vs percezione anomala
-E normale che la serranda non cambi subito al primo cambio temperatura: la logica usa filtri temporali. In modalita freecooling auto on/off l'unita puo riattivarsi dopo una pausa; puo sembrare anomalo ma e comportamento previsto.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: modalita test bypass attiva, funzione non abilitata
-- Logica in protezione: allarmi sonde fresh/return, condizioni termiche non idonee
-- Logica attiva ma attuatore non funzionante: comando presente, nessun movimento reale per guasto catena esterna
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: bypass aperto o chiuso secondo modalita attiva
-2. Dati reali disponibili: temperature fresh/return, stato bypass, livello ingresso esterno
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separazione diagnosi:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-L'attribuzione della responsabilita non puo essere dedotta dal solo esito firmware: richiede verifica tecnica complessiva di logica, interfaccia e campo.
 

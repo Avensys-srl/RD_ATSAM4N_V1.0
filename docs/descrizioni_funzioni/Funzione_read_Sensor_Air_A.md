@@ -1,6 +1,6 @@
-# Funzione `read_Sensor_Air`
+﻿# Funzione `read_Sensor_Air`
 
-# 🔷 SEZIONE A — DOCUMENTAZIONE TECNICA (ENGINEERING)
+# ðŸ”· SEZIONE A â€” DOCUMENTAZIONE TECNICA (ENGINEERING)
 
 ## A1. Nome funzione
 `read_Sensor_Air(byte addrSlave, byte iAcc, byte byte_event, byte bit_event, byte msk_clear_event)`
@@ -132,11 +132,23 @@ Acquisisce dati dai sensori aria digitali (CO2, RH, VOC, AWP) via bus, aggiorna 
 | Effetto | Dati e allarmi aggiornati per logiche clima/ventilazione |
 
 ## A9. Feedback disponibile
-- Esiste conferma reale? Si, esito comunicazione (`statusBus`) e coerenza frame ricevuto
-- Il comando e fire and forget? No (lettura con esito esplicito)
-- Dove viene letto il feedback? `src/Accessory.c:1691`, `src/Accessory.c:1693`
-- Quanto e affidabile? Media-alta lato comunicazione; dipende dalla qualita elettrica bus e dal sensore
 
+- Esiste conferma reale?
+  - Si: lettura I2C con ACK/CKSUM tramite `ReadSlave(...)` e dati provenienti dallo slave.
+- Il comando e "fire and forget"?
+  - No: la funzione valuta esito bus (`statusBus`) e restituisce `risp`.
+- Dove viene letto il feedback?
+  - Esito transazione e parsing in `read_Sensor_Air(...)` (`src/Accessory.c:1685`, `src/Accessory.c:1691`, `src/Accessory.c:1693`, `src/Accessory.c:1925`) e controllo ACK/CKSUM in `ReadSlave(...)` (`src/MASTER_I2C.c:62`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 1` (dato letto direttamente dal dispositivo remoto)
+- `Correlazione temporale: 0` (nessun timeout esplicito nella funzione chiamante)
+- `Correlazione univoca col comando: 1` (richiesta indirizzata a slave/registro specifico)
+- `Gestione errore: 1` (esito KO su ACK/CKSUM, ritorno `risp=0` e gestione a valle)
+- `Punteggio totale: 3`
+- `Classe finale: Forte`
 ## A10. Punti critici firmware
 - Uso diretto indici/bit (`iAcc`, `byte_event`, `bit_event`) senza guard-rail locali.
 - Assenza di fallback esplicito su misure stale quando `ReadSlave` fallisce.
@@ -167,37 +179,3 @@ Il firmware RD NON garantisce:
 - Integrita cablaggio/linea bus
 - Disponibilita hardware del sensore in campo
 
-# 🟢 SEZIONE B — DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-La funzione legge i sensori aria digitali e aggiorna i valori che il sistema usa per ventilazione e regolazione. Se la lettura e valida, i dati vengono aggiornati; se non lo e, il sistema rileva che il canale non ha dato risposta utile.
-
-## B2. Comportamento normale vs percezione anomala
-- E normale vedere aggiornamenti a intervalli di polling e non in continuo.
-- E normale che un sensore non aggiornato mantenga valori precedenti per alcuni cicli.
-- Se il bus e disturbato, possono comparire letture mancanti intermittenti senza guasto fisso.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: canale sensore non configurato/polling non attivo
-- Logica in protezione: evento allarme sensore fuori campo
-- Logica attiva ma attuatore non funzionante: dato sensore presente ma nessun effetto fisico per blocchi a valle
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere?
-2. Modalita selezionata?
-3. Valori reali coerenti?
-4. Consensi presenti?
-5. Allarmi attivi?
-6. Timer rispettati?
-7. Comando previsto coerente?
-8. Segnale elettrico presente?
-9. Movimento fisico osservato?
-
-Separare:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-L'attribuzione della responsabilita richiede distinguere errore di misura, errore di comunicazione e uso del dato nelle logiche a valle.

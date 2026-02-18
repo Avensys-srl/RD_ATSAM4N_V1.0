@@ -106,11 +106,23 @@ Regola la velocita dei motori per mantenere la portata aria costante (CAF), calc
 | Effetto | Portata aria tendenzialmente costante al variare impianto |
 
 ## A9. Feedback disponibile
-- Se esiste conferma reale: parziale
-- Se il comando e fire-and-forget: no, usa feedback rpm/stime
-- Dove viene letto il feedback: `src/motor_speed.c:1788`, `src/motor_speed.c:1855`, `src/motor_speed.c:1884`
-- Affidabilita del feedback: media; dipende dalla coerenza modello rpm->portata e dalla qualita misura rpm
 
+- Esiste conferma reale?
+  - Parziale: in configurazione standard la portata e stimata da modello (`CalcQW/CalcPW`); feedback diretto pressione solo in ramo specifico (`COMESSA_2388`).
+- Il comando e "fire and forget"?
+  - No: la funzione ricalcola errore di portata e riadatta PWM a ciclo.
+- Dove viene letto il feedback?
+  - Da `rpm_r` e variabili calcolate/mediate (`src/motor_speed.c:1770`, `src/motor_speed.c:1857`, `src/motor_speed.c:1899`, `src/motor_speed.c:1907`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 0` (prevalentemente stima software, non misura diretta garantita)
+- `Correlazione temporale: 0` (solo cadenza di ciclo, nessun timeout esplicito)
+- `Correlazione univoca col comando: 1` (errore `delta_Q` legato al setpoint attivo)
+- `Gestione errore: 1` (controlli rpm minima, limiti PWM, saturazioni)
+- `Punteggio totale: 2`
+- `Classe finale: Medio`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -139,40 +151,4 @@ Il firmware RD NON garantisce:
 - Portata reale identica al target in presenza di vincoli fisici esterni
 - Integrita meccanica/elettrica della catena ventilazione
 - Validita assoluta del modello di conversione in tutte le condizioni campo
-
-# 🟢 SEZIONE B — DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-In CAF la macchina prova a mantenere una portata aria costante. Quando le condizioni dell'impianto cambiano, la funzione aumenta o riduce la velocita ventilatori per compensare.
-
-## B2. Comportamento normale vs percezione anomala
-- La risposta non e immediata: la funzione interviene a passi e con tempi di filtro.
-- Piccole oscillazioni intorno al valore target sono normali.
-- Se i ventilatori girano troppo piano, la regolazione puo fermarsi temporaneamente.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: CAF non selezionato o sovrascritto da altra modalita prioritaria
-- Logica in protezione: condizioni sicurezza che bloccano la gestione motori
-- Logica attiva ma attuatore non funzionante: comando presente senza variazione reale di portata
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: mantenimento portata vicino al target CAF
-2. Dati reali disponibili: setpoint CAF, speed R/F, rpm, misura/stima portata
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separare:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-La valutazione responsabilita richiede distinguere errore di settaggio, errore comando e limiti fisici dell'impianto reale.
 

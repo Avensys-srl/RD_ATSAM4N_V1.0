@@ -115,11 +115,23 @@ Interpreta gli ingressi configurabili e restituisce l'azione operativa (`RUN/STO
 | Effetto | Attivazione logica stagione e comportamento coerente caldo/freddo |
 
 ## A9. Feedback disponibile
-- Se esiste conferma reale: conferma logica interna, non conferma fisica attuatore
-- Se il comando e fire-and-forget: parzialmente, con conferma su bit EEPROM aggiornati
-- Dove viene letto il feedback: `src/motor_speed.c:776`, `src/motor_speed.c:788`, `src/motor_speed.c:803`, `src/motor_speed.c:838`
-- Affidabilita del feedback: alta lato configurazione firmware; dipende da integrita input ADC lato campo
 
+- Esiste conferma reale?
+  - Si, sullo stato ingressi: la funzione legge direttamente `sData.measure_ADC_input[i]` e decide l'azione (`src/motor_speed.c:669`, `src/motor_speed.c:679`, `src/motor_speed.c:697`).
+- Il comando e "fire and forget"?
+  - Non applicabile: la funzione non invia comandi attuatore diretti, ma elabora input e stato unita.
+- Dove viene letto il feedback?
+  - In `ctrl_comand_inputs()` su ADC ingressi e su stati/allarmi (`src/motor_speed.c:622`, `src/motor_speed.c:669`, `src/motor_speed.c:707`, `src/motor_speed.c:940`).
+- Quanto e affidabile?
+
+Valori criteri:
+
+- `Origine diretta: 1` (lettura ingresso fisico ADC)
+- `Correlazione temporale: 0` (nessun timeout esplicito)
+- `Correlazione univoca col comando: 1` (decisione legata al canale input e soglie definite)
+- `Gestione errore: 1` (allarmi incendio, riarmo manuale, rami fallback)
+- `Punteggio totale: 3`
+- `Classe finale: Forte`
 ## A10. Punti critici firmware
 - Verificare condizioni con confronti stretti su soglie (maggiore/minore uguale) per evitare oscillazioni logiche.
 - Verificare coerenza timer/contatori rispetto al periodo scheduler reale.
@@ -148,40 +160,4 @@ Il firmware RD NON garantisce:
 - Correttezza cablaggio input campo
 - Stabilita elettrica del segnale ingresso
 - Esecuzione fisica caldo/freddo in assenza componenti esterni funzionanti
-
-# 🟢 SEZIONE B — DOCUMENTAZIONE NON TECNICA (OPERATIVA / CAMPO)
-
-## B1. Racconto operativo
-Quando l'Input 2 e configurato per stagione, il sistema decide automaticamente se lavorare in estate o inverno in base al livello del segnale. Se cambia livello, aggiorna la modalita e disattiva l'altra.
-
-## B2. Comportamento normale vs percezione anomala
-- E normale che il cambio stagione non avvenga se manca un accessorio compatibile (es. cooler per summer, heater/SSR per winter).
-- E normale vedere nessun cambio se Input 2 non e configurato in modalita stagione.
-- Valori vicino soglia possono dare percezione di instabilita.
-
-## B3. Errori bloccanti a monte
-- Logica non autorizzata: input non configurato come summer/winter
-- Logica in protezione: accessori stagionali non operativi
-- Logica attiva ma attuatore non funzionante: stagione cambiata ma resa termica assente per guasti esterni
-
-## B4. Checklist problem solving
-1. Cosa dovrebbe accadere: switch estate/inverno da Input 2
-2. Dati reali disponibili: valore ADC input 2, bit stagione attivi, stato accessori
-3. Modalita attiva corretta?
-4. Consensi presenti?
-5. Soglie rispettate?
-6. Timer completati?
-7. Allarmi attivi?
-8. Comando generato?
-9. Segnale elettrico presente?
-10. Effetto fisico osservato?
-
-Separare:
-- Problema configurazione
-- Problema elettrico
-- Problema meccanico
-- Problema installazione
-
-## B5. Nota gestionale (facoltativa)
-L'attribuzione responsabilita richiede distinguere cambio stagione logico, disponibilita hardware e risposta reale impianto.
 
