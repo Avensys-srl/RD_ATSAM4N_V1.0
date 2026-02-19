@@ -1,8 +1,15 @@
 ﻿# Descrizioni funzioni esistenti
 
-In questa cartella creiamo un file `.md` per documentare in modo completo le funzioni gia presenti nel firmware.
-Usare `TEMPLATE_Descrizione_Funzione.md` come base e rinominare il file con il formato:
+In questa cartella creiamo file `.md` per documentare in modo completo le funzioni presenti nel firmware.
 
-`Funzione_<NomeFunzione>.md`
+Usare i due template separati come base:
 
-Esempio: `Funzione_PowerMode.md`
+- `TEMPLATE_Descrizione_Funzione_A.md` (sezione tecnica)
+- `TEMPLATE_Descrizione_Funzione_B.md` (sezione operativa)
+
+Per ogni funzione creare due file distinti:
+
+- `Funzione_<NomeFunzione>_A.md`
+- `Funzione_<NomeFunzione>_B.md`
+
+I file `Funzione_<NomeFunzione>.md` e `TEMPLATE_Descrizione_Funzione.md` restano come indice e puntano ai due documenti separati.

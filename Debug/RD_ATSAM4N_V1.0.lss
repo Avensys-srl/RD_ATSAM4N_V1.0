@@ -31,9 +31,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  13 .debug_line   000251d8  00000000  00000000  000b583a  2**0
                   CONTENTS, READONLY, DEBUGGING
+<<<<<<< HEAD
  14 .debug_str    0004bcdd  00000000  00000000  000daa12  2**0
                   CONTENTS, READONLY, DEBUGGING
  15 .debug_frame  00003e18  00000000  00000000  001266f0  2**2
+=======
+ 14 .debug_str    0004bd45  00000000  00000000  000daa12  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 15 .debug_frame  00003e18  00000000  00000000  00126758  2**2
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -25443,6 +25449,7 @@ void system_init_flash(uint32_t ul_clk)
   40aba4:	20004d38 	.word	0x20004d38
 
 0040aba8 <managementBypass>:
+<<<<<<< HEAD
 //
 // NB: Bypass CLOSE, l'aria passa dallo Scambiatore
 //     Bypass OPEN, l'aria passa dal canale Bypass 
@@ -25456,12 +25463,16 @@ void managementBypass(unsigned short enab_func)
   
   // per prima cosa verifichiamo se � in test
   if( (sData.status_test & MSK_TEST_BYPASS) )
+=======
+  40aba8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40abaa:	4b9f      	ldr	r3, [pc, #636]	; (40ae28 <managementBypass+0x280>)
   40abac:	f8b3 3220 	ldrh.w	r3, [r3, #544]	; 0x220
   40abb0:	f013 0f02 	tst.w	r3, #2
   40abb4:	d000      	beq.n	40abb8 <managementBypass+0x10>
   40abb6:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
   40abb8:	4604      	mov	r4, r0
+<<<<<<< HEAD
     return;
 
       
@@ -25475,18 +25486,26 @@ void managementBypass(unsigned short enab_func)
   mskBPD_Close |= (1 << POS_BIT_BYPASS_CLOSE);
   
   switch (cfg_bypass)
+=======
+  40abba:	204d      	movs	r0, #77	; 0x4d
+  40abbc:	4b9b      	ldr	r3, [pc, #620]	; (40ae2c <managementBypass+0x284>)
+  40abbe:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40abc0:	2804      	cmp	r0, #4
   40abc2:	d8f8      	bhi.n	40abb6 <managementBypass+0xe>
   40abc4:	e8df f010 	tbh	[pc, r0, lsl #1]
   40abc8:	01110095 	.word	0x01110095
   40abcc:	0076009c 	.word	0x0076009c
   40abd0:	0005      	.short	0x0005
+<<<<<<< HEAD
         cmd_bypass_close = false;  
     break;
     
     case BPD_AUTO_ON_OFF:
     
          if(!CkAlarm(ALM_PTFRESH_KO) && !CkAlarm(ALM_PTRET_KO))
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40abd2:	2058      	movs	r0, #88	; 0x58
   40abd4:	4b96      	ldr	r3, [pc, #600]	; (40ae30 <managementBypass+0x288>)
   40abd6:	4798      	blx	r3
@@ -25498,14 +25517,18 @@ void managementBypass(unsigned short enab_func)
   40abe2:	4604      	mov	r4, r0
   40abe4:	2800      	cmp	r0, #0
   40abe6:	d1e6      	bne.n	40abb6 <managementBypass+0xe>
+<<<<<<< HEAD
         {     
           
            if( (count_active_freecooling_on > 0) && (count_active_freecooling_on < 60)) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40abe8:	4b92      	ldr	r3, [pc, #584]	; (40ae34 <managementBypass+0x28c>)
   40abea:	681b      	ldr	r3, [r3, #0]
   40abec:	3b01      	subs	r3, #1
   40abee:	2b3a      	cmp	r3, #58	; 0x3a
   40abf0:	d921      	bls.n	40ac36 <managementBypass+0x8e>
+<<<<<<< HEAD
               }
               count_active_freecooling_on++;
               count_active_freecooling_off = 0;
@@ -25518,20 +25541,29 @@ void managementBypass(unsigned short enab_func)
               cmd_bypass_close = true;  //chiudo il bypass
               cmd_bypass_open  = false;  
               if (standby_before == 1 && count_active_freecooling_off == 0)  //se ero spento....
+=======
+  40abf2:	2200      	movs	r2, #0
+  40abf4:	4b8f      	ldr	r3, [pc, #572]	; (40ae34 <managementBypass+0x28c>)
+  40abf6:	601a      	str	r2, [r3, #0]
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40abf8:	4b8f      	ldr	r3, [pc, #572]	; (40ae38 <managementBypass+0x290>)
   40abfa:	681b      	ldr	r3, [r3, #0]
   40abfc:	2b01      	cmp	r3, #1
   40abfe:	d038      	beq.n	40ac72 <managementBypass+0xca>
+<<<<<<< HEAD
                 cntUpdate_SettingPar++;
                 write_byte_eeprom( ADDR_EEP( cntUpdate_SettingPar ), cntUpdate_SettingPar );
                 PowerMode(POWER_SAVE);
                 standby_before = 0;
                 }
               count_active_freecooling_off++;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac00:	4a8e      	ldr	r2, [pc, #568]	; (40ae3c <managementBypass+0x294>)
   40ac02:	6813      	ldr	r3, [r2, #0]
   40ac04:	3301      	adds	r3, #1
   40ac06:	6013      	str	r3, [r2, #0]
+<<<<<<< HEAD
              // Sono spento, attendo 30 minuti (360 cicli), prima di verificare le condizione di una nuova riaccensione.
              cmd_bypass_open = false;
              cmd_bypass_close = true;
@@ -25542,10 +25574,15 @@ void managementBypass(unsigned short enab_func)
   40ac0c:	f340 8150 	ble.w	40aeb0 <managementBypass+0x308>
             {
             if((sData.measure_Temp[I_PROBE_RETURN] >= SetPointTemp) &&     
+=======
+  40ac08:	f5b3 7fb4 	cmp.w	r3, #360	; 0x168
+  40ac0c:	f340 8150 	ble.w	40aeb0 <managementBypass+0x308>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac10:	4b85      	ldr	r3, [pc, #532]	; (40ae28 <managementBypass+0x280>)
   40ac12:	f9b3 31fd 	ldrsh.w	r3, [r3, #509]	; 0x1fd
   40ac16:	2b00      	cmp	r3, #0
   40ac18:	db07      	blt.n	40ac2a <managementBypass+0x82>
+<<<<<<< HEAD
               (sData.measure_Temp[I_PROBE_FRESH] > Bypass_minTemp) &&                    
   40ac1a:	4a83      	ldr	r2, [pc, #524]	; (40ae28 <managementBypass+0x280>)
   40ac1c:	f9b2 21fb 	ldrsh.w	r2, [r2, #507]	; 0x1fb
@@ -25576,25 +25613,50 @@ void managementBypass(unsigned short enab_func)
   40ac32:	d165      	bne.n	40ad00 <managementBypass+0x158>
   40ac34:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
               if (read_byte_eeprom(ADDR_EEP(Set_Power_ON)) == 0)  //se ero spento mi accendo
+=======
+  40ac1a:	4a83      	ldr	r2, [pc, #524]	; (40ae28 <managementBypass+0x280>)
+  40ac1c:	f9b2 21fb 	ldrsh.w	r2, [r2, #507]	; 0x1fb
+  40ac20:	2a00      	cmp	r2, #0
+  40ac22:	dd02      	ble.n	40ac2a <managementBypass+0x82>
+  40ac24:	3305      	adds	r3, #5
+  40ac26:	429a      	cmp	r2, r3
+  40ac28:	dd39      	ble.n	40ac9e <managementBypass+0xf6>
+  40ac2a:	2401      	movs	r4, #1
+  40ac2c:	4b83      	ldr	r3, [pc, #524]	; (40ae3c <managementBypass+0x294>)
+  40ac2e:	601c      	str	r4, [r3, #0]
+  40ac30:	2c00      	cmp	r4, #0
+  40ac32:	d165      	bne.n	40ad00 <managementBypass+0x158>
+  40ac34:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac36:	204c      	movs	r0, #76	; 0x4c
   40ac38:	4b7c      	ldr	r3, [pc, #496]	; (40ae2c <managementBypass+0x284>)
   40ac3a:	4798      	blx	r3
   40ac3c:	b138      	cbz	r0, 40ac4e <managementBypass+0xa6>
+<<<<<<< HEAD
               count_active_freecooling_on++;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac3e:	4a7d      	ldr	r2, [pc, #500]	; (40ae34 <managementBypass+0x28c>)
   40ac40:	6813      	ldr	r3, [r2, #0]
   40ac42:	3301      	adds	r3, #1
   40ac44:	6013      	str	r3, [r2, #0]
+<<<<<<< HEAD
               count_active_freecooling_off = 0;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac46:	2200      	movs	r2, #0
   40ac48:	4b7c      	ldr	r3, [pc, #496]	; (40ae3c <managementBypass+0x294>)
   40ac4a:	601a      	str	r2, [r3, #0]
   40ac4c:	e7f0      	b.n	40ac30 <managementBypass+0x88>
+<<<<<<< HEAD
               write_byte_eeprom(ADDR_EEP(Set_Power_ON), 1);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac4e:	2101      	movs	r1, #1
   40ac50:	204c      	movs	r0, #76	; 0x4c
   40ac52:	4d7b      	ldr	r5, [pc, #492]	; (40ae40 <managementBypass+0x298>)
   40ac54:	47a8      	blx	r5
+<<<<<<< HEAD
               cntUpdate_SettingPar = read_byte_eeprom( ADDR_EEP( cntUpdate_SettingPar ) );
   40ac56:	207e      	movs	r0, #126	; 0x7e
   40ac58:	4b74      	ldr	r3, [pc, #464]	; (40ae2c <managementBypass+0x284>)
@@ -25610,20 +25672,39 @@ void managementBypass(unsigned short enab_func)
   40ac66:	4b77      	ldr	r3, [pc, #476]	; (40ae44 <managementBypass+0x29c>)
   40ac68:	4798      	blx	r3
               standby_before = 1;  // devo ricordarmi che ero spento
+=======
+  40ac56:	207e      	movs	r0, #126	; 0x7e
+  40ac58:	4b74      	ldr	r3, [pc, #464]	; (40ae2c <managementBypass+0x284>)
+  40ac5a:	4798      	blx	r3
+  40ac5c:	1c41      	adds	r1, r0, #1
+  40ac5e:	b2c9      	uxtb	r1, r1
+  40ac60:	207e      	movs	r0, #126	; 0x7e
+  40ac62:	47a8      	blx	r5
+  40ac64:	204f      	movs	r0, #79	; 0x4f
+  40ac66:	4b77      	ldr	r3, [pc, #476]	; (40ae44 <managementBypass+0x29c>)
+  40ac68:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac6a:	2201      	movs	r2, #1
   40ac6c:	4b72      	ldr	r3, [pc, #456]	; (40ae38 <managementBypass+0x290>)
   40ac6e:	601a      	str	r2, [r3, #0]
   40ac70:	e7e5      	b.n	40ac3e <managementBypass+0x96>
+<<<<<<< HEAD
               if (standby_before == 1 && count_active_freecooling_off == 0)  //se ero spento....
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac72:	4b72      	ldr	r3, [pc, #456]	; (40ae3c <managementBypass+0x294>)
   40ac74:	681b      	ldr	r3, [r3, #0]
   40ac76:	2b00      	cmp	r3, #0
   40ac78:	d1c2      	bne.n	40ac00 <managementBypass+0x58>
+<<<<<<< HEAD
                 write_byte_eeprom(ADDR_EEP(Set_Power_ON), 0);  //....mi rispengo
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac7a:	4611      	mov	r1, r2
   40ac7c:	204c      	movs	r0, #76	; 0x4c
   40ac7e:	4c70      	ldr	r4, [pc, #448]	; (40ae40 <managementBypass+0x298>)
   40ac80:	47a0      	blx	r4
+<<<<<<< HEAD
                 cntUpdate_SettingPar = read_byte_eeprom( ADDR_EEP( cntUpdate_SettingPar ) );
   40ac82:	207e      	movs	r0, #126	; 0x7e
   40ac84:	4b69      	ldr	r3, [pc, #420]	; (40ae2c <managementBypass+0x284>)
@@ -25639,16 +25720,34 @@ void managementBypass(unsigned short enab_func)
   40ac92:	4b6c      	ldr	r3, [pc, #432]	; (40ae44 <managementBypass+0x29c>)
   40ac94:	4798      	blx	r3
                 standby_before = 0;
+=======
+  40ac82:	207e      	movs	r0, #126	; 0x7e
+  40ac84:	4b69      	ldr	r3, [pc, #420]	; (40ae2c <managementBypass+0x284>)
+  40ac86:	4798      	blx	r3
+  40ac88:	1c41      	adds	r1, r0, #1
+  40ac8a:	b2c9      	uxtb	r1, r1
+  40ac8c:	207e      	movs	r0, #126	; 0x7e
+  40ac8e:	47a0      	blx	r4
+  40ac90:	2000      	movs	r0, #0
+  40ac92:	4b6c      	ldr	r3, [pc, #432]	; (40ae44 <managementBypass+0x29c>)
+  40ac94:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac96:	2200      	movs	r2, #0
   40ac98:	4b67      	ldr	r3, [pc, #412]	; (40ae38 <managementBypass+0x290>)
   40ac9a:	601a      	str	r2, [r3, #0]
   40ac9c:	e7b0      	b.n	40ac00 <managementBypass+0x58>
+<<<<<<< HEAD
              if (read_byte_eeprom(ADDR_EEP(Set_Power_ON)) == 0)  //se ero spento mi accendo
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ac9e:	204c      	movs	r0, #76	; 0x4c
   40aca0:	4b62      	ldr	r3, [pc, #392]	; (40ae2c <managementBypass+0x284>)
   40aca2:	4798      	blx	r3
   40aca4:	b198      	cbz	r0, 40acce <managementBypass+0x126>
+<<<<<<< HEAD
               count_active_freecooling_on++; 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aca6:	4a63      	ldr	r2, [pc, #396]	; (40ae34 <managementBypass+0x28c>)
   40aca8:	6813      	ldr	r3, [r2, #0]
   40acaa:	3301      	adds	r3, #1
@@ -25657,23 +25756,33 @@ void managementBypass(unsigned short enab_func)
   40acae:	2200      	movs	r2, #0
   40acb0:	4b62      	ldr	r3, [pc, #392]	; (40ae3c <managementBypass+0x294>)
   40acb2:	601a      	str	r2, [r3, #0]
+<<<<<<< HEAD
   if(cmd_bypass_open && ((sData.status_unit & MSK_STS_BYPASS) == mskBPD_Close))  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40acb4:	4b5c      	ldr	r3, [pc, #368]	; (40ae28 <managementBypass+0x280>)
   40acb6:	f8b3 3219 	ldrh.w	r3, [r3, #537]	; 0x219
   40acba:	f003 03c0 	and.w	r3, r3, #192	; 0xc0
   40acbe:	2b80      	cmp	r3, #128	; 0x80
   40acc0:	f47f af79 	bne.w	40abb6 <managementBypass+0xe>
+<<<<<<< HEAD
     Active_Procedure_Bypass_OpCl(OPEN_BPD, 9);  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40acc4:	2109      	movs	r1, #9
   40acc6:	2000      	movs	r0, #0
   40acc8:	4b5f      	ldr	r3, [pc, #380]	; (40ae48 <managementBypass+0x2a0>)
   40acca:	4798      	blx	r3
   40accc:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+<<<<<<< HEAD
               write_byte_eeprom(ADDR_EEP(Set_Power_ON), 1);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40acce:	2101      	movs	r1, #1
   40acd0:	204c      	movs	r0, #76	; 0x4c
   40acd2:	4c5b      	ldr	r4, [pc, #364]	; (40ae40 <managementBypass+0x298>)
   40acd4:	47a0      	blx	r4
+<<<<<<< HEAD
               cntUpdate_SettingPar = read_byte_eeprom( ADDR_EEP( cntUpdate_SettingPar ) );
   40acd6:	207e      	movs	r0, #126	; 0x7e
   40acd8:	4b54      	ldr	r3, [pc, #336]	; (40ae2c <managementBypass+0x284>)
@@ -25689,35 +25798,65 @@ void managementBypass(unsigned short enab_func)
   40ace6:	4b57      	ldr	r3, [pc, #348]	; (40ae44 <managementBypass+0x29c>)
   40ace8:	4798      	blx	r3
               standby_before = 1;  // devo ricordarmi che ero spento
+=======
+  40acd6:	207e      	movs	r0, #126	; 0x7e
+  40acd8:	4b54      	ldr	r3, [pc, #336]	; (40ae2c <managementBypass+0x284>)
+  40acda:	4798      	blx	r3
+  40acdc:	1c41      	adds	r1, r0, #1
+  40acde:	b2c9      	uxtb	r1, r1
+  40ace0:	207e      	movs	r0, #126	; 0x7e
+  40ace2:	47a0      	blx	r4
+  40ace4:	204f      	movs	r0, #79	; 0x4f
+  40ace6:	4b57      	ldr	r3, [pc, #348]	; (40ae44 <managementBypass+0x29c>)
+  40ace8:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40acea:	2201      	movs	r2, #1
   40acec:	4b52      	ldr	r3, [pc, #328]	; (40ae38 <managementBypass+0x290>)
   40acee:	601a      	str	r2, [r3, #0]
   40acf0:	e7d9      	b.n	40aca6 <managementBypass+0xfe>
+<<<<<<< HEAD
         if(DigitAccessoryOn(ACC_I2C_DXD)){
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40acf2:	200c      	movs	r0, #12
   40acf4:	4b55      	ldr	r3, [pc, #340]	; (40ae4c <managementBypass+0x2a4>)
   40acf6:	4798      	blx	r3
   40acf8:	b170      	cbz	r0, 40ad18 <managementBypass+0x170>
+<<<<<<< HEAD
           persist_temp_bypass_on = 0; 
   40acfa:	2200      	movs	r2, #0
   40acfc:	4b54      	ldr	r3, [pc, #336]	; (40ae50 <managementBypass+0x2a8>)
   40acfe:	601a      	str	r2, [r3, #0]
   else if(cmd_bypass_close && ((sData.status_unit & MSK_STS_BYPASS) == !mskBPD_Close)) 
+=======
+  40acfa:	2200      	movs	r2, #0
+  40acfc:	4b54      	ldr	r3, [pc, #336]	; (40ae50 <managementBypass+0x2a8>)
+  40acfe:	601a      	str	r2, [r3, #0]
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad00:	4b49      	ldr	r3, [pc, #292]	; (40ae28 <managementBypass+0x280>)
   40ad02:	f8b3 3219 	ldrh.w	r3, [r3, #537]	; 0x219
   40ad06:	f013 0fc0 	tst.w	r3, #192	; 0xc0
   40ad0a:	f47f af54 	bne.w	40abb6 <managementBypass+0xe>
+<<<<<<< HEAD
     Active_Procedure_Bypass_OpCl(CLOSE_BPD, 9);  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad0e:	2109      	movs	r1, #9
   40ad10:	2001      	movs	r0, #1
   40ad12:	4b4d      	ldr	r3, [pc, #308]	; (40ae48 <managementBypass+0x2a0>)
   40ad14:	4798      	blx	r3
   40ad16:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+<<<<<<< HEAD
           i_rifTemp        = read_byte_eeprom(ADDR_EEP(idxSetPointT)) & 0x01;
   40ad18:	208b      	movs	r0, #139	; 0x8b
   40ad1a:	4b44      	ldr	r3, [pc, #272]	; (40ae2c <managementBypass+0x284>)
   40ad1c:	4798      	blx	r3
           rif_temp_interna = read_word_eeprom(ADDR_EEP(SetPointTemp[i_rifTemp])); 
+=======
+  40ad18:	208b      	movs	r0, #139	; 0x8b
+  40ad1a:	4b44      	ldr	r3, [pc, #272]	; (40ae2c <managementBypass+0x284>)
+  40ad1c:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad1e:	f000 0001 	and.w	r0, r0, #1
   40ad22:	0040      	lsls	r0, r0, #1
   40ad24:	3087      	adds	r0, #135	; 0x87
@@ -25725,30 +25864,45 @@ void managementBypass(unsigned short enab_func)
   40ad28:	47a8      	blx	r5
   40ad2a:	4606      	mov	r6, r0
   40ad2c:	b207      	sxth	r7, r0
+<<<<<<< HEAD
           Bypass_minTemp   = read_word_eeprom(ADDR_EEP(Bypass_minTempExt));
   40ad2e:	2085      	movs	r0, #133	; 0x85
   40ad30:	47a8      	blx	r5
   40ad32:	4605      	mov	r5, r0
           if(DigitAccessoryOperating(ACC_I2C_HEATER)  && (enab_func &  (1 << ENAB_WINTER)))  {
+=======
+  40ad2e:	2085      	movs	r0, #133	; 0x85
+  40ad30:	47a8      	blx	r5
+  40ad32:	4605      	mov	r5, r0
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad34:	2000      	movs	r0, #0
   40ad36:	4b48      	ldr	r3, [pc, #288]	; (40ae58 <managementBypass+0x2b0>)
   40ad38:	4798      	blx	r3
   40ad3a:	b150      	cbz	r0, 40ad52 <managementBypass+0x1aa>
   40ad3c:	f414 6f80 	tst.w	r4, #1024	; 0x400
   40ad40:	d101      	bne.n	40ad46 <managementBypass+0x19e>
+<<<<<<< HEAD
               SetPointTemp = rif_temp_interna;
   40ad42:	463c      	mov	r4, r7
   40ad44:	e006      	b.n	40ad54 <managementBypass+0x1ac>
               SetPointTemp = rif_temp_interna + (short)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[0]));
+=======
+  40ad42:	463c      	mov	r4, r7
+  40ad44:	e006      	b.n	40ad54 <managementBypass+0x1ac>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad46:	2090      	movs	r0, #144	; 0x90
   40ad48:	4b38      	ldr	r3, [pc, #224]	; (40ae2c <managementBypass+0x284>)
   40ad4a:	4798      	blx	r3
   40ad4c:	4430      	add	r0, r6
   40ad4e:	b204      	sxth	r4, r0
   40ad50:	e000      	b.n	40ad54 <managementBypass+0x1ac>
+<<<<<<< HEAD
               SetPointTemp = rif_temp_interna;
   40ad52:	463c      	mov	r4, r7
           if(!CkAlarm(ALM_PTFRESH_KO) && !CkAlarm(ALM_PTRET_KO))
+=======
+  40ad52:	463c      	mov	r4, r7
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad54:	2058      	movs	r0, #88	; 0x58
   40ad56:	4b36      	ldr	r3, [pc, #216]	; (40ae30 <managementBypass+0x288>)
   40ad58:	4798      	blx	r3
@@ -25760,14 +25914,19 @@ void managementBypass(unsigned short enab_func)
   40ad64:	4606      	mov	r6, r0
   40ad66:	2800      	cmp	r0, #0
   40ad68:	d1ca      	bne.n	40ad00 <managementBypass+0x158>
+<<<<<<< HEAD
           Bypass_minTemp   = read_word_eeprom(ADDR_EEP(Bypass_minTempExt));
   40ad6a:	b22d      	sxth	r5, r5
               if((sData.measure_Temp[I_PROBE_RETURN] >= (SetPointTemp + 10)) &&     
+=======
+  40ad6a:	b22d      	sxth	r5, r5
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad6c:	4b2e      	ldr	r3, [pc, #184]	; (40ae28 <managementBypass+0x280>)
   40ad6e:	f9b3 31fd 	ldrsh.w	r3, [r3, #509]	; 0x1fd
   40ad72:	340a      	adds	r4, #10
   40ad74:	42a3      	cmp	r3, r4
   40ad76:	db07      	blt.n	40ad88 <managementBypass+0x1e0>
+<<<<<<< HEAD
                  (sData.measure_Temp[I_PROBE_FRESH] > Bypass_minTemp) &&                    
   40ad78:	4a2b      	ldr	r2, [pc, #172]	; (40ae28 <managementBypass+0x280>)
   40ad7a:	f9b2 21fb 	ldrsh.w	r2, [r2, #507]	; 0x1fb
@@ -25784,6 +25943,18 @@ void managementBypass(unsigned short enab_func)
   40ad8a:	4b31      	ldr	r3, [pc, #196]	; (40ae50 <managementBypass+0x2a8>)
   40ad8c:	601a      	str	r2, [r3, #0]
                if((sData.measure_Temp[I_PROBE_FRESH] >= sData.measure_Temp[I_PROBE_RETURN]) ||    
+=======
+  40ad78:	4a2b      	ldr	r2, [pc, #172]	; (40ae28 <managementBypass+0x280>)
+  40ad7a:	f9b2 21fb 	ldrsh.w	r2, [r2, #507]	; 0x1fb
+  40ad7e:	4295      	cmp	r5, r2
+  40ad80:	da02      	bge.n	40ad88 <managementBypass+0x1e0>
+  40ad82:	3b14      	subs	r3, #20
+  40ad84:	429a      	cmp	r2, r3
+  40ad86:	db12      	blt.n	40adae <managementBypass+0x206>
+  40ad88:	2200      	movs	r2, #0
+  40ad8a:	4b31      	ldr	r3, [pc, #196]	; (40ae50 <managementBypass+0x2a8>)
+  40ad8c:	601a      	str	r2, [r3, #0]
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ad8e:	4b26      	ldr	r3, [pc, #152]	; (40ae28 <managementBypass+0x280>)
   40ad90:	f9b3 21fb 	ldrsh.w	r2, [r3, #507]	; 0x1fb
   40ad94:	f9b3 31fd 	ldrsh.w	r3, [r3, #509]	; 0x1fd
@@ -25791,16 +25962,23 @@ void managementBypass(unsigned short enab_func)
   40ad9a:	da04      	bge.n	40ada6 <managementBypass+0x1fe>
   40ad9c:	4295      	cmp	r5, r2
   40ad9e:	dc02      	bgt.n	40ada6 <managementBypass+0x1fe>
+<<<<<<< HEAD
                   (sData.measure_Temp[I_PROBE_RETURN] <= (rif_temp_interna - 20)) ||  
   40ada0:	3f14      	subs	r7, #20
                   (sData.measure_Temp[I_PROBE_FRESH] < Bypass_minTemp) ||                 
   40ada2:	42bb      	cmp	r3, r7
   40ada4:	dc13      	bgt.n	40adce <managementBypass+0x226>
                  persist_temp_bypass_on = 0; 
+=======
+  40ada0:	3f14      	subs	r7, #20
+  40ada2:	42bb      	cmp	r3, r7
+  40ada4:	dc13      	bgt.n	40adce <managementBypass+0x226>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ada6:	2200      	movs	r2, #0
   40ada8:	4b29      	ldr	r3, [pc, #164]	; (40ae50 <managementBypass+0x2a8>)
   40adaa:	601a      	str	r2, [r3, #0]
   40adac:	e7a8      	b.n	40ad00 <managementBypass+0x158>
+<<<<<<< HEAD
                  !DigitAccessoryOn(ACC_I2C_COOLER))                                                
   40adae:	2001      	movs	r0, #1
   40adb0:	4b26      	ldr	r3, [pc, #152]	; (40ae4c <managementBypass+0x2a4>)
@@ -25809,12 +25987,20 @@ void managementBypass(unsigned short enab_func)
   40adb4:	2800      	cmp	r0, #0
   40adb6:	d1e7      	bne.n	40ad88 <managementBypass+0x1e0>
                  if(persist_temp_bypass_on++ > 3) {               
+=======
+  40adae:	2001      	movs	r0, #1
+  40adb0:	4b26      	ldr	r3, [pc, #152]	; (40ae4c <managementBypass+0x2a4>)
+  40adb2:	4798      	blx	r3
+  40adb4:	2800      	cmp	r0, #0
+  40adb6:	d1e7      	bne.n	40ad88 <managementBypass+0x1e0>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40adb8:	4a25      	ldr	r2, [pc, #148]	; (40ae50 <managementBypass+0x2a8>)
   40adba:	6813      	ldr	r3, [r2, #0]
   40adbc:	1c59      	adds	r1, r3, #1
   40adbe:	6011      	str	r1, [r2, #0]
   40adc0:	2b03      	cmp	r3, #3
   40adc2:	dde4      	ble.n	40ad8e <managementBypass+0x1e6>
+<<<<<<< HEAD
                    persist_temp_bypass_on = 4;
   40adc4:	2204      	movs	r2, #4
   40adc6:	4b22      	ldr	r3, [pc, #136]	; (40ae50 <managementBypass+0x2a8>)
@@ -25845,10 +26031,34 @@ void managementBypass(unsigned short enab_func)
   40adec:	4b0f      	ldr	r3, [pc, #60]	; (40ae2c <managementBypass+0x284>)
   40adee:	4798      	blx	r3
         if ((cfg_inp != INP_12V_BYPASS_OPEN) && (cfg_inp != INP_0V_BYPASS_OPEN))
+=======
+  40adc4:	2204      	movs	r2, #4
+  40adc6:	4b22      	ldr	r3, [pc, #136]	; (40ae50 <managementBypass+0x2a8>)
+  40adc8:	601a      	str	r2, [r3, #0]
+  40adca:	2601      	movs	r6, #1
+  40adcc:	e7df      	b.n	40ad8e <managementBypass+0x1e6>
+  40adce:	2000      	movs	r0, #0
+  40add0:	4b1e      	ldr	r3, [pc, #120]	; (40ae4c <managementBypass+0x2a4>)
+  40add2:	4798      	blx	r3
+  40add4:	2800      	cmp	r0, #0
+  40add6:	d1e6      	bne.n	40ada6 <managementBypass+0x1fe>
+  40add8:	2001      	movs	r0, #1
+  40adda:	4b1c      	ldr	r3, [pc, #112]	; (40ae4c <managementBypass+0x2a4>)
+  40addc:	4798      	blx	r3
+  40adde:	2800      	cmp	r0, #0
+  40ade0:	d1e1      	bne.n	40ada6 <managementBypass+0x1fe>
+  40ade2:	2e00      	cmp	r6, #0
+  40ade4:	f47f af66 	bne.w	40acb4 <managementBypass+0x10c>
+  40ade8:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+  40adea:	204e      	movs	r0, #78	; 0x4e
+  40adec:	4b0f      	ldr	r3, [pc, #60]	; (40ae2c <managementBypass+0x284>)
+  40adee:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40adf0:	1f03      	subs	r3, r0, #4
   40adf2:	b2db      	uxtb	r3, r3
   40adf4:	2b01      	cmp	r3, #1
   40adf6:	d902      	bls.n	40adfe <managementBypass+0x256>
+<<<<<<< HEAD
             cfg_inp = read_byte_eeprom(ADDR_EEP(Set_Input[1]));  // passa a verificare l'input 2
   40adf8:	204f      	movs	r0, #79	; 0x4f
   40adfa:	4b0c      	ldr	r3, [pc, #48]	; (40ae2c <managementBypass+0x284>)
@@ -25860,6 +26070,15 @@ void managementBypass(unsigned short enab_func)
   40ae02:	2805      	cmp	r0, #5
   40ae04:	f47f aed7 	bne.w	40abb6 <managementBypass+0xe>
             if (((sData.status_unit & MSK_STS_BYPASS) == 0) && (sData.measure_ADC_input[i] > 610)) 
+=======
+  40adf8:	204f      	movs	r0, #79	; 0x4f
+  40adfa:	4b0c      	ldr	r3, [pc, #48]	; (40ae2c <managementBypass+0x284>)
+  40adfc:	4798      	blx	r3
+  40adfe:	2804      	cmp	r0, #4
+  40ae00:	d02e      	beq.n	40ae60 <managementBypass+0x2b8>
+  40ae02:	2805      	cmp	r0, #5
+  40ae04:	f47f aed7 	bne.w	40abb6 <managementBypass+0xe>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ae08:	4b07      	ldr	r3, [pc, #28]	; (40ae28 <managementBypass+0x280>)
   40ae0a:	f8b3 3219 	ldrh.w	r3, [r3, #537]	; 0x219
   40ae0e:	f013 03c0 	ands.w	r3, r3, #192	; 0xc0
@@ -25885,7 +26104,10 @@ void managementBypass(unsigned short enab_func)
   40ae54:	0040b859 	.word	0x0040b859
   40ae58:	0040012d 	.word	0x0040012d
   40ae5c:	200018ac 	.word	0x200018ac
+<<<<<<< HEAD
             if (((sData.status_unit & MSK_STS_BYPASS) == 0) && (sData.measure_ADC_input[i] < 250)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ae60:	4b14      	ldr	r3, [pc, #80]	; (40aeb4 <managementBypass+0x30c>)
   40ae62:	f8b3 3219 	ldrh.w	r3, [r3, #537]	; 0x219
   40ae66:	f013 03c0 	ands.w	r3, r3, #192	; 0xc0
@@ -25895,39 +26117,58 @@ void managementBypass(unsigned short enab_func)
   40ae72:	2bf9      	cmp	r3, #249	; 0xf9
   40ae74:	f77f af44 	ble.w	40ad00 <managementBypass+0x158>
   40ae78:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
+<<<<<<< HEAD
             else if (((sData.status_unit & MSK_STS_BYPASS) == mskBPD_Close) &&  (sData.measure_ADC_input[i] > 610)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ae7a:	2b80      	cmp	r3, #128	; 0x80
   40ae7c:	f47f ae9b 	bne.w	40abb6 <managementBypass+0xe>
   40ae80:	4b0d      	ldr	r3, [pc, #52]	; (40aeb8 <managementBypass+0x310>)
   40ae82:	f9b3 3003 	ldrsh.w	r3, [r3, #3]
+<<<<<<< HEAD
   Bool  cmd_bypass_open = false, cmd_bypass_close = false;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ae86:	f240 2262 	movw	r2, #610	; 0x262
   40ae8a:	4293      	cmp	r3, r2
   40ae8c:	bfd4      	ite	le
   40ae8e:	2300      	movle	r3, #0
   40ae90:	2301      	movgt	r3, #1
+<<<<<<< HEAD
   if(cmd_bypass_open && ((sData.status_unit & MSK_STS_BYPASS) == mskBPD_Close))  
   40ae92:	2b00      	cmp	r3, #0
   40ae94:	f47f af16 	bne.w	40acc4 <managementBypass+0x11c>
   40ae98:	e68d      	b.n	40abb6 <managementBypass+0xe>
             else if (((sData.status_unit & MSK_STS_BYPASS) == mskBPD_Close) &&  (sData.measure_ADC_input[i] < 250)) 
+=======
+  40ae92:	2b00      	cmp	r3, #0
+  40ae94:	f47f af16 	bne.w	40acc4 <managementBypass+0x11c>
+  40ae98:	e68d      	b.n	40abb6 <managementBypass+0xe>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40ae9a:	2b80      	cmp	r3, #128	; 0x80
   40ae9c:	f47f ae8b 	bne.w	40abb6 <managementBypass+0xe>
   40aea0:	4b05      	ldr	r3, [pc, #20]	; (40aeb8 <managementBypass+0x310>)
   40aea2:	f9b3 3003 	ldrsh.w	r3, [r3, #3]
+<<<<<<< HEAD
   Bool  cmd_bypass_open = false, cmd_bypass_close = false;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aea6:	2bf9      	cmp	r3, #249	; 0xf9
   40aea8:	bfcc      	ite	gt
   40aeaa:	2300      	movgt	r3, #0
   40aeac:	2301      	movle	r3, #1
   40aeae:	e7f0      	b.n	40ae92 <managementBypass+0x2ea>
+<<<<<<< HEAD
               cmd_bypass_close = true;  //chiudo il bypass
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aeb0:	2401      	movs	r4, #1
   40aeb2:	e6bd      	b.n	40ac30 <managementBypass+0x88>
   40aeb4:	200016ac 	.word	0x200016ac
   40aeb8:	200018ac 	.word	0x200018ac
 
 0040aebc <TemperatureRegulate>:
+<<<<<<< HEAD
 // pilota il bypass. la funzione gira nello scheduler (sample = 5 sec.)
 //
 //  Funzione Modificata dalla 2.16: introdotto Acc. DXD
@@ -25941,10 +26182,14 @@ int TemperatureRegulate()
   Byte msk_bit = 0, nbyte, ref_T_setting;
   Byte i_rifTemp, stato_heater, stato_cooler, cfg_bypass;
   enab_func  = read_word_eeprom(ADDR_EEP(Enab_Fuction)); 
+=======
+  40aebc:	e92d 4ff8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aec0:	202e      	movs	r0, #46	; 0x2e
   40aec2:	4b98      	ldr	r3, [pc, #608]	; (40b124 <TemperatureRegulate+0x268>)
   40aec4:	4798      	blx	r3
   40aec6:	4604      	mov	r4, r0
+<<<<<<< HEAD
   cfg_bypass = read_byte_eeprom(ADDR_EEP(Config_Bypass));
   40aec8:	204d      	movs	r0, #77	; 0x4d
   40aeca:	4b97      	ldr	r3, [pc, #604]	; (40b128 <TemperatureRegulate+0x26c>)
@@ -25955,6 +26200,11 @@ int TemperatureRegulate()
 
   //---- (1) Se l'unit� non � in funzione esci dalla funzione ----
   if((sData.status_unit & (1 << POS_BIT_UNIT_RUN)) == 0  &&  ( cfg_bypass != BPD_AUTO_ON_OFF ) && !(enab_func & (1 << ENAB_MBF))  )  {
+=======
+  40aec8:	204d      	movs	r0, #77	; 0x4d
+  40aeca:	4b97      	ldr	r3, [pc, #604]	; (40b128 <TemperatureRegulate+0x26c>)
+  40aecc:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aece:	4b97      	ldr	r3, [pc, #604]	; (40b12c <TemperatureRegulate+0x270>)
   40aed0:	f8b3 3219 	ldrh.w	r3, [r3, #537]	; 0x219
   40aed4:	f013 0f01 	tst.w	r3, #1
@@ -25963,6 +26213,7 @@ int TemperatureRegulate()
   40aedc:	d02b      	beq.n	40af36 <TemperatureRegulate+0x7a>
   40aede:	f414 4f80 	tst.w	r4, #16384	; 0x4000
   40aee2:	d13e      	bne.n	40af62 <TemperatureRegulate+0xa6>
+<<<<<<< HEAD
     // Se il bypass era aperto chiudilo
     if((sData.status_unit & MSK_STS_BYPASS) == 0) 
   40aee4:	f013 0fc0 	tst.w	r3, #192	; 0xc0
@@ -25971,58 +26222,87 @@ int TemperatureRegulate()
     
     // spengo gli accesori se attivi
     if(DigitAccessoryOn(ACC_I2C_COOLER))
+=======
+  40aee4:	f013 0fc0 	tst.w	r3, #192	; 0xc0
+  40aee8:	d014      	beq.n	40af14 <TemperatureRegulate+0x58>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aeea:	2001      	movs	r0, #1
   40aeec:	4b90      	ldr	r3, [pc, #576]	; (40b130 <TemperatureRegulate+0x274>)
   40aeee:	4798      	blx	r3
   40aef0:	b9a8      	cbnz	r0, 40af1e <TemperatureRegulate+0x62>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_COOLER);
     
     if(DigitAccessoryOn(ACC_I2C_HEATER)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aef2:	2000      	movs	r0, #0
   40aef4:	4b8e      	ldr	r3, [pc, #568]	; (40b130 <TemperatureRegulate+0x274>)
   40aef6:	4798      	blx	r3
   40aef8:	b9a8      	cbnz	r0, 40af26 <TemperatureRegulate+0x6a>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
        
     if(DigitAccessoryOn(ACC_I2C_DXD)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40aefa:	200c      	movs	r0, #12
   40aefc:	4b8c      	ldr	r3, [pc, #560]	; (40b130 <TemperatureRegulate+0x274>)
   40aefe:	4798      	blx	r3
   40af00:	b9a8      	cbnz	r0, 40af2e <TemperatureRegulate+0x72>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_DXD); 
    
     if( info_SSR > 0)
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af02:	4b8c      	ldr	r3, [pc, #560]	; (40b134 <TemperatureRegulate+0x278>)
   40af04:	781b      	ldrb	r3, [r3, #0]
   40af06:	2b00      	cmp	r3, #0
   40af08:	d057      	beq.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
 	  write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);	
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af0a:	2100      	movs	r1, #0
   40af0c:	2096      	movs	r0, #150	; 0x96
   40af0e:	4b8a      	ldr	r3, [pc, #552]	; (40b138 <TemperatureRegulate+0x27c>)
   40af10:	4798      	blx	r3
   40af12:	e052      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
        Active_Procedure_Bypass_OpCl(CLOSE_BPD, 2);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af14:	2102      	movs	r1, #2
   40af16:	2001      	movs	r0, #1
   40af18:	4b88      	ldr	r3, [pc, #544]	; (40b13c <TemperatureRegulate+0x280>)
   40af1a:	4798      	blx	r3
   40af1c:	e7e5      	b.n	40aeea <TemperatureRegulate+0x2e>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_COOLER);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af1e:	2001      	movs	r0, #1
   40af20:	4b87      	ldr	r3, [pc, #540]	; (40b140 <TemperatureRegulate+0x284>)
   40af22:	4798      	blx	r3
   40af24:	e7e5      	b.n	40aef2 <TemperatureRegulate+0x36>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af26:	2000      	movs	r0, #0
   40af28:	4b85      	ldr	r3, [pc, #532]	; (40b140 <TemperatureRegulate+0x284>)
   40af2a:	4798      	blx	r3
   40af2c:	e7e5      	b.n	40aefa <TemperatureRegulate+0x3e>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_DXD); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af2e:	200c      	movs	r0, #12
   40af30:	4b83      	ldr	r3, [pc, #524]	; (40b140 <TemperatureRegulate+0x284>)
   40af32:	4798      	blx	r3
   40af34:	e7e5      	b.n	40af02 <TemperatureRegulate+0x46>
+<<<<<<< HEAD
       
     return 1;  
     
@@ -26033,34 +26313,48 @@ int TemperatureRegulate()
   {
      // spengo gli accessori se attivi
     if(DigitAccessoryOn(ACC_I2C_COOLER))
+=======
+  40af36:	f414 4f80 	tst.w	r4, #16384	; 0x4000
+  40af3a:	d112      	bne.n	40af62 <TemperatureRegulate+0xa6>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af3c:	2001      	movs	r0, #1
   40af3e:	4b7c      	ldr	r3, [pc, #496]	; (40b130 <TemperatureRegulate+0x274>)
   40af40:	4798      	blx	r3
   40af42:	2800      	cmp	r0, #0
   40af44:	d13c      	bne.n	40afc0 <TemperatureRegulate+0x104>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_COOLER);
     
     if(DigitAccessoryOn(ACC_I2C_HEATER)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af46:	2000      	movs	r0, #0
   40af48:	4b79      	ldr	r3, [pc, #484]	; (40b130 <TemperatureRegulate+0x274>)
   40af4a:	4798      	blx	r3
   40af4c:	2800      	cmp	r0, #0
   40af4e:	d13b      	bne.n	40afc8 <TemperatureRegulate+0x10c>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
        
     if(DigitAccessoryOn(ACC_I2C_DXD)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af50:	200c      	movs	r0, #12
   40af52:	4b77      	ldr	r3, [pc, #476]	; (40b130 <TemperatureRegulate+0x274>)
   40af54:	4798      	blx	r3
   40af56:	2800      	cmp	r0, #0
   40af58:	d13a      	bne.n	40afd0 <TemperatureRegulate+0x114>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_DXD); 
       
     if ( info_SSR > 0)
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af5a:	4b76      	ldr	r3, [pc, #472]	; (40b134 <TemperatureRegulate+0x278>)
   40af5c:	781b      	ldrb	r3, [r3, #0]
   40af5e:	2b00      	cmp	r3, #0
   40af60:	d13a      	bne.n	40afd8 <TemperatureRegulate+0x11c>
+<<<<<<< HEAD
   
   }
  
@@ -26073,15 +26367,23 @@ int TemperatureRegulate()
 
   //---- (3)  Se � attivo almeno un accessorio di Riscaldamento o raffreddamento procedi ----
   if(!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_PREHEATER) && !AccessoryPresent_EepList(ACC_EEP_DXD) && !AccessoryPresent_EepList(ACC_EEP_SSR))
+=======
+  40af62:	4620      	mov	r0, r4
+  40af64:	4b77      	ldr	r3, [pc, #476]	; (40b144 <TemperatureRegulate+0x288>)
+  40af66:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af68:	2000      	movs	r0, #0
   40af6a:	4b77      	ldr	r3, [pc, #476]	; (40b148 <TemperatureRegulate+0x28c>)
   40af6c:	4798      	blx	r3
   40af6e:	2800      	cmp	r0, #0
   40af70:	d037      	beq.n	40afe2 <TemperatureRegulate+0x126>
+<<<<<<< HEAD
     return 1;       // se non vi � nessuno sistema per riscaldare o raffreddare, che ci sto a f� qui ??? Esco.
 
   //---- (4) In caso di guasto di uno dei motori spegni subito gli accessori clima a meno che non sia il MODBUS a comandare i motori   
   if ((sData.StatusMotorsR & 0xF0) || (sData.StatusMotorsF &0xF0) || CkAlarm(ALM_EB_CTRL_FAN) && !(enab_func & (1 << ENAB_MBF))) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af72:	4b6e      	ldr	r3, [pc, #440]	; (40b12c <TemperatureRegulate+0x270>)
   40af74:	f893 321d 	ldrb.w	r3, [r3, #541]	; 0x21d
   40af78:	f013 0ff0 	tst.w	r3, #240	; 0xf0
@@ -26090,43 +26392,59 @@ int TemperatureRegulate()
   40af80:	f893 321e 	ldrb.w	r3, [r3, #542]	; 0x21e
   40af84:	f013 0ff0 	tst.w	r3, #240	; 0xf0
   40af88:	d040      	beq.n	40b00c <TemperatureRegulate+0x150>
+<<<<<<< HEAD
       if(DigitAccessoryOn(ACC_I2C_PREHEATER))  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af8a:	2002      	movs	r0, #2
   40af8c:	4b68      	ldr	r3, [pc, #416]	; (40b130 <TemperatureRegulate+0x274>)
   40af8e:	4798      	blx	r3
   40af90:	2800      	cmp	r0, #0
   40af92:	d17d      	bne.n	40b090 <TemperatureRegulate+0x1d4>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_PREHEATER);   
          
       if(DigitAccessoryOn(ACC_I2C_HEATER))  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af94:	2000      	movs	r0, #0
   40af96:	4b66      	ldr	r3, [pc, #408]	; (40b130 <TemperatureRegulate+0x274>)
   40af98:	4798      	blx	r3
   40af9a:	2800      	cmp	r0, #0
   40af9c:	d17c      	bne.n	40b098 <TemperatureRegulate+0x1dc>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_HEATER);     
         
       if(DigitAccessoryOn(ACC_I2C_COOLER))
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40af9e:	2001      	movs	r0, #1
   40afa0:	4b63      	ldr	r3, [pc, #396]	; (40b130 <TemperatureRegulate+0x274>)
   40afa2:	4798      	blx	r3
   40afa4:	2800      	cmp	r0, #0
   40afa6:	d17b      	bne.n	40b0a0 <TemperatureRegulate+0x1e4>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_COOLER);    
          
       if(DigitAccessoryOn(ACC_I2C_DXD))
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afa8:	200c      	movs	r0, #12
   40afaa:	4b61      	ldr	r3, [pc, #388]	; (40b130 <TemperatureRegulate+0x274>)
   40afac:	4798      	blx	r3
   40afae:	2800      	cmp	r0, #0
   40afb0:	d17a      	bne.n	40b0a8 <TemperatureRegulate+0x1ec>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_DXD);   
       
 	  if ( info_SSR > 0)
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afb2:	4b60      	ldr	r3, [pc, #384]	; (40b134 <TemperatureRegulate+0x278>)
   40afb4:	781b      	ldrb	r3, [r3, #0]
   40afb6:	2b00      	cmp	r3, #0
   40afb8:	d17a      	bne.n	40b0b0 <TemperatureRegulate+0x1f4>
+<<<<<<< HEAD
 */         
 //------------------------------------ x_dbg          
 
@@ -26136,27 +26454,43 @@ int TemperatureRegulate()
   40afba:	2001      	movs	r0, #1
   40afbc:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
        TAG_DigitAccessoryOff(ACC_I2C_COOLER);
+=======
+  40afba:	2001      	movs	r0, #1
+  40afbc:	e8bd 8ff8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, sl, fp, pc}
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afc0:	2001      	movs	r0, #1
   40afc2:	4b5f      	ldr	r3, [pc, #380]	; (40b140 <TemperatureRegulate+0x284>)
   40afc4:	4798      	blx	r3
   40afc6:	e7be      	b.n	40af46 <TemperatureRegulate+0x8a>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afc8:	2000      	movs	r0, #0
   40afca:	4b5d      	ldr	r3, [pc, #372]	; (40b140 <TemperatureRegulate+0x284>)
   40afcc:	4798      	blx	r3
   40afce:	e7bf      	b.n	40af50 <TemperatureRegulate+0x94>
+<<<<<<< HEAD
        TAG_DigitAccessoryOff(ACC_I2C_DXD); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afd0:	200c      	movs	r0, #12
   40afd2:	4b5b      	ldr	r3, [pc, #364]	; (40b140 <TemperatureRegulate+0x284>)
   40afd4:	4798      	blx	r3
   40afd6:	e7c0      	b.n	40af5a <TemperatureRegulate+0x9e>
+<<<<<<< HEAD
 	  write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);	  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afd8:	2100      	movs	r1, #0
   40afda:	2096      	movs	r0, #150	; 0x96
   40afdc:	4b56      	ldr	r3, [pc, #344]	; (40b138 <TemperatureRegulate+0x27c>)
   40afde:	4798      	blx	r3
   40afe0:	e7bf      	b.n	40af62 <TemperatureRegulate+0xa6>
+<<<<<<< HEAD
   if(!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_PREHEATER) && !AccessoryPresent_EepList(ACC_EEP_DXD) && !AccessoryPresent_EepList(ACC_EEP_SSR))
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40afe2:	2001      	movs	r0, #1
   40afe4:	4b58      	ldr	r3, [pc, #352]	; (40b148 <TemperatureRegulate+0x28c>)
   40afe6:	4798      	blx	r3
@@ -26178,29 +26512,42 @@ int TemperatureRegulate()
   40b006:	2800      	cmp	r0, #0
   40b008:	d1b3      	bne.n	40af72 <TemperatureRegulate+0xb6>
   40b00a:	e7d6      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
   if ((sData.StatusMotorsR & 0xF0) || (sData.StatusMotorsF &0xF0) || CkAlarm(ALM_EB_CTRL_FAN) && !(enab_func & (1 << ENAB_MBF))) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b00c:	2050      	movs	r0, #80	; 0x50
   40b00e:	4b50      	ldr	r3, [pc, #320]	; (40b150 <TemperatureRegulate+0x294>)
   40b010:	4798      	blx	r3
   40b012:	b110      	cbz	r0, 40b01a <TemperatureRegulate+0x15e>
   40b014:	f414 4f80 	tst.w	r4, #16384	; 0x4000
   40b018:	d0b7      	beq.n	40af8a <TemperatureRegulate+0xce>
+<<<<<<< HEAD
   if((sData.status_test  & MSK_TEST_IPEHD) == 0) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b01a:	4b44      	ldr	r3, [pc, #272]	; (40b12c <TemperatureRegulate+0x270>)
   40b01c:	f8b3 3220 	ldrh.w	r3, [r3, #544]	; 0x220
   40b020:	f013 0f10 	tst.w	r3, #16
   40b024:	d049      	beq.n	40b0ba <TemperatureRegulate+0x1fe>
+<<<<<<< HEAD
   i_rifTemp    = read_byte_eeprom(ADDR_EEP(idxSetPointT)) & 0x01;
   40b026:	208b      	movs	r0, #139	; 0x8b
   40b028:	4d3f      	ldr	r5, [pc, #252]	; (40b128 <TemperatureRegulate+0x26c>)
   40b02a:	47a8      	blx	r5
   SetPointTemp = read_word_eeprom(ADDR_EEP(SetPointTemp[i_rifTemp])); 
+=======
+  40b026:	208b      	movs	r0, #139	; 0x8b
+  40b028:	4d3f      	ldr	r5, [pc, #252]	; (40b128 <TemperatureRegulate+0x26c>)
+  40b02a:	47a8      	blx	r5
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b02c:	f000 0001 	and.w	r0, r0, #1
   40b030:	0040      	lsls	r0, r0, #1
   40b032:	3087      	adds	r0, #135	; 0x87
   40b034:	4e3b      	ldr	r6, [pc, #236]	; (40b124 <TemperatureRegulate+0x268>)
   40b036:	47b0      	blx	r6
   40b038:	4607      	mov	r7, r0
+<<<<<<< HEAD
   SetPointTemp1 = read_word_eeprom(ADDR_EEP(SetPointTemp_Heater));  
   40b03a:	2038      	movs	r0, #56	; 0x38
   40b03c:	47b0      	blx	r6
@@ -26216,11 +26563,24 @@ int TemperatureRegulate()
   40b04e:	4b37      	ldr	r3, [pc, #220]	; (40b12c <TemperatureRegulate+0x270>)
   40b050:	f9b3 61fd 	ldrsh.w	r6, [r3, #509]	; 0x1fd
   if(AccessoryPresent_EepList(ACC_EEP_DXD)) 
+=======
+  40b03a:	2038      	movs	r0, #56	; 0x38
+  40b03c:	47b0      	blx	r6
+  40b03e:	4680      	mov	r8, r0
+  40b040:	2094      	movs	r0, #148	; 0x94
+  40b042:	47a8      	blx	r5
+  40b044:	4605      	mov	r5, r0
+  40b046:	f010 0902 	ands.w	r9, r0, #2
+  40b04a:	f000 80a4 	beq.w	40b196 <TemperatureRegulate+0x2da>
+  40b04e:	4b37      	ldr	r3, [pc, #220]	; (40b12c <TemperatureRegulate+0x270>)
+  40b050:	f9b3 61fd 	ldrsh.w	r6, [r3, #509]	; 0x1fd
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b054:	2007      	movs	r0, #7
   40b056:	4b3d      	ldr	r3, [pc, #244]	; (40b14c <TemperatureRegulate+0x290>)
   40b058:	4798      	blx	r3
   40b05a:	2800      	cmp	r0, #0
   40b05c:	f000 827f 	beq.w	40b55e <TemperatureRegulate+0x6a2>
+<<<<<<< HEAD
      if(enab_func & (1 << ENAB_SUMMER))
   40b060:	f414 6f00 	tst.w	r4, #2048	; 0x800
        sData.RegDXD.func_compressor = 'S'; // raffredda
@@ -26231,45 +26591,75 @@ int TemperatureRegulate()
   40b06a:	4b30      	ldr	r3, [pc, #192]	; (40b12c <TemperatureRegulate+0x270>)
   40b06c:	f883 21d5 	strb.w	r2, [r3, #469]	; 0x1d5
      if(sData.RegDXD.func_compressor != sData.AccI2C[ACC_I2C_DXD].info) {
+=======
+  40b060:	f414 6f00 	tst.w	r4, #2048	; 0x800
+  40b064:	bf14      	ite	ne
+  40b066:	2253      	movne	r2, #83	; 0x53
+  40b068:	2257      	moveq	r2, #87	; 0x57
+  40b06a:	4b30      	ldr	r3, [pc, #192]	; (40b12c <TemperatureRegulate+0x270>)
+  40b06c:	f883 21d5 	strb.w	r2, [r3, #469]	; 0x1d5
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b070:	4b2e      	ldr	r3, [pc, #184]	; (40b12c <TemperatureRegulate+0x270>)
   40b072:	f893 21d5 	ldrb.w	r2, [r3, #469]	; 0x1d5
   40b076:	f893 3104 	ldrb.w	r3, [r3, #260]	; 0x104
   40b07a:	4293      	cmp	r3, r2
   40b07c:	f000 80bd 	beq.w	40b1fa <TemperatureRegulate+0x33e>
+<<<<<<< HEAD
         sData.RegDXD.processor_I2C |= CHANGE_FUNC_COMPRESS;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b080:	4a2a      	ldr	r2, [pc, #168]	; (40b12c <TemperatureRegulate+0x270>)
   40b082:	f892 31d2 	ldrb.w	r3, [r2, #466]	; 0x1d2
   40b086:	f043 0301 	orr.w	r3, r3, #1
   40b08a:	f882 31d2 	strb.w	r3, [r2, #466]	; 0x1d2
+<<<<<<< HEAD
         return 1;
   40b08e:	e794      	b.n	40afba <TemperatureRegulate+0xfe>
          TAG_DigitAccessoryOff(ACC_I2C_PREHEATER);   
+=======
+  40b08e:	e794      	b.n	40afba <TemperatureRegulate+0xfe>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b090:	2002      	movs	r0, #2
   40b092:	4b2b      	ldr	r3, [pc, #172]	; (40b140 <TemperatureRegulate+0x284>)
   40b094:	4798      	blx	r3
   40b096:	e77d      	b.n	40af94 <TemperatureRegulate+0xd8>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_HEATER);     
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b098:	2000      	movs	r0, #0
   40b09a:	4b29      	ldr	r3, [pc, #164]	; (40b140 <TemperatureRegulate+0x284>)
   40b09c:	4798      	blx	r3
   40b09e:	e77e      	b.n	40af9e <TemperatureRegulate+0xe2>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_COOLER);    
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0a0:	2001      	movs	r0, #1
   40b0a2:	4b27      	ldr	r3, [pc, #156]	; (40b140 <TemperatureRegulate+0x284>)
   40b0a4:	4798      	blx	r3
   40b0a6:	e77f      	b.n	40afa8 <TemperatureRegulate+0xec>
+<<<<<<< HEAD
          TAG_DigitAccessoryOff(ACC_I2C_DXD);   
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0a8:	200c      	movs	r0, #12
   40b0aa:	4b25      	ldr	r3, [pc, #148]	; (40b140 <TemperatureRegulate+0x284>)
   40b0ac:	4798      	blx	r3
   40b0ae:	e780      	b.n	40afb2 <TemperatureRegulate+0xf6>
+<<<<<<< HEAD
 	  write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);	  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0b0:	2100      	movs	r1, #0
   40b0b2:	2096      	movs	r0, #150	; 0x96
   40b0b4:	4b20      	ldr	r3, [pc, #128]	; (40b138 <TemperatureRegulate+0x27c>)
   40b0b6:	4798      	blx	r3
   40b0b8:	e77f      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
     if(DigitAccessoryOperating(ACC_I2C_PREHEATER) && (enab_func & (1 << ENAB_PREHEATING)) ) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0ba:	2002      	movs	r0, #2
   40b0bc:	4b22      	ldr	r3, [pc, #136]	; (40b148 <TemperatureRegulate+0x28c>)
   40b0be:	4798      	blx	r3
@@ -26277,12 +26667,18 @@ int TemperatureRegulate()
   40b0c2:	d05b      	beq.n	40b17c <TemperatureRegulate+0x2c0>
   40b0c4:	f414 5f80 	tst.w	r4, #4096	; 0x1000
   40b0c8:	d058      	beq.n	40b17c <TemperatureRegulate+0x2c0>
+<<<<<<< HEAD
       if(sData.AccI2C[ACC_I2C_PREHEATER].sts & STS_ACC_ELECT)  // se l'accessorio � elettrico non mi preoccupo della formazione di ghiaccio sullo stesso
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0ca:	4b18      	ldr	r3, [pc, #96]	; (40b12c <TemperatureRegulate+0x270>)
   40b0cc:	f893 302f 	ldrb.w	r3, [r3, #47]	; 0x2f
   40b0d0:	f013 0f08 	tst.w	r3, #8
   40b0d4:	d042      	beq.n	40b15c <TemperatureRegulate+0x2a0>
+<<<<<<< HEAD
         if( (sData.measure_Temp[I_PROBE_EXHAUST] < 30) && (count_preHeaterOn == 0) ) // se si forma condensa pu� ghiacciare, accendo il preheater per 3 min e tengo acceso se T_EX non � > 3�C
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0d6:	4b15      	ldr	r3, [pc, #84]	; (40b12c <TemperatureRegulate+0x270>)
   40b0d8:	f9b3 3201 	ldrsh.w	r3, [r3, #513]	; 0x201
   40b0dc:	2b1d      	cmp	r3, #29
@@ -26290,16 +26686,23 @@ int TemperatureRegulate()
   40b0e0:	4b1c      	ldr	r3, [pc, #112]	; (40b154 <TemperatureRegulate+0x298>)
   40b0e2:	681b      	ldr	r3, [r3, #0]
   40b0e4:	b13b      	cbz	r3, 40b0f6 <TemperatureRegulate+0x23a>
+<<<<<<< HEAD
          if(count_preHeaterOn > 0)  //decremento il timer fino a 0
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0e6:	4b1b      	ldr	r3, [pc, #108]	; (40b154 <TemperatureRegulate+0x298>)
   40b0e8:	681b      	ldr	r3, [r3, #0]
   40b0ea:	2b00      	cmp	r3, #0
   40b0ec:	dd9b      	ble.n	40b026 <TemperatureRegulate+0x16a>
+<<<<<<< HEAD
          count_preHeaterOn--; 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b0ee:	3b01      	subs	r3, #1
   40b0f0:	4a18      	ldr	r2, [pc, #96]	; (40b154 <TemperatureRegulate+0x298>)
   40b0f2:	6013      	str	r3, [r2, #0]
   40b0f4:	e797      	b.n	40b026 <TemperatureRegulate+0x16a>
+<<<<<<< HEAD
            TAG_DigitAccessoryOn(ACC_I2C_PREHEATER); //accendo l'accessorio
   40b0f6:	2002      	movs	r0, #2
   40b0f8:	4b17      	ldr	r3, [pc, #92]	; (40b158 <TemperatureRegulate+0x29c>)
@@ -26313,17 +26716,34 @@ int TemperatureRegulate()
   40b104:	681b      	ldr	r3, [r3, #0]
   40b106:	e7f2      	b.n	40b0ee <TemperatureRegulate+0x232>
         }else if ((sData.measure_Temp[I_PROBE_EXHAUST] > 30) && (count_preHeaterOn == 0)) // se si � scaldato abbastanza spengo e inserisco una pausa di 3 min prima del prossimo controllo
+=======
+  40b0f6:	2002      	movs	r0, #2
+  40b0f8:	4b17      	ldr	r3, [pc, #92]	; (40b158 <TemperatureRegulate+0x29c>)
+  40b0fa:	4798      	blx	r3
+  40b0fc:	2278      	movs	r2, #120	; 0x78
+  40b0fe:	4b15      	ldr	r3, [pc, #84]	; (40b154 <TemperatureRegulate+0x298>)
+  40b100:	601a      	str	r2, [r3, #0]
+  40b102:	4b14      	ldr	r3, [pc, #80]	; (40b154 <TemperatureRegulate+0x298>)
+  40b104:	681b      	ldr	r3, [r3, #0]
+  40b106:	e7f2      	b.n	40b0ee <TemperatureRegulate+0x232>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b108:	2b1e      	cmp	r3, #30
   40b10a:	ddec      	ble.n	40b0e6 <TemperatureRegulate+0x22a>
   40b10c:	4b11      	ldr	r3, [pc, #68]	; (40b154 <TemperatureRegulate+0x298>)
   40b10e:	681b      	ldr	r3, [r3, #0]
   40b110:	2b00      	cmp	r3, #0
   40b112:	d1e8      	bne.n	40b0e6 <TemperatureRegulate+0x22a>
+<<<<<<< HEAD
            TAG_DigitAccessoryOff(ACC_I2C_PREHEATER);
   40b114:	2002      	movs	r0, #2
   40b116:	4b0a      	ldr	r3, [pc, #40]	; (40b140 <TemperatureRegulate+0x284>)
   40b118:	4798      	blx	r3
            count_preHeaterOn = toff_preheater; //carico il timer (OFF)
+=======
+  40b114:	2002      	movs	r0, #2
+  40b116:	4b0a      	ldr	r3, [pc, #40]	; (40b140 <TemperatureRegulate+0x284>)
+  40b118:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b11a:	2224      	movs	r2, #36	; 0x24
   40b11c:	4b0d      	ldr	r3, [pc, #52]	; (40b154 <TemperatureRegulate+0x298>)
   40b11e:	601a      	str	r2, [r3, #0]
@@ -26343,49 +26763,78 @@ int TemperatureRegulate()
   40b150:	00403a7d 	.word	0x00403a7d
   40b154:	2000108c 	.word	0x2000108c
   40b158:	0040019d 	.word	0x0040019d
+<<<<<<< HEAD
        if(sData.AccI2C[ACC_I2C_PREHEATER].measure1 <= 50) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b15c:	4bb6      	ldr	r3, [pc, #728]	; (40b438 <TemperatureRegulate+0x57c>)
   40b15e:	f9b3 3031 	ldrsh.w	r3, [r3, #49]	; 0x31
   40b162:	2b32      	cmp	r3, #50	; 0x32
   40b164:	dd06      	ble.n	40b174 <TemperatureRegulate+0x2b8>
+<<<<<<< HEAD
        }else if (sData.AccI2C[ACC_I2C_PREHEATER].measure1 > 70) //sopra i 7 posso spegnere
   40b166:	2b46      	cmp	r3, #70	; 0x46
   40b168:	f77f af5d 	ble.w	40b026 <TemperatureRegulate+0x16a>
             TAG_DigitAccessoryOff(ACC_I2C_PREHEATER);
+=======
+  40b166:	2b46      	cmp	r3, #70	; 0x46
+  40b168:	f77f af5d 	ble.w	40b026 <TemperatureRegulate+0x16a>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b16c:	2002      	movs	r0, #2
   40b16e:	4bb3      	ldr	r3, [pc, #716]	; (40b43c <TemperatureRegulate+0x580>)
   40b170:	4798      	blx	r3
   40b172:	e758      	b.n	40b026 <TemperatureRegulate+0x16a>
+<<<<<<< HEAD
           TAG_DigitAccessoryOn(ACC_I2C_PREHEATER); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b174:	2002      	movs	r0, #2
   40b176:	4bb2      	ldr	r3, [pc, #712]	; (40b440 <TemperatureRegulate+0x584>)
   40b178:	4798      	blx	r3
   40b17a:	e754      	b.n	40b026 <TemperatureRegulate+0x16a>
+<<<<<<< HEAD
        if(DigitAccessoryOn(ACC_I2C_PREHEATER) == 1) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b17c:	2002      	movs	r0, #2
   40b17e:	4bb1      	ldr	r3, [pc, #708]	; (40b444 <TemperatureRegulate+0x588>)
   40b180:	4798      	blx	r3
   40b182:	2801      	cmp	r0, #1
   40b184:	f47f af4f 	bne.w	40b026 <TemperatureRegulate+0x16a>
+<<<<<<< HEAD
           TAG_DigitAccessoryOff(ACC_I2C_PREHEATER);    
   40b188:	2002      	movs	r0, #2
   40b18a:	4bac      	ldr	r3, [pc, #688]	; (40b43c <TemperatureRegulate+0x580>)
   40b18c:	4798      	blx	r3
           count_preHeaterOn = 0;
+=======
+  40b188:	2002      	movs	r0, #2
+  40b18a:	4bac      	ldr	r3, [pc, #688]	; (40b43c <TemperatureRegulate+0x580>)
+  40b18c:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b18e:	2200      	movs	r2, #0
   40b190:	4bad      	ldr	r3, [pc, #692]	; (40b448 <TemperatureRegulate+0x58c>)
   40b192:	601a      	str	r2, [r3, #0]
   40b194:	e747      	b.n	40b026 <TemperatureRegulate+0x16a>
+<<<<<<< HEAD
      if(DigitAccessoryOperating(ACC_I2C_AWP)) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b196:	2008      	movs	r0, #8
   40b198:	4bac      	ldr	r3, [pc, #688]	; (40b44c <TemperatureRegulate+0x590>)
   40b19a:	4798      	blx	r3
   40b19c:	b118      	cbz	r0, 40b1a6 <TemperatureRegulate+0x2ea>
+<<<<<<< HEAD
         TempRif = sData.AccI2C[ACC_I2C_AWP].measure2;
   40b19e:	4ba6      	ldr	r3, [pc, #664]	; (40b438 <TemperatureRegulate+0x57c>)
   40b1a0:	f9b3 60ab 	ldrsh.w	r6, [r3, #171]	; 0xab
   40b1a4:	e756      	b.n	40b054 <TemperatureRegulate+0x198>
      } else if (DigitAccessoryOperating(ACC_I2C_COOLER) && !DigitAccessoryOperating(ACC_I2C_HEATER)) {  // solo COOLER
+=======
+  40b19e:	4ba6      	ldr	r3, [pc, #664]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b1a0:	f9b3 60ab 	ldrsh.w	r6, [r3, #171]	; 0xab
+  40b1a4:	e756      	b.n	40b054 <TemperatureRegulate+0x198>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b1a6:	2001      	movs	r0, #1
   40b1a8:	4ba8      	ldr	r3, [pc, #672]	; (40b44c <TemperatureRegulate+0x590>)
   40b1aa:	4798      	blx	r3
@@ -26394,40 +26843,62 @@ int TemperatureRegulate()
   40b1b0:	4ba6      	ldr	r3, [pc, #664]	; (40b44c <TemperatureRegulate+0x590>)
   40b1b2:	4798      	blx	r3
   40b1b4:	b918      	cbnz	r0, 40b1be <TemperatureRegulate+0x302>
+<<<<<<< HEAD
         TempRif = sData.AccI2C[ACC_I2C_COOLER].measure1;
   40b1b6:	4ba0      	ldr	r3, [pc, #640]	; (40b438 <TemperatureRegulate+0x57c>)
   40b1b8:	f9b3 601d 	ldrsh.w	r6, [r3, #29]
   40b1bc:	e74a      	b.n	40b054 <TemperatureRegulate+0x198>
      } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER)) {  // solo HEATER
+=======
+  40b1b6:	4ba0      	ldr	r3, [pc, #640]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b1b8:	f9b3 601d 	ldrsh.w	r6, [r3, #29]
+  40b1bc:	e74a      	b.n	40b054 <TemperatureRegulate+0x198>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b1be:	2000      	movs	r0, #0
   40b1c0:	4ba2      	ldr	r3, [pc, #648]	; (40b44c <TemperatureRegulate+0x590>)
   40b1c2:	4798      	blx	r3
   40b1c4:	b118      	cbz	r0, 40b1ce <TemperatureRegulate+0x312>
+<<<<<<< HEAD
         TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
   40b1c6:	4b9c      	ldr	r3, [pc, #624]	; (40b438 <TemperatureRegulate+0x57c>)
   40b1c8:	f9b3 6009 	ldrsh.w	r6, [r3, #9]
   40b1cc:	e742      	b.n	40b054 <TemperatureRegulate+0x198>
      } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || !DigitAccessoryOperating(ACC_I2C_COOLER)) {  // solo HEATER
+=======
+  40b1c6:	4b9c      	ldr	r3, [pc, #624]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b1c8:	f9b3 6009 	ldrsh.w	r6, [r3, #9]
+  40b1cc:	e742      	b.n	40b054 <TemperatureRegulate+0x198>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b1ce:	2001      	movs	r0, #1
   40b1d0:	4b9e      	ldr	r3, [pc, #632]	; (40b44c <TemperatureRegulate+0x590>)
   40b1d2:	4798      	blx	r3
   40b1d4:	2800      	cmp	r0, #0
   40b1d6:	d0f6      	beq.n	40b1c6 <TemperatureRegulate+0x30a>
+<<<<<<< HEAD
      } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER)) {   // entrambi
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b1d8:	2000      	movs	r0, #0
   40b1da:	4b9c      	ldr	r3, [pc, #624]	; (40b44c <TemperatureRegulate+0x590>)
   40b1dc:	4798      	blx	r3
   40b1de:	b118      	cbz	r0, 40b1e8 <TemperatureRegulate+0x32c>
+<<<<<<< HEAD
         TempRif = sData.AccI2C[ACC_I2C_HEATER].measure1;
   40b1e0:	4b95      	ldr	r3, [pc, #596]	; (40b438 <TemperatureRegulate+0x57c>)
   40b1e2:	f9b3 6009 	ldrsh.w	r6, [r3, #9]
   40b1e6:	e735      	b.n	40b054 <TemperatureRegulate+0x198>
      } else if (DigitAccessoryOperating(ACC_I2C_HEATER) || DigitAccessoryOperating(ACC_I2C_COOLER)) {   // entrambi
+=======
+  40b1e0:	4b95      	ldr	r3, [pc, #596]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b1e2:	f9b3 6009 	ldrsh.w	r6, [r3, #9]
+  40b1e6:	e735      	b.n	40b054 <TemperatureRegulate+0x198>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b1e8:	2001      	movs	r0, #1
   40b1ea:	4b98      	ldr	r3, [pc, #608]	; (40b44c <TemperatureRegulate+0x590>)
   40b1ec:	4798      	blx	r3
   40b1ee:	2800      	cmp	r0, #0
   40b1f0:	d1f6      	bne.n	40b1e0 <TemperatureRegulate+0x324>
+<<<<<<< HEAD
         TempRif = sData.measure_Temp[I_PROBE_SUPPLY];
   40b1f2:	4b91      	ldr	r3, [pc, #580]	; (40b438 <TemperatureRegulate+0x57c>)
   40b1f4:	f9b3 61ff 	ldrsh.w	r6, [r3, #511]	; 0x1ff
@@ -26455,11 +26926,32 @@ int TemperatureRegulate()
             SetPointTemp = 0;  
   40b21a:	2700      	movls	r7, #0
      if(CkAlarm(ALM_DXD_COMPRESS)) {
+=======
+  40b1f2:	4b91      	ldr	r3, [pc, #580]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b1f4:	f9b3 61ff 	ldrsh.w	r6, [r3, #511]	; 0x1ff
+  40b1f8:	e72c      	b.n	40b054 <TemperatureRegulate+0x198>
+  40b1fa:	f414 6f40 	tst.w	r4, #3072	; 0xc00
+  40b1fe:	d059      	beq.n	40b2b4 <TemperatureRegulate+0x3f8>
+  40b200:	f1b9 0f00 	cmp.w	r9, #0
+  40b204:	d10a      	bne.n	40b21c <TemperatureRegulate+0x360>
+  40b206:	2a57      	cmp	r2, #87	; 0x57
+  40b208:	d06f      	beq.n	40b2ea <TemperatureRegulate+0x42e>
+  40b20a:	2095      	movs	r0, #149	; 0x95
+  40b20c:	4b90      	ldr	r3, [pc, #576]	; (40b450 <TemperatureRegulate+0x594>)
+  40b20e:	4798      	blx	r3
+  40b210:	b280      	uxth	r0, r0
+  40b212:	4287      	cmp	r7, r0
+  40b214:	bf86      	itte	hi
+  40b216:	1a3f      	subhi	r7, r7, r0
+  40b218:	b2bf      	uxthhi	r7, r7
+  40b21a:	2700      	movls	r7, #0
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b21c:	202e      	movs	r0, #46	; 0x2e
   40b21e:	4b8d      	ldr	r3, [pc, #564]	; (40b454 <TemperatureRegulate+0x598>)
   40b220:	4798      	blx	r3
   40b222:	2800      	cmp	r0, #0
   40b224:	d167      	bne.n	40b2f6 <TemperatureRegulate+0x43a>
+<<<<<<< HEAD
      if(++sData.RegDXD.count > time_regulator)
   40b226:	4b84      	ldr	r3, [pc, #528]	; (40b438 <TemperatureRegulate+0x57c>)
   40b228:	f8d3 21d8 	ldr.w	r2, [r3, #472]	; 0x1d8
@@ -26473,12 +26965,23 @@ int TemperatureRegulate()
   40b236:	4293      	cmp	r3, r2
   40b238:	f280 8084 	bge.w	40b344 <TemperatureRegulate+0x488>
        sData.RegDXD.count  = 0;
+=======
+  40b226:	4b84      	ldr	r3, [pc, #528]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b228:	f8d3 21d8 	ldr.w	r2, [r3, #472]	; 0x1d8
+  40b22c:	3201      	adds	r2, #1
+  40b22e:	f3c5 0387 	ubfx	r3, r5, #2, #8
+  40b232:	005b      	lsls	r3, r3, #1
+  40b234:	3306      	adds	r3, #6
+  40b236:	4293      	cmp	r3, r2
+  40b238:	f280 8084 	bge.w	40b344 <TemperatureRegulate+0x488>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b23c:	4b7e      	ldr	r3, [pc, #504]	; (40b438 <TemperatureRegulate+0x57c>)
   40b23e:	2200      	movs	r2, #0
   40b240:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
   40b244:	f883 21d9 	strb.w	r2, [r3, #473]	; 0x1d9
   40b248:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b24c:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
+<<<<<<< HEAD
        if (sData.RegDXD.func_compressor == 'W'){
   40b250:	f893 31d5 	ldrb.w	r3, [r3, #469]	; 0x1d5
   40b254:	2b57      	cmp	r3, #87	; 0x57
@@ -26487,6 +26990,13 @@ int TemperatureRegulate()
   40b258:	2b53      	cmp	r3, #83	; 0x53
   40b25a:	f47f aeae 	bne.w	40afba <TemperatureRegulate+0xfe>
           if ((TempRif >= (SetPointTemp + 8)) && (sData.measure_Temp[I_PROBE_SUPPLY] <= (SetPointTemp + 190))) 
+=======
+  40b250:	f893 31d5 	ldrb.w	r3, [r3, #469]	; 0x1d5
+  40b254:	2b57      	cmp	r3, #87	; 0x57
+  40b256:	d079      	beq.n	40b34c <TemperatureRegulate+0x490>
+  40b258:	2b53      	cmp	r3, #83	; 0x53
+  40b25a:	f47f aeae 	bne.w	40afba <TemperatureRegulate+0xfe>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b25e:	4632      	mov	r2, r6
   40b260:	463b      	mov	r3, r7
   40b262:	f107 0108 	add.w	r1, r7, #8
@@ -26497,11 +27007,17 @@ int TemperatureRegulate()
   40b270:	37be      	adds	r7, #190	; 0xbe
   40b272:	42b9      	cmp	r1, r7
   40b274:	f340 810a 	ble.w	40b48c <TemperatureRegulate+0x5d0>
+<<<<<<< HEAD
           }else if (TempRif < (SetPointTemp - 25)) {  
   40b278:	f1a3 0119 	sub.w	r1, r3, #25
   40b27c:	428a      	cmp	r2, r1
   40b27e:	f2c0 8132 	blt.w	40b4e6 <TemperatureRegulate+0x62a>
           }else if ((TempRif <= (SetPointTemp - 8)) && sData.RegDXD.val_0_10V) { 
+=======
+  40b278:	f1a3 0119 	sub.w	r1, r3, #25
+  40b27c:	428a      	cmp	r2, r1
+  40b27e:	f2c0 8132 	blt.w	40b4e6 <TemperatureRegulate+0x62a>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b282:	3b08      	subs	r3, #8
   40b284:	429a      	cmp	r2, r3
   40b286:	f73f ae98 	bgt.w	40afba <TemperatureRegulate+0xfe>
@@ -26509,6 +27025,7 @@ int TemperatureRegulate()
   40b28c:	f893 31d3 	ldrb.w	r3, [r3, #467]	; 0x1d3
   40b290:	2b00      	cmp	r3, #0
   40b292:	f43f ae92 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
             if(sData.RegDXD.val_0_10V > STEP_REG_DXD)
   40b296:	2b05      	cmp	r3, #5
   40b298:	f240 8146 	bls.w	40b528 <TemperatureRegulate+0x66c>
@@ -26517,16 +27034,27 @@ int TemperatureRegulate()
   40b29e:	4a66      	ldr	r2, [pc, #408]	; (40b438 <TemperatureRegulate+0x57c>)
   40b2a0:	f882 31d3 	strb.w	r3, [r2, #467]	; 0x1d3
             sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+  40b296:	2b05      	cmp	r3, #5
+  40b298:	f240 8146 	bls.w	40b528 <TemperatureRegulate+0x66c>
+  40b29c:	3b05      	subs	r3, #5
+  40b29e:	4a66      	ldr	r2, [pc, #408]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b2a0:	f882 31d3 	strb.w	r3, [r2, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b2a4:	4a64      	ldr	r2, [pc, #400]	; (40b438 <TemperatureRegulate+0x57c>)
   40b2a6:	f892 31d2 	ldrb.w	r3, [r2, #466]	; 0x1d2
   40b2aa:	f043 0302 	orr.w	r3, r3, #2
   40b2ae:	f882 31d2 	strb.w	r3, [r2, #466]	; 0x1d2
   40b2b2:	e682      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
         if(DigitAccessoryOn(ACC_I2C_DXD)) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b2b4:	200c      	movs	r0, #12
   40b2b6:	4b63      	ldr	r3, [pc, #396]	; (40b444 <TemperatureRegulate+0x588>)
   40b2b8:	4798      	blx	r3
   40b2ba:	b990      	cbnz	r0, 40b2e2 <TemperatureRegulate+0x426>
+<<<<<<< HEAD
         sData.RegDXD.processor_I2C = 0;
   40b2bc:	4b5e      	ldr	r3, [pc, #376]	; (40b438 <TemperatureRegulate+0x57c>)
   40b2be:	2200      	movs	r2, #0
@@ -26534,19 +27062,30 @@ int TemperatureRegulate()
         sData.RegDXD.val_0_10V     = 0;
   40b2c4:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
         sData.RegDXD.count         = -6; 
+=======
+  40b2bc:	4b5e      	ldr	r3, [pc, #376]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b2be:	2200      	movs	r2, #0
+  40b2c0:	f883 21d2 	strb.w	r2, [r3, #466]	; 0x1d2
+  40b2c4:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b2c8:	f06f 0205 	mvn.w	r2, #5
   40b2cc:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
   40b2d0:	f04f 32ff 	mov.w	r2, #4294967295
   40b2d4:	f883 21d9 	strb.w	r2, [r3, #473]	; 0x1d9
   40b2d8:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b2dc:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
+<<<<<<< HEAD
         return 1;
   40b2e0:	e66b      	b.n	40afba <TemperatureRegulate+0xfe>
            TAG_DigitAccessoryOff(ACC_I2C_DXD); 
+=======
+  40b2e0:	e66b      	b.n	40afba <TemperatureRegulate+0xfe>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b2e2:	200c      	movs	r0, #12
   40b2e4:	4b55      	ldr	r3, [pc, #340]	; (40b43c <TemperatureRegulate+0x580>)
   40b2e6:	4798      	blx	r3
   40b2e8:	e7e8      	b.n	40b2bc <TemperatureRegulate+0x400>
+<<<<<<< HEAD
           hist_T = read_byte_eeprom(ADDR_EEP(DeltaTemp_Supply)); // default 120 = 12.0
   40b2ea:	2095      	movs	r0, #149	; 0x95
   40b2ec:	4b58      	ldr	r3, [pc, #352]	; (40b450 <TemperatureRegulate+0x594>)
@@ -26556,6 +27095,14 @@ int TemperatureRegulate()
   40b2f2:	b2bf      	uxth	r7, r7
   40b2f4:	e792      	b.n	40b21c <TemperatureRegulate+0x360>
         if(DigitAccessoryOn(ACC_I2C_DXD) && (sData.RegDXD.count != -30)) {   // intile tenere acceso il compressore
+=======
+  40b2ea:	2095      	movs	r0, #149	; 0x95
+  40b2ec:	4b58      	ldr	r3, [pc, #352]	; (40b450 <TemperatureRegulate+0x594>)
+  40b2ee:	4798      	blx	r3
+  40b2f0:	4407      	add	r7, r0
+  40b2f2:	b2bf      	uxth	r7, r7
+  40b2f4:	e792      	b.n	40b21c <TemperatureRegulate+0x360>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b2f6:	200c      	movs	r0, #12
   40b2f8:	4b52      	ldr	r3, [pc, #328]	; (40b444 <TemperatureRegulate+0x588>)
   40b2fa:	4798      	blx	r3
@@ -26565,11 +27112,17 @@ int TemperatureRegulate()
   40b304:	f8d3 31d8 	ldr.w	r3, [r3, #472]	; 0x1d8
   40b308:	f113 0f1e 	cmn.w	r3, #30
   40b30c:	f43f ae55 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
            TAG_DigitAccessoryOff(ACC_I2C_DXD); 
   40b310:	200c      	movs	r0, #12
   40b312:	4b4a      	ldr	r3, [pc, #296]	; (40b43c <TemperatureRegulate+0x580>)
   40b314:	4798      	blx	r3
            sData.RegDXD.count = -30;
+=======
+  40b310:	200c      	movs	r0, #12
+  40b312:	4b4a      	ldr	r3, [pc, #296]	; (40b43c <TemperatureRegulate+0x580>)
+  40b314:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b316:	4b48      	ldr	r3, [pc, #288]	; (40b438 <TemperatureRegulate+0x57c>)
   40b318:	f06f 021d 	mvn.w	r2, #29
   40b31c:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
@@ -26577,19 +27130,30 @@ int TemperatureRegulate()
   40b324:	f883 21d9 	strb.w	r2, [r3, #473]	; 0x1d9
   40b328:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b32c:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
+<<<<<<< HEAD
            sData.RegDXD.val_0_10V = 0;
   40b330:	2200      	movs	r2, #0
   40b332:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
            sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+  40b330:	2200      	movs	r2, #0
+  40b332:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b336:	f893 21d2 	ldrb.w	r2, [r3, #466]	; 0x1d2
   40b33a:	f042 0202 	orr.w	r2, r2, #2
   40b33e:	f883 21d2 	strb.w	r2, [r3, #466]	; 0x1d2
   40b342:	e63a      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
      if(++sData.RegDXD.count > time_regulator)
   40b344:	4b3c      	ldr	r3, [pc, #240]	; (40b438 <TemperatureRegulate+0x57c>)
   40b346:	f8c3 21d8 	str.w	r2, [r3, #472]	; 0x1d8
   40b34a:	e636      	b.n	40afba <TemperatureRegulate+0xfe>
           if ((TempRif <= (SetPointTemp - 8)) && (sData.measure_Temp[I_PROBE_SUPPLY] <= (SetPointTemp + 190))) 
+=======
+  40b344:	4b3c      	ldr	r3, [pc, #240]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b346:	f8c3 21d8 	str.w	r2, [r3, #472]	; 0x1d8
+  40b34a:	e636      	b.n	40afba <TemperatureRegulate+0xfe>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b34c:	4632      	mov	r2, r6
   40b34e:	463b      	mov	r3, r7
   40b350:	f1a7 0108 	sub.w	r1, r7, #8
@@ -26600,11 +27164,17 @@ int TemperatureRegulate()
   40b35e:	37be      	adds	r7, #190	; 0xbe
   40b360:	42b9      	cmp	r1, r7
   40b362:	dd1b      	ble.n	40b39c <TemperatureRegulate+0x4e0>
+<<<<<<< HEAD
           }else if (TempRif > (SetPointTemp + 25)) {  
   40b364:	f103 0119 	add.w	r1, r3, #25
   40b368:	428a      	cmp	r2, r1
   40b36a:	dc44      	bgt.n	40b3f6 <TemperatureRegulate+0x53a>
           }else if ((TempRif >= (SetPointTemp + 8)) && sData.RegDXD.val_0_10V) { 
+=======
+  40b364:	f103 0119 	add.w	r1, r3, #25
+  40b368:	428a      	cmp	r2, r1
+  40b36a:	dc44      	bgt.n	40b3f6 <TemperatureRegulate+0x53a>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b36c:	3308      	adds	r3, #8
   40b36e:	429a      	cmp	r2, r3
   40b370:	f6ff ae23 	blt.w	40afba <TemperatureRegulate+0xfe>
@@ -26612,6 +27182,7 @@ int TemperatureRegulate()
   40b376:	f893 31d3 	ldrb.w	r3, [r3, #467]	; 0x1d3
   40b37a:	2b00      	cmp	r3, #0
   40b37c:	f43f ae1d 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
               if(sData.RegDXD.val_0_10V > STEP_REG_DXD)
   40b380:	2b05      	cmp	r3, #5
   40b382:	d969      	bls.n	40b458 <TemperatureRegulate+0x59c>
@@ -26620,22 +27191,36 @@ int TemperatureRegulate()
   40b386:	4a2c      	ldr	r2, [pc, #176]	; (40b438 <TemperatureRegulate+0x57c>)
   40b388:	f882 31d3 	strb.w	r3, [r2, #467]	; 0x1d3
               sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+  40b380:	2b05      	cmp	r3, #5
+  40b382:	d969      	bls.n	40b458 <TemperatureRegulate+0x59c>
+  40b384:	3b05      	subs	r3, #5
+  40b386:	4a2c      	ldr	r2, [pc, #176]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b388:	f882 31d3 	strb.w	r3, [r2, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b38c:	4a2a      	ldr	r2, [pc, #168]	; (40b438 <TemperatureRegulate+0x57c>)
   40b38e:	f892 31d2 	ldrb.w	r3, [r2, #466]	; 0x1d2
   40b392:	f043 0302 	orr.w	r3, r3, #2
   40b396:	f882 31d2 	strb.w	r3, [r2, #466]	; 0x1d2
   40b39a:	e60e      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
               if(DigitAccessoryOn(ACC_I2C_DXD) == 0) 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b39c:	200c      	movs	r0, #12
   40b39e:	4b29      	ldr	r3, [pc, #164]	; (40b444 <TemperatureRegulate+0x588>)
   40b3a0:	4798      	blx	r3
   40b3a2:	b1a0      	cbz	r0, 40b3ce <TemperatureRegulate+0x512>
+<<<<<<< HEAD
                  sData.RegDXD.val_0_10V += STEP_REG_DXD;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b3a4:	4a24      	ldr	r2, [pc, #144]	; (40b438 <TemperatureRegulate+0x57c>)
   40b3a6:	f892 31d3 	ldrb.w	r3, [r2, #467]	; 0x1d3
   40b3aa:	3305      	adds	r3, #5
   40b3ac:	b2db      	uxtb	r3, r3
   40b3ae:	f882 31d3 	strb.w	r3, [r2, #467]	; 0x1d3
+<<<<<<< HEAD
               if(sData.RegDXD.val_0_10V > 100)
   40b3b2:	2b64      	cmp	r3, #100	; 0x64
   40b3b4:	d903      	bls.n	40b3be <TemperatureRegulate+0x502>
@@ -26644,11 +27229,19 @@ int TemperatureRegulate()
   40b3b8:	4b1f      	ldr	r3, [pc, #124]	; (40b438 <TemperatureRegulate+0x57c>)
   40b3ba:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
               sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+  40b3b2:	2b64      	cmp	r3, #100	; 0x64
+  40b3b4:	d903      	bls.n	40b3be <TemperatureRegulate+0x502>
+  40b3b6:	2264      	movs	r2, #100	; 0x64
+  40b3b8:	4b1f      	ldr	r3, [pc, #124]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b3ba:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b3be:	4a1e      	ldr	r2, [pc, #120]	; (40b438 <TemperatureRegulate+0x57c>)
   40b3c0:	f892 31d2 	ldrb.w	r3, [r2, #466]	; 0x1d2
   40b3c4:	f043 0302 	orr.w	r3, r3, #2
   40b3c8:	f882 31d2 	strb.w	r3, [r2, #466]	; 0x1d2
   40b3cc:	e5f5      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
                  TAG_DigitAccessoryOn(ACC_I2C_DXD);  
   40b3ce:	200c      	movs	r0, #12
   40b3d0:	4b1b      	ldr	r3, [pc, #108]	; (40b440 <TemperatureRegulate+0x584>)
@@ -26658,6 +27251,14 @@ int TemperatureRegulate()
   40b3d6:	223c      	movs	r2, #60	; 0x3c
   40b3d8:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
                  sData.RegDXD.count     = -24;  // Diamo +2 minuti in pi� (24 x 5sec. = 120 sec), in modo da dare il tempo al compressore di arrivare a regime
+=======
+  40b3ce:	200c      	movs	r0, #12
+  40b3d0:	4b1b      	ldr	r3, [pc, #108]	; (40b440 <TemperatureRegulate+0x584>)
+  40b3d2:	4798      	blx	r3
+  40b3d4:	4b18      	ldr	r3, [pc, #96]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b3d6:	223c      	movs	r2, #60	; 0x3c
+  40b3d8:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b3dc:	f06f 0217 	mvn.w	r2, #23
   40b3e0:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
   40b3e4:	f04f 32ff 	mov.w	r2, #4294967295
@@ -26665,21 +27266,33 @@ int TemperatureRegulate()
   40b3ec:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b3f0:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
   40b3f4:	e7e3      	b.n	40b3be <TemperatureRegulate+0x502>
+<<<<<<< HEAD
               sData.RegDXD.val_0_10V = 0;
   40b3f6:	2200      	movs	r2, #0
   40b3f8:	4b0f      	ldr	r3, [pc, #60]	; (40b438 <TemperatureRegulate+0x57c>)
   40b3fa:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
               if(DigitAccessoryOn(ACC_I2C_DXD)) 
+=======
+  40b3f6:	2200      	movs	r2, #0
+  40b3f8:	4b0f      	ldr	r3, [pc, #60]	; (40b438 <TemperatureRegulate+0x57c>)
+  40b3fa:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b3fe:	200c      	movs	r0, #12
   40b400:	4b10      	ldr	r3, [pc, #64]	; (40b444 <TemperatureRegulate+0x588>)
   40b402:	4798      	blx	r3
   40b404:	2800      	cmp	r0, #0
   40b406:	f43f add8 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
                   TAG_DigitAccessoryOff(ACC_I2C_DXD); 
   40b40a:	200c      	movs	r0, #12
   40b40c:	4b0b      	ldr	r3, [pc, #44]	; (40b43c <TemperatureRegulate+0x580>)
   40b40e:	4798      	blx	r3
                   sData.RegDXD.count = -24;
+=======
+  40b40a:	200c      	movs	r0, #12
+  40b40c:	4b0b      	ldr	r3, [pc, #44]	; (40b43c <TemperatureRegulate+0x580>)
+  40b40e:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b410:	4b09      	ldr	r3, [pc, #36]	; (40b438 <TemperatureRegulate+0x57c>)
   40b412:	f06f 0217 	mvn.w	r2, #23
   40b416:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
@@ -26687,7 +27300,10 @@ int TemperatureRegulate()
   40b41e:	f883 21d9 	strb.w	r2, [r3, #473]	; 0x1d9
   40b422:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b426:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
+<<<<<<< HEAD
                   sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b42a:	f893 21d2 	ldrb.w	r2, [r3, #466]	; 0x1d2
   40b42e:	f042 0202 	orr.w	r2, r2, #2
   40b432:	f883 21d2 	strb.w	r2, [r3, #466]	; 0x1d2
@@ -26700,21 +27316,33 @@ int TemperatureRegulate()
   40b44c:	0040012d 	.word	0x0040012d
   40b450:	0040b84d 	.word	0x0040b84d
   40b454:	00403a7d 	.word	0x00403a7d
+<<<<<<< HEAD
                 sData.RegDXD.val_0_10V = 0;
   40b458:	2200      	movs	r2, #0
   40b45a:	4b9a      	ldr	r3, [pc, #616]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b45c:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
                 if(DigitAccessoryOn(ACC_I2C_DXD)) {   // intile tenere acceso il compressore
+=======
+  40b458:	2200      	movs	r2, #0
+  40b45a:	4b9a      	ldr	r3, [pc, #616]	; (40b6c4 <TemperatureRegulate+0x808>)
+  40b45c:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b460:	200c      	movs	r0, #12
   40b462:	4b99      	ldr	r3, [pc, #612]	; (40b6c8 <TemperatureRegulate+0x80c>)
   40b464:	4798      	blx	r3
   40b466:	2800      	cmp	r0, #0
   40b468:	d090      	beq.n	40b38c <TemperatureRegulate+0x4d0>
+<<<<<<< HEAD
                    TAG_DigitAccessoryOff(ACC_I2C_DXD); 
   40b46a:	200c      	movs	r0, #12
   40b46c:	4b97      	ldr	r3, [pc, #604]	; (40b6cc <TemperatureRegulate+0x810>)
   40b46e:	4798      	blx	r3
                    sData.RegDXD.count = -24;
+=======
+  40b46a:	200c      	movs	r0, #12
+  40b46c:	4b97      	ldr	r3, [pc, #604]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b46e:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b470:	4b94      	ldr	r3, [pc, #592]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b472:	f06f 0217 	mvn.w	r2, #23
   40b476:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
@@ -26723,17 +27351,24 @@ int TemperatureRegulate()
   40b482:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b486:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
   40b48a:	e77f      	b.n	40b38c <TemperatureRegulate+0x4d0>
+<<<<<<< HEAD
             if(DigitAccessoryOn(ACC_I2C_DXD) == 0) {
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b48c:	200c      	movs	r0, #12
   40b48e:	4b8e      	ldr	r3, [pc, #568]	; (40b6c8 <TemperatureRegulate+0x80c>)
   40b490:	4798      	blx	r3
   40b492:	b1a0      	cbz	r0, 40b4be <TemperatureRegulate+0x602>
+<<<<<<< HEAD
               sData.RegDXD.val_0_10V += STEP_REG_DXD;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b494:	4a8b      	ldr	r2, [pc, #556]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b496:	f892 31d3 	ldrb.w	r3, [r2, #467]	; 0x1d3
   40b49a:	3305      	adds	r3, #5
   40b49c:	b2db      	uxtb	r3, r3
   40b49e:	f882 31d3 	strb.w	r3, [r2, #467]	; 0x1d3
+<<<<<<< HEAD
             if(sData.RegDXD.val_0_10V > 100)
   40b4a2:	2b64      	cmp	r3, #100	; 0x64
   40b4a4:	d903      	bls.n	40b4ae <TemperatureRegulate+0x5f2>
@@ -26742,11 +27377,19 @@ int TemperatureRegulate()
   40b4a8:	4b86      	ldr	r3, [pc, #536]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b4aa:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
             sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+  40b4a2:	2b64      	cmp	r3, #100	; 0x64
+  40b4a4:	d903      	bls.n	40b4ae <TemperatureRegulate+0x5f2>
+  40b4a6:	2264      	movs	r2, #100	; 0x64
+  40b4a8:	4b86      	ldr	r3, [pc, #536]	; (40b6c4 <TemperatureRegulate+0x808>)
+  40b4aa:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b4ae:	4a85      	ldr	r2, [pc, #532]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b4b0:	f892 31d2 	ldrb.w	r3, [r2, #466]	; 0x1d2
   40b4b4:	f043 0302 	orr.w	r3, r3, #2
   40b4b8:	f882 31d2 	strb.w	r3, [r2, #466]	; 0x1d2
   40b4bc:	e57d      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
               TAG_DigitAccessoryOn(ACC_I2C_DXD);  
   40b4be:	200c      	movs	r0, #12
   40b4c0:	4b83      	ldr	r3, [pc, #524]	; (40b6d0 <TemperatureRegulate+0x814>)
@@ -26756,6 +27399,14 @@ int TemperatureRegulate()
   40b4c6:	223c      	movs	r2, #60	; 0x3c
   40b4c8:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
               sData.RegDXD.count     =  -24;  // Diamo +2 minuti in pi�, in modo da dare il tempo al compressore di arrivare a regime
+=======
+  40b4be:	200c      	movs	r0, #12
+  40b4c0:	4b83      	ldr	r3, [pc, #524]	; (40b6d0 <TemperatureRegulate+0x814>)
+  40b4c2:	4798      	blx	r3
+  40b4c4:	4b7f      	ldr	r3, [pc, #508]	; (40b6c4 <TemperatureRegulate+0x808>)
+  40b4c6:	223c      	movs	r2, #60	; 0x3c
+  40b4c8:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b4cc:	f06f 0217 	mvn.w	r2, #23
   40b4d0:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
   40b4d4:	f04f 32ff 	mov.w	r2, #4294967295
@@ -26763,21 +27414,33 @@ int TemperatureRegulate()
   40b4dc:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b4e0:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
   40b4e4:	e7e3      	b.n	40b4ae <TemperatureRegulate+0x5f2>
+<<<<<<< HEAD
               sData.RegDXD.val_0_10V = 0;
   40b4e6:	2200      	movs	r2, #0
   40b4e8:	4b76      	ldr	r3, [pc, #472]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b4ea:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
               if(DigitAccessoryOn(ACC_I2C_DXD)) 
+=======
+  40b4e6:	2200      	movs	r2, #0
+  40b4e8:	4b76      	ldr	r3, [pc, #472]	; (40b6c4 <TemperatureRegulate+0x808>)
+  40b4ea:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b4ee:	200c      	movs	r0, #12
   40b4f0:	4b75      	ldr	r3, [pc, #468]	; (40b6c8 <TemperatureRegulate+0x80c>)
   40b4f2:	4798      	blx	r3
   40b4f4:	2800      	cmp	r0, #0
   40b4f6:	f43f ad60 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
                   TAG_DigitAccessoryOff(ACC_I2C_DXD); 
   40b4fa:	200c      	movs	r0, #12
   40b4fc:	4b73      	ldr	r3, [pc, #460]	; (40b6cc <TemperatureRegulate+0x810>)
   40b4fe:	4798      	blx	r3
                   sData.RegDXD.count = -24;
+=======
+  40b4fa:	200c      	movs	r0, #12
+  40b4fc:	4b73      	ldr	r3, [pc, #460]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b4fe:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b500:	4b70      	ldr	r3, [pc, #448]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b502:	f06f 0217 	mvn.w	r2, #23
   40b506:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
@@ -26785,26 +27448,41 @@ int TemperatureRegulate()
   40b50e:	f883 21d9 	strb.w	r2, [r3, #473]	; 0x1d9
   40b512:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b516:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
+<<<<<<< HEAD
                   sData.RegDXD.processor_I2C |= CHANGE_VAL_0_10V;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b51a:	f893 21d2 	ldrb.w	r2, [r3, #466]	; 0x1d2
   40b51e:	f042 0202 	orr.w	r2, r2, #2
   40b522:	f883 21d2 	strb.w	r2, [r3, #466]	; 0x1d2
   40b526:	e548      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
               sData.RegDXD.val_0_10V = 0;
   40b528:	2200      	movs	r2, #0
   40b52a:	4b66      	ldr	r3, [pc, #408]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b52c:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
               if(DigitAccessoryOn(ACC_I2C_DXD)) {   // intile tenere acceso il compressore
+=======
+  40b528:	2200      	movs	r2, #0
+  40b52a:	4b66      	ldr	r3, [pc, #408]	; (40b6c4 <TemperatureRegulate+0x808>)
+  40b52c:	f883 21d3 	strb.w	r2, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b530:	200c      	movs	r0, #12
   40b532:	4b65      	ldr	r3, [pc, #404]	; (40b6c8 <TemperatureRegulate+0x80c>)
   40b534:	4798      	blx	r3
   40b536:	2800      	cmp	r0, #0
   40b538:	f43f aeb4 	beq.w	40b2a4 <TemperatureRegulate+0x3e8>
+<<<<<<< HEAD
                  TAG_DigitAccessoryOff(ACC_I2C_DXD); 
   40b53c:	200c      	movs	r0, #12
   40b53e:	4b63      	ldr	r3, [pc, #396]	; (40b6cc <TemperatureRegulate+0x810>)
   40b540:	4798      	blx	r3
                  sData.RegDXD.count = -24;
+=======
+  40b53c:	200c      	movs	r0, #12
+  40b53e:	4b63      	ldr	r3, [pc, #396]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b540:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b542:	4b60      	ldr	r3, [pc, #384]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b544:	f06f 0217 	mvn.w	r2, #23
   40b548:	f883 21d8 	strb.w	r2, [r3, #472]	; 0x1d8
@@ -26813,6 +27491,7 @@ int TemperatureRegulate()
   40b554:	f883 21da 	strb.w	r2, [r3, #474]	; 0x1da
   40b558:	f883 21db 	strb.w	r2, [r3, #475]	; 0x1db
   40b55c:	e6a2      	b.n	40b2a4 <TemperatureRegulate+0x3e8>
+<<<<<<< HEAD
     sData.RegDXD.processor_I2C = 0;
   40b55e:	4b59      	ldr	r3, [pc, #356]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b560:	2000      	movs	r0, #0
@@ -26820,11 +27499,20 @@ int TemperatureRegulate()
     sData.RegDXD.val_0_10V    = 0;
   40b566:	f883 01d3 	strb.w	r0, [r3, #467]	; 0x1d3
     sData.RegDXD.count        = 0; 
+=======
+  40b55e:	4b59      	ldr	r3, [pc, #356]	; (40b6c4 <TemperatureRegulate+0x808>)
+  40b560:	2000      	movs	r0, #0
+  40b562:	f883 01d2 	strb.w	r0, [r3, #466]	; 0x1d2
+  40b566:	f883 01d3 	strb.w	r0, [r3, #467]	; 0x1d3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b56a:	f883 01d8 	strb.w	r0, [r3, #472]	; 0x1d8
   40b56e:	f883 01d9 	strb.w	r0, [r3, #473]	; 0x1d9
   40b572:	f883 01da 	strb.w	r0, [r3, #474]	; 0x1da
   40b576:	f883 01db 	strb.w	r0, [r3, #475]	; 0x1db
+<<<<<<< HEAD
   if (!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !AccessoryPresent_EepList(ACC_EEP_SSR))
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b57a:	4b56      	ldr	r3, [pc, #344]	; (40b6d4 <TemperatureRegulate+0x818>)
   40b57c:	4798      	blx	r3
   40b57e:	b920      	cbnz	r0, 40b58a <TemperatureRegulate+0x6ce>
@@ -26833,17 +27521,24 @@ int TemperatureRegulate()
   40b584:	4798      	blx	r3
   40b586:	2800      	cmp	r0, #0
   40b588:	d032      	beq.n	40b5f0 <TemperatureRegulate+0x734>
+<<<<<<< HEAD
    Value1 = read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[0]));
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b58a:	2090      	movs	r0, #144	; 0x90
   40b58c:	4d52      	ldr	r5, [pc, #328]	; (40b6d8 <TemperatureRegulate+0x81c>)
   40b58e:	47a8      	blx	r5
   40b590:	4b52      	ldr	r3, [pc, #328]	; (40b6dc <TemperatureRegulate+0x820>)
   40b592:	8018      	strh	r0, [r3, #0]
+<<<<<<< HEAD
    Value2 = read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[1]));
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b594:	2091      	movs	r0, #145	; 0x91
   40b596:	47a8      	blx	r5
   40b598:	4b51      	ldr	r3, [pc, #324]	; (40b6e0 <TemperatureRegulate+0x824>)
   40b59a:	8018      	strh	r0, [r3, #0]
+<<<<<<< HEAD
    soglia_Off_Heater = SetPointTemp1 + (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[0]));
   40b59c:	2090      	movs	r0, #144	; 0x90
   40b59e:	47a8      	blx	r5
@@ -26879,22 +27574,56 @@ int TemperatureRegulate()
   40b5d8:	2000      	movs	r0, #0
   40b5da:	47a0      	blx	r4
 	    if ( info_SSR > 0)
+=======
+  40b59c:	2090      	movs	r0, #144	; 0x90
+  40b59e:	47a8      	blx	r5
+  40b5a0:	4682      	mov	sl, r0
+  40b5a2:	2091      	movs	r0, #145	; 0x91
+  40b5a4:	47a8      	blx	r5
+  40b5a6:	4681      	mov	r9, r0
+  40b5a8:	2092      	movs	r0, #146	; 0x92
+  40b5aa:	47a8      	blx	r5
+  40b5ac:	4683      	mov	fp, r0
+  40b5ae:	2093      	movs	r0, #147	; 0x93
+  40b5b0:	47a8      	blx	r5
+  40b5b2:	4605      	mov	r5, r0
+  40b5b4:	f404 4388 	and.w	r3, r4, #17408	; 0x4400
+  40b5b8:	f5b3 6f80 	cmp.w	r3, #1024	; 0x400
+  40b5bc:	d02c      	beq.n	40b618 <TemperatureRegulate+0x75c>
+  40b5be:	f404 4390 	and.w	r3, r4, #18432	; 0x4800
+  40b5c2:	f5b3 6f00 	cmp.w	r3, #2048	; 0x800
+  40b5c6:	f000 8095 	beq.w	40b6f4 <TemperatureRegulate+0x838>
+  40b5ca:	f414 4f98 	tst.w	r4, #19456	; 0x4c00
+  40b5ce:	f47f acf4 	bne.w	40afba <TemperatureRegulate+0xfe>
+  40b5d2:	2001      	movs	r0, #1
+  40b5d4:	4c3d      	ldr	r4, [pc, #244]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b5d6:	47a0      	blx	r4
+  40b5d8:	2000      	movs	r0, #0
+  40b5da:	47a0      	blx	r4
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b5dc:	4b41      	ldr	r3, [pc, #260]	; (40b6e4 <TemperatureRegulate+0x828>)
   40b5de:	781b      	ldrb	r3, [r3, #0]
   40b5e0:	2b00      	cmp	r3, #0
   40b5e2:	f43f acea 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
     	write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);	  
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b5e6:	2100      	movs	r1, #0
   40b5e8:	2096      	movs	r0, #150	; 0x96
   40b5ea:	4b3f      	ldr	r3, [pc, #252]	; (40b6e8 <TemperatureRegulate+0x82c>)
   40b5ec:	4798      	blx	r3
   40b5ee:	e4e4      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
   if (!DigitAccessoryOperating(ACC_I2C_HEATER) && !DigitAccessoryOperating(ACC_I2C_COOLER) && !AccessoryPresent_EepList(ACC_EEP_SSR))
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b5f0:	2012      	movs	r0, #18
   40b5f2:	4b3e      	ldr	r3, [pc, #248]	; (40b6ec <TemperatureRegulate+0x830>)
   40b5f4:	4798      	blx	r3
   40b5f6:	2800      	cmp	r0, #0
   40b5f8:	d1c7      	bne.n	40b58a <TemperatureRegulate+0x6ce>
+<<<<<<< HEAD
     TAG_DigitAccessoryOff(ACC_I2C_COOLER);
   40b5fa:	2001      	movs	r0, #1
   40b5fc:	4c33      	ldr	r4, [pc, #204]	; (40b6cc <TemperatureRegulate+0x810>)
@@ -26903,25 +27632,42 @@ int TemperatureRegulate()
   40b600:	2000      	movs	r0, #0
   40b602:	47a0      	blx	r4
 	if ( info_SSR > 0)
+=======
+  40b5fa:	2001      	movs	r0, #1
+  40b5fc:	4c33      	ldr	r4, [pc, #204]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b5fe:	47a0      	blx	r4
+  40b600:	2000      	movs	r0, #0
+  40b602:	47a0      	blx	r4
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b604:	4b37      	ldr	r3, [pc, #220]	; (40b6e4 <TemperatureRegulate+0x828>)
   40b606:	781b      	ldrb	r3, [r3, #0]
   40b608:	2b00      	cmp	r3, #0
   40b60a:	f43f acd6 	beq.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
 	write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);	
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b60e:	2100      	movs	r1, #0
   40b610:	2096      	movs	r0, #150	; 0x96
   40b612:	4b35      	ldr	r3, [pc, #212]	; (40b6e8 <TemperatureRegulate+0x82c>)
   40b614:	4798      	blx	r3
   40b616:	e4d0      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
       TAG_DigitAccessoryOff(ACC_I2C_COOLER); 
   40b618:	2001      	movs	r0, #1
   40b61a:	4b2c      	ldr	r3, [pc, #176]	; (40b6cc <TemperatureRegulate+0x810>)
   40b61c:	4798      	blx	r3
       if(DigitAccessoryOperating(ACC_I2C_HEATER) || AccessoryPresent_EepList(ACC_EEP_SSR) )
+=======
+  40b618:	2001      	movs	r0, #1
+  40b61a:	4b2c      	ldr	r3, [pc, #176]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b61c:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b61e:	2000      	movs	r0, #0
   40b620:	4b2c      	ldr	r3, [pc, #176]	; (40b6d4 <TemperatureRegulate+0x818>)
   40b622:	4798      	blx	r3
   40b624:	b1d8      	cbz	r0, 40b65e <TemperatureRegulate+0x7a2>
+<<<<<<< HEAD
    soglia_On_Heater  = SetPointTemp1 + (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Hot[1]));
   40b626:	fa48 f389 	sxtab	r3, r8, r9
          if (TempRif < soglia_On_Heater) 
@@ -26935,33 +27681,58 @@ int TemperatureRegulate()
   40b636:	429e      	cmp	r6, r3
   40b638:	db30      	blt.n	40b69c <TemperatureRegulate+0x7e0>
             if(++persist_Temp_heater_off > 1) { 
+=======
+  40b626:	fa48 f389 	sxtab	r3, r8, r9
+  40b62a:	b21b      	sxth	r3, r3
+  40b62c:	429e      	cmp	r6, r3
+  40b62e:	db2d      	blt.n	40b68c <TemperatureRegulate+0x7d0>
+  40b630:	fa48 f38a 	sxtab	r3, r8, sl
+  40b634:	b21b      	sxth	r3, r3
+  40b636:	429e      	cmp	r6, r3
+  40b638:	db30      	blt.n	40b69c <TemperatureRegulate+0x7e0>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b63a:	4a2d      	ldr	r2, [pc, #180]	; (40b6f0 <TemperatureRegulate+0x834>)
   40b63c:	6813      	ldr	r3, [r2, #0]
   40b63e:	3301      	adds	r3, #1
   40b640:	6013      	str	r3, [r2, #0]
   40b642:	2b01      	cmp	r3, #1
   40b644:	f77f acb9 	ble.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
                TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
   40b648:	2000      	movs	r0, #0
   40b64a:	4b20      	ldr	r3, [pc, #128]	; (40b6cc <TemperatureRegulate+0x810>)
   40b64c:	4798      	blx	r3
 			   write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);
+=======
+  40b648:	2000      	movs	r0, #0
+  40b64a:	4b20      	ldr	r3, [pc, #128]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b64c:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b64e:	2100      	movs	r1, #0
   40b650:	2096      	movs	r0, #150	; 0x96
   40b652:	4b25      	ldr	r3, [pc, #148]	; (40b6e8 <TemperatureRegulate+0x82c>)
   40b654:	4798      	blx	r3
+<<<<<<< HEAD
                persist_Temp_heater_off = 0; 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b656:	2200      	movs	r2, #0
   40b658:	4b25      	ldr	r3, [pc, #148]	; (40b6f0 <TemperatureRegulate+0x834>)
   40b65a:	601a      	str	r2, [r3, #0]
   40b65c:	e4ad      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
       if(DigitAccessoryOperating(ACC_I2C_HEATER) || AccessoryPresent_EepList(ACC_EEP_SSR) )
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b65e:	2012      	movs	r0, #18
   40b660:	4b22      	ldr	r3, [pc, #136]	; (40b6ec <TemperatureRegulate+0x830>)
   40b662:	4798      	blx	r3
   40b664:	2800      	cmp	r0, #0
   40b666:	d1de      	bne.n	40b626 <TemperatureRegulate+0x76a>
+<<<<<<< HEAD
          if (DigitAccessoryOn(ACC_I2C_HEATER) == 1 || (info_SSR > 0) )
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b668:	2000      	movs	r0, #0
   40b66a:	4b17      	ldr	r3, [pc, #92]	; (40b6c8 <TemperatureRegulate+0x80c>)
   40b66c:	4798      	blx	r3
@@ -26970,6 +27741,7 @@ int TemperatureRegulate()
   40b672:	4b1c      	ldr	r3, [pc, #112]	; (40b6e4 <TemperatureRegulate+0x828>)
   40b674:	781b      	ldrb	r3, [r3, #0]
   40b676:	b12b      	cbz	r3, 40b684 <TemperatureRegulate+0x7c8>
+<<<<<<< HEAD
             TAG_DigitAccessoryOff(ACC_I2C_HEATER); 
   40b678:	2000      	movs	r0, #0
   40b67a:	4b14      	ldr	r3, [pc, #80]	; (40b6cc <TemperatureRegulate+0x810>)
@@ -26979,36 +27751,62 @@ int TemperatureRegulate()
   40b680:	781b      	ldrb	r3, [r3, #0]
   40b682:	b9cb      	cbnz	r3, 40b6b8 <TemperatureRegulate+0x7fc>
          persist_Temp_heater_off = 0; 
+=======
+  40b678:	2000      	movs	r0, #0
+  40b67a:	4b14      	ldr	r3, [pc, #80]	; (40b6cc <TemperatureRegulate+0x810>)
+  40b67c:	4798      	blx	r3
+  40b67e:	4b19      	ldr	r3, [pc, #100]	; (40b6e4 <TemperatureRegulate+0x828>)
+  40b680:	781b      	ldrb	r3, [r3, #0]
+  40b682:	b9cb      	cbnz	r3, 40b6b8 <TemperatureRegulate+0x7fc>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b684:	2200      	movs	r2, #0
   40b686:	4b1a      	ldr	r3, [pc, #104]	; (40b6f0 <TemperatureRegulate+0x834>)
   40b688:	601a      	str	r2, [r3, #0]
   40b68a:	e496      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
             TAG_DigitAccessoryOn(ACC_I2C_HEATER);
   40b68c:	2000      	movs	r0, #0
   40b68e:	4b10      	ldr	r3, [pc, #64]	; (40b6d0 <TemperatureRegulate+0x814>)
   40b690:	4798      	blx	r3
 			write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 100);
+=======
+  40b68c:	2000      	movs	r0, #0
+  40b68e:	4b10      	ldr	r3, [pc, #64]	; (40b6d0 <TemperatureRegulate+0x814>)
+  40b690:	4798      	blx	r3
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b692:	2164      	movs	r1, #100	; 0x64
   40b694:	2096      	movs	r0, #150	; 0x96
   40b696:	4b14      	ldr	r3, [pc, #80]	; (40b6e8 <TemperatureRegulate+0x82c>)
   40b698:	4798      	blx	r3
   40b69a:	e48e      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
 				persist_Temp_heater_off = 0;
   40b69c:	2000      	movs	r0, #0
   40b69e:	4b14      	ldr	r3, [pc, #80]	; (40b6f0 <TemperatureRegulate+0x834>)
   40b6a0:	6018      	str	r0, [r3, #0]
 				if ( !DigitAccessoryOn(ACC_I2C_HEATER))
+=======
+  40b69c:	2000      	movs	r0, #0
+  40b69e:	4b14      	ldr	r3, [pc, #80]	; (40b6f0 <TemperatureRegulate+0x834>)
+  40b6a0:	6018      	str	r0, [r3, #0]
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b6a2:	4b09      	ldr	r3, [pc, #36]	; (40b6c8 <TemperatureRegulate+0x80c>)
   40b6a4:	4798      	blx	r3
   40b6a6:	2800      	cmp	r0, #0
   40b6a8:	f47f ac87 	bne.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
 					sData.AccI2C[ACC_I2C_HEATER].status_comand &= ~ CMD_ON;
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b6ac:	4a05      	ldr	r2, [pc, #20]	; (40b6c4 <TemperatureRegulate+0x808>)
   40b6ae:	7e53      	ldrb	r3, [r2, #25]
   40b6b0:	f023 0301 	bic.w	r3, r3, #1
   40b6b4:	7653      	strb	r3, [r2, #25]
   40b6b6:	e480      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
 	        write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b6b8:	2100      	movs	r1, #0
   40b6ba:	2096      	movs	r0, #150	; 0x96
   40b6bc:	4b0a      	ldr	r3, [pc, #40]	; (40b6e8 <TemperatureRegulate+0x82c>)
@@ -27027,6 +27825,7 @@ int TemperatureRegulate()
   40b6e8:	0040b7dd 	.word	0x0040b7dd
   40b6ec:	00400175 	.word	0x00400175
   40b6f0:	20001090 	.word	0x20001090
+<<<<<<< HEAD
       TAG_DigitAccessoryOff(ACC_I2C_HEATER);
   40b6f4:	2000      	movs	r0, #0
   40b6f6:	4b1d      	ldr	r3, [pc, #116]	; (40b76c <TemperatureRegulate+0x8b0>)
@@ -27036,13 +27835,25 @@ int TemperatureRegulate()
   40b6fc:	781b      	ldrb	r3, [r3, #0]
   40b6fe:	bb13      	cbnz	r3, 40b746 <TemperatureRegulate+0x88a>
       if(DigitAccessoryOperating(ACC_I2C_COOLER))
+=======
+  40b6f4:	2000      	movs	r0, #0
+  40b6f6:	4b1d      	ldr	r3, [pc, #116]	; (40b76c <TemperatureRegulate+0x8b0>)
+  40b6f8:	4798      	blx	r3
+  40b6fa:	4b1d      	ldr	r3, [pc, #116]	; (40b770 <TemperatureRegulate+0x8b4>)
+  40b6fc:	781b      	ldrb	r3, [r3, #0]
+  40b6fe:	bb13      	cbnz	r3, 40b746 <TemperatureRegulate+0x88a>
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b700:	2001      	movs	r0, #1
   40b702:	4b1c      	ldr	r3, [pc, #112]	; (40b774 <TemperatureRegulate+0x8b8>)
   40b704:	4798      	blx	r3
   40b706:	b338      	cbz	r0, 40b758 <TemperatureRegulate+0x89c>
+<<<<<<< HEAD
    soglia_On_Cooler  = SetPointTemp + (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Cold[1])); 
   40b708:	fa47 f385 	sxtab	r3, r7, r5
         if((TempRif >= soglia_On_Cooler) && (sData.measure_Temp[I_PROBE_FRESH] > (sData.measure_Temp[I_PROBE_RETURN] - 40))) 
+=======
+  40b708:	fa47 f385 	sxtab	r3, r7, r5
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b70c:	b21b      	sxth	r3, r3
   40b70e:	429e      	cmp	r6, r3
   40b710:	db07      	blt.n	40b722 <TemperatureRegulate+0x866>
@@ -27052,9 +27863,13 @@ int TemperatureRegulate()
   40b71c:	3b28      	subs	r3, #40	; 0x28
   40b71e:	429a      	cmp	r2, r3
   40b720:	dc16      	bgt.n	40b750 <TemperatureRegulate+0x894>
+<<<<<<< HEAD
    soglia_Off_Cooler = SetPointTemp + (signed char)read_byte_eeprom(ADDR_EEP(hister_Temp_Cold[0]));
   40b722:	fa47 f38b 	sxtab	r3, r7, fp
         else if ((TempRif < soglia_Off_Cooler) || (sData.measure_Temp[I_PROBE_FRESH] < (sData.measure_Temp[I_PROBE_RETURN] - 50))) 
+=======
+  40b722:	fa47 f38b 	sxtab	r3, r7, fp
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b726:	b21b      	sxth	r3, r3
   40b728:	429e      	cmp	r6, r3
   40b72a:	db08      	blt.n	40b73e <TemperatureRegulate+0x882>
@@ -27064,29 +27879,44 @@ int TemperatureRegulate()
   40b736:	3b32      	subs	r3, #50	; 0x32
   40b738:	429a      	cmp	r2, r3
   40b73a:	f6bf ac3e 	bge.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
           TAG_DigitAccessoryOff(ACC_I2C_COOLER);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b73e:	2001      	movs	r0, #1
   40b740:	4b0a      	ldr	r3, [pc, #40]	; (40b76c <TemperatureRegulate+0x8b0>)
   40b742:	4798      	blx	r3
   40b744:	e439      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
 		  write_byte_eeprom(ADDR_EEP(Set_EHD_mod), 0); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b746:	2100      	movs	r1, #0
   40b748:	2096      	movs	r0, #150	; 0x96
   40b74a:	4b0c      	ldr	r3, [pc, #48]	; (40b77c <TemperatureRegulate+0x8c0>)
   40b74c:	4798      	blx	r3
   40b74e:	e7d7      	b.n	40b700 <TemperatureRegulate+0x844>
+<<<<<<< HEAD
           TAG_DigitAccessoryOn(ACC_I2C_COOLER);
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b750:	2001      	movs	r0, #1
   40b752:	4b0b      	ldr	r3, [pc, #44]	; (40b780 <TemperatureRegulate+0x8c4>)
   40b754:	4798      	blx	r3
   40b756:	e430      	b.n	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
         if(DigitAccessoryOn(ACC_I2C_COOLER) == 1)
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b758:	2001      	movs	r0, #1
   40b75a:	4b0a      	ldr	r3, [pc, #40]	; (40b784 <TemperatureRegulate+0x8c8>)
   40b75c:	4798      	blx	r3
   40b75e:	2801      	cmp	r0, #1
   40b760:	f47f ac2b 	bne.w	40afba <TemperatureRegulate+0xfe>
+<<<<<<< HEAD
           TAG_DigitAccessoryOff(ACC_I2C_COOLER); 
+=======
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
   40b764:	4b01      	ldr	r3, [pc, #4]	; (40b76c <TemperatureRegulate+0x8b0>)
   40b766:	4798      	blx	r3
   40b768:	e427      	b.n	40afba <TemperatureRegulate+0xfe>

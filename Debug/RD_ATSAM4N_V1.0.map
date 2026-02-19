@@ -12965,6 +12965,7 @@ OUTPUT(RD_ATSAM4N_V1.0.elf elf32-littlearm)
  .debug_line    0x000229e7     0x126c src/HW_func.o
  .debug_line    0x00023c53     0x1585 src/main.o
 
+<<<<<<< HEAD
 .debug_str      0x00000000    0x4bcdd
  .debug_str     0x00000000    0x42027 src/Accessory.o
                               0x425b7 (size before relaxing)
@@ -13048,6 +13049,91 @@ OUTPUT(RD_ATSAM4N_V1.0.elf elf32-littlearm)
                               0x41bda (size before relaxing)
  .debug_str     0x0004b84f      0x48e src/main.o
                               0x428b7 (size before relaxing)
+=======
+.debug_str      0x00000000    0x4bd45
+ .debug_str     0x00000000    0x4205b src/Accessory.o
+                              0x425eb (size before relaxing)
+ .debug_str     0x0004205b      0x1a8 src/ADC.o
+                              0x41639 (size before relaxing)
+ .debug_str     0x00042203     0x2c27 src/Admin_Messages.o
+                              0x44156 (size before relaxing)
+ .debug_str     0x00044e2a       0x3a src/Alarm.o
+                              0x405cd (size before relaxing)
+ .debug_str     0x00044e64       0xaa src/ASF/common/services/sleepmgr/sam/sleepmgr.o
+                              0x3cf5c (size before relaxing)
+ .debug_str     0x00044f0e      0xe03 src/ASF/sam/drivers/adc/adc2.o
+                              0x3f818 (size before relaxing)
+ .debug_str     0x00045d11      0x2fa src/ASF/sam/drivers/efc/efc.o
+                              0x3d303 (size before relaxing)
+ .debug_str     0x0004600b      0x1dc src/ASF/sam/drivers/pdc/pdc.o
+                              0x3cf93 (size before relaxing)
+ .debug_str     0x000461e7      0x140 src/ASF/sam/drivers/rstc/rstc.o
+                              0x3d002 (size before relaxing)
+ .debug_str     0x00046327      0x2d1 src/ASF/sam/drivers/rtc/rtc.o
+                              0x3d13c (size before relaxing)
+ .debug_str     0x000465f8      0x3d7 src/ASF/sam/drivers/twi/twi.o
+                              0x3d32d (size before relaxing)
+ .debug_str     0x000469cf      0x793 src/ASF/sam/drivers/usart/usart.o
+                              0x3d6ae (size before relaxing)
+ .debug_str     0x00047162       0xdd src/ASF/sam/drivers/wdt/wdt.o
+                              0x3cedd (size before relaxing)
+ .debug_str     0x0004723f      0x59f src/ASF/sam/services/flash_efc/flash_efc.o
+                              0x3f0e3 (size before relaxing)
+ .debug_str     0x000477de      0x182 src/MASTER_I2C.o
+                              0x3fe8b (size before relaxing)
+ .debug_str     0x00047960      0x810 src/motor_speed.o
+                              0x4265e (size before relaxing)
+ .debug_str     0x00048170      0x103 src/Scheduler.o
+                              0x3f6c2 (size before relaxing)
+ .debug_str     0x00048273      0x27c src/Serial1_Class.o
+                              0x401af (size before relaxing)
+ .debug_str     0x000484ef      0x18d src/Serial2_Class.o
+                              0x40218 (size before relaxing)
+ .debug_str     0x0004867c       0x86 src/Seriale_1.o
+                              0x3f950 (size before relaxing)
+ .debug_str     0x00048702       0xdc src/Seriale_2.o
+                              0x3fad7 (size before relaxing)
+ .debug_str     0x000487de      0x7d2 src/shell.o
+                              0x41437 (size before relaxing)
+ .debug_str     0x00048fb0      0x393 src/Testing_HW.o
+                              0x4108b (size before relaxing)
+ .debug_str     0x00049343       0x4b src/Weekly_Prog.o
+                              0x40798 (size before relaxing)
+ .debug_str     0x0004938e       0xa0 src/ASF/common/services/serial/usart_serial.o
+                              0x3ed1e (size before relaxing)
+ .debug_str     0x0004942e       0x35 src/ASF/common/services/delay/sam/cycle_counter.o
+                              0x3cf44 (size before relaxing)
+ .debug_str     0x00049463      0x2a9 src/ASF/common/services/clock/sam4n/sysclk.o
+                              0x3ea71 (size before relaxing)
+ .debug_str     0x0004970c      0x579 src/ASF/sam/drivers/pmc/pmc.o
+                              0x3d815 (size before relaxing)
+ .debug_str     0x00049c85      0x2f0 src/ASF/sam/drivers/tc/tc.o
+                              0x3d1c0 (size before relaxing)
+ .debug_str     0x00049f75      0x1d8 src/ASF/sam/drivers/uart/uart.o
+                              0x3d195 (size before relaxing)
+ .debug_str     0x0004a14d      0x1e4 src/ASF/common/boards/user_board/init.o
+                              0x3fcdc (size before relaxing)
+ .debug_str     0x0004a331       0x65 src/ASF/common/utils/interrupt/interrupt_sam_nvic.o
+                              0x3ce20 (size before relaxing)
+ .debug_str     0x0004a396       0x4d src/ASF/sam/utils/cmsis/sam4n/source/templates/exceptions.o
+                              0x2c596 (size before relaxing)
+ .debug_str     0x0004a3e3      0x3e6 src/ASF/sam/utils/cmsis/sam4n/source/templates/gcc/startup_sam4n.o
+                              0x2c9a4 (size before relaxing)
+ .debug_str     0x0004a7c9      0x156 src/ASF/sam/utils/cmsis/sam4n/source/templates/system_sam4n.o
+                              0x3d076 (size before relaxing)
+ .debug_str     0x0004a91f      0x768 src/ASF/sam/utils/syscalls/gcc/syscalls.o
+                               0x7433 (size before relaxing)
+ .debug_str     0x0004b087      0x2db src/Clima_Func.o
+                              0x412ec (size before relaxing)
+ .debug_str     0x0004b362      0x167 src/eeprom_func.o
+                              0x41074 (size before relaxing)
+ .debug_str     0x0004b4c9      0x184 src/Filter_Func.o
+                              0x40e6e (size before relaxing)
+ .debug_str     0x0004b64d      0x26a src/HW_func.o
+                              0x41c0e (size before relaxing)
+ .debug_str     0x0004b8b7      0x48e src/main.o
+                              0x428eb (size before relaxing)
+>>>>>>> b3726a1ba8718be352a789762618b0c4e68774b6
 
 .debug_frame    0x00000000     0x3e18
  .debug_frame   0x00000000      0x2e4 src/Accessory.o
